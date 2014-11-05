@@ -48,6 +48,10 @@ bool CDeck::Deal()
 
 bool CDeck::Flip(int _num)
 {
+	for(int i = 1; i < _num ; i++)
+	{
+
+	}
 }
 
 bool CDeck::Reset()
