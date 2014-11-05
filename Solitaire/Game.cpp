@@ -37,6 +37,10 @@ CGame::CGame()	: m_pClock(0)
 				, m_hMainWindow(0)
 				, m_pBackBuffer(0)
 {
+	for(int i = 0 ; i < 7; i++)
+	{
+		m_PlayStack[i] = new CPlayStack; 
+	}
 }
 
 /***********************

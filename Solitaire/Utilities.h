@@ -25,11 +25,13 @@
 
 // Library Includes
 #include <strstream>
+#include <vector>
 
 // Macros
 	// Check to see if "a" exists 
 #define VALIDATE(a) if (!a) return (false)
 
+using namespace std;
 
 /***********************
 * ToString: Returns the printable string of the passed in object  

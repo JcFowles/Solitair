@@ -29,12 +29,13 @@
 #include "Clock.h"
 #include "BackBuffer.h"
 #include "Utilities.h"
-
+#include "PlayStack.h"
 // Types
 // Constants
 
 // Prototypes
 class CBackBuffer;
+class CPlayStack;
 
 class CGame
 {
@@ -62,6 +63,8 @@ private:
 protected:
 	CClock* m_pClock;
 	CBackBuffer* m_pBackBuffer;
+
+	CPlayStack* m_PlayStack[7];
 
 	//Application data
 	HINSTANCE m_hApplicationInstance;
