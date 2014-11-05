@@ -39,7 +39,7 @@ CGame::CGame()	: m_pClock(0)
 {
 	for(int i = 0 ; i < 7; i++)
 	{
-		m_PlayStack[i] = new CPlayStack; 
+		m_PlayStack[i] = 0; 
 	}
 }
 
@@ -56,6 +56,12 @@ CGame::~CGame()
 	m_pBackBuffer = 0;
 	delete m_pClock;
 	m_pClock = 0;
+
+	for(int i = 0 ; i < 7; i++)
+	{
+		delete m_PlayStack[i] ; 
+		m_PlayStack[i] = 0;
+	}
 }
 
 /***********************
@@ -77,7 +83,25 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 	//ShowCursor(false);
+	
+	//Card Stacks
+	CPlayStack* tempStack = 0;
+
+
+	/*for(int i = 0 ; i < 7; i++)
+	{
+		
+		tempStack = new CPlayStack; 
+		VALIDATE(tempStack->Initialise(fCurrentX, fCurrentY));
+		m_PlayStack[i] = tempStack;
+	}*/
+	
+	
+	
+	
 	return (true);
+
+
 }
 
 /***********************

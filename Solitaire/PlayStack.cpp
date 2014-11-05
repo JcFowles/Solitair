@@ -15,7 +15,6 @@
 
 // This include
 #include "PlayStack.h"
-#include "Card.h"
 
 /***********************
 * CPlayStack: Contructor for the PlayStack class
@@ -23,7 +22,7 @@
 ********************/
 CPlayStack::CPlayStack(void)
 {
-
+	
 }
 
 /***********************
@@ -34,6 +33,7 @@ CPlayStack::~CPlayStack(void)
 {
 
 }
+
 
 /***********************
 * AddCards: Adds cards to the card play stack
@@ -90,7 +90,7 @@ vector<CCard*>* CPlayStack::RemoveCards(int _iCardFromTop)
 ********************/
 bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 {
-	/*
+	
 	if( ((_kpCard->GetSuit()) < 3) &&
 		((*m_pCards).back()->GetSuit() > 2) )
 	{
@@ -101,7 +101,7 @@ bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 	{
 		return CardCheckValue(_kpCard);
 	}
-	else*/
+	else
 	{
 		return false;
 	}
@@ -116,12 +116,12 @@ bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 ********************/
 bool CPlayStack::FlipCard()
 {
-	//if(!((*m_pCards).back()->IsVisible()))
-	//{
-	//	//callans switch animations shit here
-	//	
-	//	(*m_pCards).back()->SetVisible(true);
-	//}
+	if(!((*m_pCards).back()->IsVisible()))
+	{
+		//callans switch animations shit here
+		
+		(*m_pCards).back()->SetVisible(true);
+	}
 	
 	return true;
 
@@ -135,10 +135,10 @@ bool CPlayStack::FlipCard()
 ********************/
 bool CPlayStack::CardCheckValue( CCard*  _kpCard)
 {
-	/*if( (_kpCard->GetCardNum()) == (((*m_pCards).back()->GetCardNum()) - 1) )
+	if( (_kpCard->GetNumber()) == (((*m_pCards).back()->GetNumber()) - 1) )
 	{
 		return true;
-	}*/
+	}
 	return false;
 }
 
@@ -150,12 +150,12 @@ bool CPlayStack::CardCheckValue( CCard*  _kpCard)
 ********************/
 bool CPlayStack::BlankCheck( CCard*  _kpCard)
 {
-	/*if( ((_kpCard->GetCardNum()) == KING ) &&
-		(((*m_pCards).back()->GetCardNum()) == NUM_DEFAULT))
+	if( ((_kpCard->GetNumber()) == KING ) &&
+		(((*m_pCards).back()->GetNumber()) == NUM_DEFAULT))
 	{
 		return true;
 	}
-	else*/
+	else
 	{
 		return false;
 	}

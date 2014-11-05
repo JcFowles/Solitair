@@ -23,9 +23,10 @@
 #include "windows.h"
 
 // Local Includes
-//#include "Card.h"
+#include "Card.h"
 #include "Utilities.h"
 //#include "Entity.h"
+
 class CCard;
 class CPlayStack 
 {
@@ -49,6 +50,8 @@ private:
 	CPlayStack(const CPlayStack& _kr);
 	CPlayStack& operator= (const CPlayStack& _kr);
 	
+
+
 	bool CardCheckSuit( CCard*  _kpCard);
 	bool CardCheckValue( CCard*  _kpCard);
 	bool BlankCheck( CCard*  _kpCard);

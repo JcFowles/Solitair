@@ -26,6 +26,7 @@
 // Library Includes
 #include <strstream>
 #include <vector>
+#include <algorithm>
 
 // Macros
 	// Check to see if "a" exists 

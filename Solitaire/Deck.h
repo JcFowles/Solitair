@@ -26,7 +26,7 @@
 #include "Card.h"
 #include "Utilities.h"
 //#include "Entity.h"
-
+class CCard;
 class CDeck
 {
 public:
