@@ -30,7 +30,7 @@
 #include "resource.h"
 
 // Prototypes
-class CCard:public CEntity
+class CCard : public CEntity
 {
 public:
 	CCard(void);

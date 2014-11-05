@@ -72,7 +72,7 @@ CCard* CWinStack::RemoveCard()
 * @parameter: _kpCard: constant pointer to a constant card, to be checked
 * @return: bool : True if cards can be added, False if not
 ********************/
-bool CWinStack::CardCheckSuit(const CCard* const _kpCard)
+bool CWinStack::CardCheckSuit( CCard*  _kpCard)
 {
 	
 	if( (_kpCard->GetSuit()) == ((*m_pCards).back()->GetSuit()) )
@@ -92,9 +92,9 @@ bool CWinStack::CardCheckSuit(const CCard* const _kpCard)
 * @parameter: _kpCard: constant pointer to a constant card, to be checked
 * @return: bool : True if cards can be added, False if not
 ********************/
-bool CWinStack::CardCheckValue(const CCard* const _kpCard)
+bool CWinStack::CardCheckValue( CCard* _kpCard)
 {
-	if( (_kpCard->GetCardNum()) == (((*m_pCards).back()->GetCardNum()) - 1) )
+	if( (_kpCard->GetNumber()) == (((*m_pCards).back()->GetNumber()) - 1) )
 	{
 		return true;
 	}

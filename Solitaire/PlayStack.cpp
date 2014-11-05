@@ -15,6 +15,7 @@
 
 // This include
 #include "PlayStack.h"
+#include "Card.h"
 
 /***********************
 * CPlayStack: Contructor for the PlayStack class
@@ -87,7 +88,7 @@ vector<CCard*>* CPlayStack::RemoveCards(int _iCardFromTop)
 * @parameter: _kpCard: constant pointer to a constant card, to be checked
 * @return: bool : True if cards can be added, False if not
 ********************/
-bool CPlayStack::CardCheckSuit(const CCard* const _kpCard)
+bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 {
 	/*
 	if( ((_kpCard->GetSuit()) < 3) &&
@@ -132,7 +133,7 @@ bool CPlayStack::FlipCard()
 * @parameter: _kpCard: constant pointer to a constant card, to be checked
 * @return: bool : True if cards can be added, False if not
 ********************/
-bool CPlayStack::CardCheckValue(const CCard* const _kpCard)
+bool CPlayStack::CardCheckValue( CCard*  _kpCard)
 {
 	/*if( (_kpCard->GetCardNum()) == (((*m_pCards).back()->GetCardNum()) - 1) )
 	{
@@ -147,7 +148,7 @@ bool CPlayStack::CardCheckValue(const CCard* const _kpCard)
 * @parameter: _kpCard: constant pointer to a constant card, to be checked
 * @return: bool : True if cards can be added, False if not
 ********************/
-bool CPlayStack::BlankCheck(const CCard* const _kpCard)
+bool CPlayStack::BlankCheck( CCard*  _kpCard)
 {
 	/*if( ((_kpCard->GetCardNum()) == KING ) &&
 		(((*m_pCards).back()->GetCardNum()) == NUM_DEFAULT))

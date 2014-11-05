@@ -23,10 +23,10 @@
 #include "windows.h"
 
 // Local Includes
-#include "Card.h"
+//#include "Card.h"
 #include "Utilities.h"
 //#include "Entity.h"
-
+class CCard;
 class CPlayStack 
 {
 	// Member Functions
@@ -49,9 +49,9 @@ private:
 	CPlayStack(const CPlayStack& _kr);
 	CPlayStack& operator= (const CPlayStack& _kr);
 	
-	bool CardCheckSuit(const CCard* const _kpCard);
-	bool CardCheckValue(const CCard* const _kpCard);
-	bool BlankCheck(const CCard* const _kpCard);
+	bool CardCheckSuit( CCard*  _kpCard);
+	bool CardCheckValue( CCard*  _kpCard);
+	bool BlankCheck( CCard*  _kpCard);
 
 	// Member Variables
 protected:

@@ -44,8 +44,8 @@ private:
 	CWinStack(const CWinStack& _kr);
 	CWinStack& operator= (const CWinStack& _kr);
 	
-	bool CardCheckSuit(const CCard* const _kpCard);
-	bool CardCheckValue(const CCard* const _kpCard);
+	bool CardCheckSuit( CCard*  _kpCard);
+	bool CardCheckValue( CCard*  _kpCard);
 
 	// Member Variables
 protected:

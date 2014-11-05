@@ -32,10 +32,7 @@
 #define VALIDATE(a) if (!a) return (false)
 
 using namespace std;
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/Fowles
 
 /***********************
 * ToString: Returns the printable string of the passed in object  
