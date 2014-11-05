@@ -106,6 +106,8 @@ HWND CreateAndRegisterWindow(HINSTANCE _hInstance, int _iWidth, int _iHeight, LP
 /***********************
 * WinMain: Program starts here 
 * @author: Asma Shakil
+* @author: Callan Moore
+
 * @Parameter: _hInstance: Instance handle that Windows generates for your application
 * @Parameter: _hPrevInstance: Tracker for the previous instance for the application
 * @Parameter: _lpCmdline: Wide char string that contains the passed in arguments 
@@ -116,8 +118,8 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 {
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
-	const int kiWidth = 672;
-	const int kiHeight = 768;
+	const int kiWidth = 1160;
+	const int kiHeight = 1040;
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 	CGame& rGame = CGame::GetInstance();
 
