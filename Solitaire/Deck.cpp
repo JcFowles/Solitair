@@ -61,6 +61,16 @@ bool CDeck::Initialise()
 	return true;
 }
 
+void CDeck::Draw()
+{
+
+}
+
+void CDeck::Process(float _fDeltaTick)
+{
+
+}
+
 bool CDeck::Deal()
 {
 	return true;

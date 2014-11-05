@@ -28,16 +28,16 @@
 //#include "Entity.h"
 
 class CCard;
-class CPlayStack 
+class CPlayStack //: public CEntity
 {
 	// Member Functions
 public:
 	CPlayStack(void);
 	~CPlayStack(void);
 
-	/*virtual bool Initialise();
-	virtual void Draw();
-	virtual void Process(float _fDeltaTick);*/
+	//virtual bool Initialise();
+	//virtual void Draw();
+	//virtual void Process(float _fDeltaTick);
 
 	bool AddCards(vector<CCard*>* _pCards);
 	vector<CCard*>* RemoveCards(int _iCardFromTop);

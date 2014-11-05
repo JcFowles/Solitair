@@ -25,7 +25,7 @@
 // Library Includes
 
 // Local Includes
-#include"Utilities.h"
+#include "Utilities.h"
 #include "Entity.h"
 #include "resource.h"
 

@@ -18,6 +18,9 @@
 *			Nick.gould@mediadesign.school.nz
 */
 
+// Local Includes
+#include "Sprite.h"
+
 // This Include
 #include "entity.h"
 
