@@ -48,8 +48,6 @@ public:
 	void SetNumber(ECardNum _eCardNum);
 	void SetVisible(bool _bIsVisible);
 
-
-
 protected:
 	ESuit m_eSuit;
 	ECardNum m_eCardNum;
