@@ -33,6 +33,11 @@ public:
 	CDeck(void);
 	~CDeck(void);
 
+	
+	virtual bool Initialise();
+	virtual void Draw();
+	virtual void Process(float _fDeltaTick);
+
 	bool Shuffle();
 	bool Deal();
 

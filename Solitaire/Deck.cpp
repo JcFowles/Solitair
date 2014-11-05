@@ -41,6 +41,25 @@ bool CDeck::Shuffle()
 	return true;
 }
 
+/***********************
+* Initialise: Intialise the Deck with the 52 cards
+* @author: Callan Moore
+* @return: bool : Returns true if everything is initialise correctly
+********************/
+bool CDeck::Initialise()
+{
+	CCard* pCardTemp = 0;
+	for( int i = HEART; i != SPADE; i++)	// Cycle through the suits
+	{
+		for( int j = ACE; j != KING; j++)	// Cycle through the 13 card values
+		{
+			pCardTemp = new CCard;
+			VALIDATE(pCardTemp->Initialise(static_cast<ESuit>(i), static_cast<ECardNum>(j)));
+			m_pDeck->push_back(pCardTemp);
+		}
+	}
+	return true;
+}
 
 bool CDeck::Deal()
 {
