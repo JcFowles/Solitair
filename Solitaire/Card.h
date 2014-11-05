@@ -56,7 +56,8 @@ protected:
 	bool m_bIsVisible;
 
 private:
-	int m_iSpriteID;
+	int m_iSpriteID_X;
+	int m_iSpriteID_Y;
 	int m_iMaskID;
 };
 

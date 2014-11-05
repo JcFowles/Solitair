@@ -41,307 +41,309 @@ CCard::~CCard(void)
 ********************/
 bool CCard::Initialise(ESuit _ESuit, ECardNum _ECardnum)
 {
+	
+	m_iMaskID = IDB_MASK_CARD;
+	m_iSpriteID_Y = _ESuit;
+	m_iSpriteID_X = _ECardnum;
 	return true;
-//	m_iMaskID = IDB_MASK_CARD;
-//
-//	switch(_ESuit)
-//	{
-//	case(HEART):
-//		{
-//		switch(_ECardnum)
-//			{
-//			case(ACE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_ACE;
-//					break;
-//				}
-//			case(TWO):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_TWO;
-//					break;
-//				}
-//			case(THREE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_THREE;
-//					break;
-//				}
-//			case(FOUR): 
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_FOUR;
-//					break;
-//				}
-//			case(FIVE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_FIVE;
-//					break;
-//				}
-//			case(SIX):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_SIX;
-//					break;
-//				}
-//			case(SEVEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_SEVEN;
-//					break;
-//				}
-//			case(EIGHT):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_EIGHT;
-//					break;
-//				}
-//			case(NINE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_NINE;
-//					break;
-//				}
-//			case(TEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_TEN;
-//					break;
-//				}
-//			case(JACK):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_JACK;
-//					break;
-//				}
-//			case(QUEEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_QUEEN;
-//					break;
-//				}
-//			case(KING):
-//				{
-//					m_iSpriteID = IDB_SPRITE_HEART_KING;
-//					break;
-//				}
-//			}
-//		}
-//	case(DIAMOND):
-//		{
-//		switch(_ECardnum)
-//			{
-//			case(ACE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_ACE;
-//					break;
-//				}
-//			case(TWO):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_TWO;
-//					break;
-//				}
-//			case(THREE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_THREE;
-//					break;
-//				}
-//			case(FOUR): 
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_FOUR;
-//					break;
-//				}
-//			case(FIVE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_FIVE;
-//					break;
-//				}
-//			case(SIX):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_SIX;
-//					break;
-//				}
-//			case(SEVEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_SEVEN;
-//					break;
-//				}
-//			case(EIGHT):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_EIGHT;
-//					break;
-//				}
-//			case(NINE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_NINE;
-//					break;
-//				}
-//			case(TEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_TEN;
-//					break;
-//				}
-//			case(JACK):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_JACK;
-//					break;
-//				}
-//			case(QUEEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_QUEEN;
-//					break;
-//				}
-//			case(KING):
-//				{
-//					m_iSpriteID = IDB_SPRITE_DIAMOND_KING;
-//					break;
-//				}
-//			}
-//
-//		}
-//	case(SPADE):
-//		{
-//		switch(_ECardnum)
-//			{
-//			case(ACE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_ACE;
-//					break;
-//				}
-//			case(TWO):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_TWO;
-//					break;
-//				}
-//			case(THREE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_THREE;
-//					break;
-//				}
-//			case(FOUR): 
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_FOUR;
-//					break;
-//				}
-//			case(FIVE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_FIVE;
-//					break;
-//				}
-//			case(SIX):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_SIX;
-//					break;
-//				}
-//			case(SEVEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_SEVEN;
-//					break;
-//				}
-//			case(EIGHT):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_EIGHT;
-//					break;
-//				}
-//			case(NINE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_NINE;
-//					break;
-//				}
-//			case(TEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_TEN;
-//					break;
-//				}
-//			case(JACK):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_JACK;
-//					break;
-//				}
-//			case(QUEEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_QUEEN;
-//					break;
-//				}
-//			case(KING):
-//				{
-//					m_iSpriteID = IDB_SPRITE_SPADE_KING;
-//					break;
-//				}
-//			}
-//
-//		}
-//	case(CLUB):
-//		{
-//		switch(_ECardnum)
-//			{
-//			case(ACE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_ACE;
-//					break;
-//				}
-//			case(TWO):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_TWO;
-//					break;
-//				}
-//			case(THREE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_THREE;
-//					break;
-//				}
-//			case(FOUR): 
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_FOUR;
-//					break;
-//				}
-//			case(FIVE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_FIVE;
-//					break;
-//				}
-//			case(SIX):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_SIX;
-//					break;
-//				}
-//			case(SEVEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_SEVEN;
-//					break;
-//				}
-//			case(EIGHT):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_EIGHT;
-//					break;
-//				}
-//			case(NINE):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_NINE;
-//					break;
-//				}
-//			case(TEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_TEN;
-//					break;
-//				}
-//			case(JACK):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_JACK;
-//					break;
-//				}
-//			case(QUEEN):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_QUEEN;
-//					break;
-//				}
-//			case(KING):
-//				{
-//					m_iSpriteID = IDB_SPRITE_CLUB_KING;
-//					break;
-//				}
-//			}
-//
-//		}
-//	default:
-//		{
-//			m_iSpriteID = IDB_SPRITE_BLANK;
-//		}
-//
-//
-//
-//
-//	}
+
+	/*
+	switch(_ESuit)
+	{
+	case(HEART):
+		{
+		//m_iSpriteID_Y = 
+		switch(_ECardnum)
+			{
+			case(ACE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_ACE;
+					break;
+				}
+			case(TWO):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_TWO;
+					break;
+				}
+			case(THREE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_THREE;
+					break;
+				}
+			case(FOUR): 
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_FOUR;
+					break;
+				}
+			case(FIVE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_FIVE;
+					break;
+				}
+			case(SIX):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_SIX;
+					break;
+				}
+			case(SEVEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_SEVEN;
+					break;
+				}
+			case(EIGHT):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_EIGHT;
+					break;
+				}
+			case(NINE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_NINE;
+					break;
+				}
+			case(TEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_TEN;
+					break;
+				}
+			case(JACK):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_JACK;
+					break;
+				}
+			case(QUEEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_QUEEN;
+					break;
+				}
+			case(KING):
+				{
+					m_iSpriteID_X = IDB_SPRITE_HEART_KING;
+					break;
+				}
+			}
+		}
+	case(DIAMOND):
+		{
+		switch(_ECardnum)
+			{
+			case(ACE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_ACE;
+					break;
+				}
+			case(TWO):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_TWO;
+					break;
+				}
+			case(THREE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_THREE;
+					break;
+				}
+			case(FOUR): 
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_FOUR;
+					break;
+				}
+			case(FIVE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_FIVE;
+					break;
+				}
+			case(SIX):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_SIX;
+					break;
+				}
+			case(SEVEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_SEVEN;
+					break;
+				}
+			case(EIGHT):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_EIGHT;
+					break;
+				}
+			case(NINE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_NINE;
+					break;
+				}
+			case(TEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_TEN;
+					break;
+				}
+			case(JACK):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_JACK;
+					break;
+				}
+			case(QUEEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_QUEEN;
+					break;
+				}
+			case(KING):
+				{
+					m_iSpriteID_X = IDB_SPRITE_DIAMOND_KING;
+					break;
+				}
+			}
+
+		}
+	case(SPADE):
+		{
+		switch(_ECardnum)
+			{
+			case(ACE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_ACE;
+					break;
+				}
+			case(TWO):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_TWO;
+					break;
+				}
+			case(THREE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_THREE;
+					break;
+				}
+			case(FOUR): 
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_FOUR;
+					break;
+				}
+			case(FIVE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_FIVE;
+					break;
+				}
+			case(SIX):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_SIX;
+					break;
+				}
+			case(SEVEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_SEVEN;
+					break;
+				}
+			case(EIGHT):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_EIGHT;
+					break;
+				}
+			case(NINE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_NINE;
+					break;
+				}
+			case(TEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_TEN;
+					break;
+				}
+			case(JACK):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_JACK;
+					break;
+				}
+			case(QUEEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_QUEEN;
+					break;
+				}
+			case(KING):
+				{
+					m_iSpriteID_X = IDB_SPRITE_SPADE_KING;
+					break;
+				}
+			}
+
+		}
+	case(CLUB):
+		{
+		switch(_ECardnum)
+			{
+			case(ACE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_ACE;
+					break;
+				}
+			case(TWO):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_TWO;
+					break;
+				}
+			case(THREE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_THREE;
+					break;
+				}
+			case(FOUR): 
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_FOUR;
+					break;
+				}
+			case(FIVE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_FIVE;
+					break;
+				}
+			case(SIX):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_SIX;
+					break;
+				}
+			case(SEVEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_SEVEN;
+					break;
+				}
+			case(EIGHT):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_EIGHT;
+					break;
+				}
+			case(NINE):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_NINE;
+					break;
+				}
+			case(TEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_TEN;
+					break;
+				}
+			case(JACK):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_JACK;
+					break;
+				}
+			case(QUEEN):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_QUEEN;
+					break;
+				}
+			case(KING):
+				{
+					m_iSpriteID_X = IDB_SPRITE_CLUB_KING;
+					break;
+				}
+			}
+
+		}
+	default:
+		{
+			m_iSpriteID_X = IDB_SPRITE_BLANK;
+		}
+	}
+	*/
 }
 
 /***********************

@@ -58,8 +58,8 @@ enum ESuit
 		SUIT_DEFAULT,
 		HEART,
 		DIAMOND,
-		SPADE,
 		CLUB,
+		SPADE,
 	};
 
 
@@ -69,7 +69,6 @@ enum ESuit
 ********************/
 enum ECardNum
 	{
-		NUM_DEFAULT,
 		ACE,
 		TWO,
 		THREE,
@@ -83,6 +82,7 @@ enum ECardNum
 		JACK,
 		QUEEN,
 		KING,
+		NUM_DEFAULT,
 	};
 
 #endif // __UTILITIES_H__
