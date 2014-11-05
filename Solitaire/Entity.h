@@ -28,6 +28,7 @@
 #if !defined(__ENTITY_H__)
 #define __ENTITY_H__
 
+
 // Prototypes
 class CSprite;
 
