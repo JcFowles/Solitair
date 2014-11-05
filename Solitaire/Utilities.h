@@ -25,10 +25,13 @@
 
 // Library Includes
 #include <strstream>
+#include <vector>
 
 // Macros
 	// Check to see if "a" exists 
 #define VALIDATE(a) if (!a) return (false)
+
+using namespace std;
 
 
 /***********************
@@ -44,5 +47,42 @@ std::string ToString(const T& _value)
 	theStream << _value << std::ends;
 	return (theStream.str());
 }
+
+
+/***********************
+* ESuit: Gives the suit for a card  
+* @author: Nick Gould
+********************/
+enum ESuit
+	{
+		SUIT_DEFAULT,
+		HEART,
+		DIAMOND,
+		SPADE,
+		CLUB,
+	};
+
+
+/***********************
+* ESuit: Gives the number for a card  
+* @author: Nick Gould
+********************/
+enum ECardNum
+	{
+		NUM_DEFAULT,
+		ACE,
+		TWO,
+		THREE,
+		FOUR,
+		FIVE,
+		SIX,
+		SEVEN,
+		EIGHT,
+		NINE,
+		TEN,
+		JACK,
+		QUEEN,
+		KING,
+	};
 
 #endif // __UTILITIES_H__
