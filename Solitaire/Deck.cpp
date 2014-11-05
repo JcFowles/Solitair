@@ -63,6 +63,7 @@ bool CDeck::Initialise()
 
 bool CDeck::Deal()
 {
+	return true;
 }
 
 bool CDeck::Flip(int _num)
@@ -71,12 +72,15 @@ bool CDeck::Flip(int _num)
 	{
 
 	}
+	return true;
 }
 
 bool CDeck::Reset()
 {
+	return true;
 }
 
 CCard* CDeck::Remove()
 {
+	return 0;
 }

@@ -83,10 +83,6 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 	//ShowCursor(false);
-<<<<<<< HEAD
-
-
-=======
 	
 	//Card Stacks
 	CPlayStack* tempStack = 0;
@@ -100,10 +96,6 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 		m_PlayStack[i] = tempStack;
 	}*/
 	
-	
-	
-	
->>>>>>> origin/Combined
 	return (true);
 
 
