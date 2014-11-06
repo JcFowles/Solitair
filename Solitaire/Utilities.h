@@ -85,7 +85,7 @@ enum ECardNum
 		JACK,
 		QUEEN,
 		KING,
-		NUM_DEFAULT,
+		//NUM_DEFAULT,
 	};
 
 #endif // __UTILITIES_H__

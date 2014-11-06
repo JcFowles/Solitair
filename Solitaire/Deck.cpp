@@ -22,8 +22,8 @@
 ********************/
 CDeck::CDeck(void)
 {
-	m_pDeck = 0;
-	m_pPickUp = 0;
+	m_pDeck = new deque<CCard*>;
+	m_pPickUp = new deque<CCard*>;
 }
 
 /***********************
@@ -97,11 +97,11 @@ bool CDeck::Shuffle()
 
 bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 {
-	
+	vector<CCard*>* tempCardStack ;
 	for(int i = 0 ; i < 7 ; i++)
 	{
 		
-		vector<CCard*>* tempCardStack = (*_pThePlayStack)[i]->getStack();
+		tempCardStack = (*_pThePlayStack)[i]->getStack();
 
 		for(int k = 0; k <= i; k++)
 		{

@@ -152,6 +152,7 @@ void CEntity::SetY(float _f)
 void CEntity::SetSuit(ESuit _eSuit)
 {
 	m_pSprite->SetSuit(_eSuit);
+
 }
 
 /***********************

@@ -37,11 +37,13 @@ CGame::CGame()	: m_pClock(0)
 				, m_hMainWindow(0)
 				, m_pBackBuffer(0)
 				, m_pDeck(0)
+				, m_PlayStack(0)
 {
+	/*
 	for(int i = 0 ; i < 7; i++)
 	{
-		m_PlayStack[i] = 0; 
-	}
+		m_PlayStack[i] = new CPlayStack; 
+	}*/
 }
 
 /***********************
@@ -89,7 +91,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	
 
 	//Card Stacks
-	CPlayStack* tempStack = new CPlayStack;
+	CPlayStack* tempStack;
 
 	const float fkGap = 40.0f;
 	const float fkYPlayStack = 400.0f;

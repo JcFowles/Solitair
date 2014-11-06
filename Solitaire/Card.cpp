@@ -60,9 +60,10 @@ bool CCard::Initialise(ESuit _ESuit, ECardNum _ECardnum)
 	m_iMaskID = IDB_MASK_CARD;
 	//m_iSpriteID_Y = _ESuit;
 	//m_iSpriteID_X = _ECardnum;
-	m_eSuit = _ESuit;
-	m_eCardNum = _ECardnum;
 	VALIDATE(CEntity::Initialise());
+	SetSuit(_ESuit);
+	SetNumber(_ECardnum);
+	//VALIDATE(CEntity::Initialise());
 	return true;
 }
 

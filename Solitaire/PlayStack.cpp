@@ -22,7 +22,7 @@
 ********************/
 CPlayStack::CPlayStack(void)
 {
-	
+	m_pCards = new vector<CCard*>;
 }
 
 /***********************
@@ -38,9 +38,12 @@ bool CPlayStack::Initialise(float _iX, float _iY)
 {
 	CCard* pBlank = new CCard;
 	pBlank->SetFlipped(true);
-	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, NUM_DEFAULT));
+	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, ACE));
 	CEntity::SetX(_iX);
 	CEntity::SetY(_iY);
+	
+	
+	m_pCards->push_back(pBlank);
 
 	return (true);
 
@@ -170,7 +173,7 @@ bool CPlayStack::CardCheckValue( CCard*  _kpCard)
 bool CPlayStack::BlankCheck( CCard*  _kpCard)
 {
 	if( ((_kpCard->GetNumber()) == KING ) &&
-		(((*m_pCards).back()->GetNumber()) == NUM_DEFAULT))
+		(((*m_pCards).back()->GetSuit()) == SUIT_DEFAULT))
 	{
 		return true;
 	}

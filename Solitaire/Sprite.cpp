@@ -35,6 +35,8 @@ CSprite::CSprite()	: m_iX(0)
 	++s_iRefCount;
 	m_iBackingID_X = 5;
 	m_iBackingID_Y = 4;
+	m_eSuit = SUIT_DEFAULT;
+	m_eNumber = ACE;
 }
 
 /***********************
