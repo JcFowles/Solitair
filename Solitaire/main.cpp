@@ -29,6 +29,7 @@
 #include "Utilities.h"
 #define WINDOW_CLASS_NAME L"SOLITAIRE"
 
+
 /***********************
 * WindowProc: Process the window 
 * @author: Asma Shakil
@@ -42,11 +43,17 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 {
 	switch (_uiMsg)
 	{
-	case WM_DESTROY:
+	case ID_GAME_NEWGAME:
 		{
-			PostQuitMessage(0);
-			return(0);
+
 		}
+		break;
+	case ID_GAME_EXIT: // Fall through
+	case WM_DESTROY:
+	{
+		PostQuitMessage(0);
+		return(0);
+	}
 	break;
 	default:break;
 	}
@@ -78,6 +85,8 @@ HWND CreateAndRegisterWindow(HINSTANCE _hInstance, int _iWidth, int _iHeight, LP
 	winclass.lpszClassName = WINDOW_CLASS_NAME;
 	winclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
+	HMENU hMenu = LoadMenu( _hInstance, MAKEINTRESOURCE(IDR_SOLITAIRE));
+
 	if (!RegisterClassEx(&winclass))
 	{
 		// Failed to register.
@@ -92,7 +101,7 @@ HWND CreateAndRegisterWindow(HINSTANCE _hInstance, int _iWidth, int _iHeight, LP
 							CW_USEDEFAULT, CW_USEDEFAULT,
 							_iWidth, _iHeight,
 							NULL,
-							NULL,
+							hMenu,
 							_hInstance,
 							NULL);
 
@@ -124,7 +133,8 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 	CGame& rGame = CGame::GetInstance();
 
-	 std::srand ( unsigned ( time(0) ) );
+
+	std::srand ( unsigned ( time(0) ) );
 
 	if (!rGame.Initialise(_hInstance, hwnd, kiWidth, kiHeight))
 	{
