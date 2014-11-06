@@ -120,6 +120,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 /***********************
 * Draw: All the games drawing and redrawing will be done here, and drawing will be done to the backbuffer
 * @author: Asma Shakil
+* @author: Jc Fowles
 * @return: void
 ********************/
 void CGame::Draw()
