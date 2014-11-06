@@ -32,7 +32,20 @@ CDeck::CDeck(void)
 ********************/
 CDeck::~CDeck(void)
 {
+	
+	while(!m_pDeck->empty())
+	{
+		m_pDeck->pop_back();
+	}
+	delete m_pDeck;
+	m_pDeck = 0;
 
+	while(!m_pPickUp->empty())
+	{
+		m_pPickUp->pop_back();
+	}
+	delete m_pPickUp;
+	m_pPickUp = 0;
 }
 
 /***********************
@@ -44,23 +57,26 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 {
 	theBackCard = new CCard;
 	VALIDATE(theBackCard->Initialise(SUIT_DEFAULT, THREE));
-	
+	theBackCard->SetX(_iX);
+	theBackCard->SetY(_iY);
 
 
 	CCard* pCardTemp = 0;
-	for( int i = HEART; i != SPADE; i++)	// Cycle through the suits
+	for( int i = HEART; i != SUIT_DEFAULT; i++)	// Cycle through the suits
 	{
-		for( int j = ACE; j != KING; j++)	// Cycle through the 13 card values
+		for( int j = ACE; j != KING+1; j++)	// Cycle through the 13 card values
 		{
 			pCardTemp = new CCard;
 
 			VALIDATE(pCardTemp->Initialise(static_cast<ESuit>(i), static_cast<ECardNum>(j)));
+			pCardTemp->SetX(theBackCard->GetX());
+			pCardTemp->SetY(theBackCard->GetY());
 			m_pDeck->push_back(pCardTemp);
 		}
 	}
 
-	CEntity::SetX(_iX);
-	CEntity::SetY(_iY);
+	//CEntity::SetX(_iX);
+	//CEntity::SetY(_iY);
 
 	Shuffle();
 	Deal(_pThePlayStacks);
@@ -107,6 +123,7 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 		{
 			tempCardStack->push_back(m_pDeck->back());
 			m_pDeck->pop_back();
+			//tempCardStack->back()->SetY()
 		}
 		
 	}

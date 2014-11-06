@@ -37,7 +37,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_hMainWindow(0)
 				, m_pBackBuffer(0)
 				, m_pDeck(0)
-				, m_PlayStack(0)
+				, m_PlayStacks(0)
 {
 	/*
 	for(int i = 0 ; i < 7; i++)
@@ -60,11 +60,20 @@ CGame::~CGame()
 	delete m_pClock;
 	m_pClock = 0;
 
-	for(int i = 0 ; i < 7; i++)
+	while(!(m_PlayStacks->empty()))
+	{
+		m_PlayStacks->pop_back();
+	}
+	delete m_PlayStacks;
+	m_PlayStacks = 0;
+	/*for(int i = 0 ; i < 7; i++)
 	{
 		delete m_PlayStack[i] ; 
 		m_PlayStack[i] = 0;
-	}
+	}*/
+
+	//delete m_pDeck;
+	//m_pDeck = 0;
 }
 
 /***********************
@@ -92,6 +101,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 
 	//Card Stacks
 	CPlayStack* tempStack;
+	m_PlayStacks = new vector<CPlayStack*>;
 
 	const float fkGap = 40.0f;
 	const float fkYPlayStack = 400.0f;
@@ -103,7 +113,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	{
 		tempStack = new CPlayStack; 
 		VALIDATE(tempStack->Initialise( ((i*fkPlusX)+fkXPlayStack), fkYPlayStack) );
-		m_PlayStack.push_back(tempStack);
+		m_PlayStacks->push_back(tempStack);
 	}
 
 	//The Deck
@@ -112,7 +122,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	
 
 	m_pDeck = new CDeck();
-	VALIDATE(m_pDeck->Initialise(fkXDeck, fkYDeck, &m_PlayStack));
+	VALIDATE(m_pDeck->Initialise(fkXDeck, fkYDeck, m_PlayStacks));
 	
 	return (true);
 
@@ -134,7 +144,7 @@ void CGame::Draw()
 	
 	for(int i = 0; i < 7 ; i++)
 	{
-		m_PlayStack[i]->Draw();
+		(*m_PlayStacks)[i]->Draw();
 	}
 
 	m_pBackBuffer->Present();
@@ -143,12 +153,18 @@ void CGame::Draw()
 /***********************
 * Process: All the game logic will be proccesed here
 * @author: Asma Shakil
+* @author: Callan Moore
+* @author: Jc Fowles
 * @parameter: _fDeltaTick: How long it takes to do the procces
 * @return: void
 ********************/
 void CGame::Process(float _fDeltaTick)
 {
 	// Process all the game’s logic here.
+	for(unsigned int i = 0; i < m_PlayStacks->size() ; i++)
+	{
+		(*m_PlayStacks)[i]->Process(_fDeltaTick);
+	}
 }
 
 /***********************

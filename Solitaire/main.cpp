@@ -21,6 +21,7 @@
 //Library Includes
 #include <windows.h>
 #include <windowsx.h>
+#include <time.h>
 
 //Local Includes
 #include "Game.h"
@@ -122,6 +123,8 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 	const int kiHeight = 1040;
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 	CGame& rGame = CGame::GetInstance();
+
+	 std::srand ( unsigned ( time(0) ) );
 
 	if (!rGame.Initialise(_hInstance, hwnd, kiWidth, kiHeight))
 	{

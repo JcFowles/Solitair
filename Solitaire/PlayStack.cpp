@@ -31,16 +31,24 @@ CPlayStack::CPlayStack(void)
 ********************/
 CPlayStack::~CPlayStack(void)
 {
-
+	while(!m_pCards->empty())
+	{
+		m_pCards->pop_back();
+	}
+	delete m_pCards;
+	m_pCards = 0;
 }
 
 bool CPlayStack::Initialise(float _iX, float _iY)
 {
 	CCard* pBlank = new CCard;
+	
 	pBlank->SetFlipped(true);
 	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, ACE));
-	CEntity::SetX(_iX);
-	CEntity::SetY(_iY);
+	pBlank->SetX(_iX);
+	pBlank->SetY(_iY);
+	//CEntity::SetX(_iX);
+	//CEntity::SetY(_iY);
 	
 	
 	m_pCards->push_back(pBlank);
@@ -48,10 +56,34 @@ bool CPlayStack::Initialise(float _iX, float _iY)
 	return (true);
 
 }
-
+//* @author: Jc Fowles
+//* @author: Callan Moore
 void CPlayStack::Draw()
 {
-
+	
+	if(m_pCards->size() > 1)
+	{
+		for(unsigned int i = 1; i < m_pCards->size() ; i++)
+		{
+			(*m_pCards)[i]->SetX((*m_pCards)[i-1]->GetX());
+			
+			if((*m_pCards)[i - 1]->IsFlipped())
+			{
+				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 40);
+			}
+			else
+			{
+				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 10);
+			}
+			
+			(*m_pCards)[i]->Draw();
+		}
+	}
+	else
+	{
+		(*m_pCards)[0]->Draw();
+	}
+	
 }
 
 void CPlayStack::Process(float _fDeltaTick)

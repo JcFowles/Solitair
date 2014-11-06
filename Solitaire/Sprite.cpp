@@ -45,11 +45,13 @@ CSprite::CSprite()	: m_iX(0)
 ********************/
 CSprite::~CSprite()
 {
-	DeleteObject(m_hSprite);
-	DeleteObject(m_hMask);
+	//DeleteObject(m_hSprite);
+	//DeleteObject(m_hMask);
 	--s_iRefCount;
 	if (s_iRefCount == 0)
 	{
+		DeleteObject(m_hSprite);
+		DeleteObject(m_hMask);
 		DeleteDC(s_hSharedSpriteDC);
 		s_hSharedSpriteDC = 0;
 	}
@@ -107,7 +109,7 @@ void CSprite::Draw(bool _bFlipped)
 	HGDIOBJ hOldObj = SelectObject(s_hSharedSpriteDC, m_hMask);
 	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, 0, 0, SRCAND);
 	SelectObject(s_hSharedSpriteDC, m_hSprite);
-	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, iSpriteID_X, iSpriteID_Y, SRCPAINT);
+	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, (iSpriteID_X * iW), (iSpriteID_Y * iH), SRCPAINT);
 	SelectObject(s_hSharedSpriteDC, hOldObj);
 }
 

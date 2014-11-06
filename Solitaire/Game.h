@@ -64,7 +64,7 @@ protected:
 	CClock* m_pClock;
 	CBackBuffer* m_pBackBuffer;
 
-	vector<CPlayStack*> m_PlayStack;
+	vector<CPlayStack*>* m_PlayStacks;
 	CDeck* m_pDeck;
 
 	//Application data

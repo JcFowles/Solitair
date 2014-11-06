@@ -130,6 +130,7 @@ float CEntity::GetHeight() const
 void CEntity::SetX(float _f)
 {
 	m_fX = _f;
+	m_pSprite->SetX(static_cast<int>(m_fX));
 }
 
 /***********************
@@ -141,6 +142,7 @@ void CEntity::SetX(float _f)
 void CEntity::SetY(float _f)
 {
 	m_fY = _f;
+	m_pSprite->SetY(static_cast<int>(m_fY));
 }
 
 /***********************
