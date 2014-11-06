@@ -23,6 +23,7 @@
 ********************/
 CWinStack::CWinStack(void)
 {
+	m_pCards = new vector<CCard*>;
 }
 
 /***********************
@@ -33,6 +34,71 @@ CWinStack::~CWinStack(void)
 {
 }
 
+/***********************
+* Initialise: Initialises the PlayStack with a blank card to start with
+* @author: Jc Fowles
+* @parameter: _fX : x position of the playStack
+* @parameter: _fY : y position of the playStack
+* @return: void
+********************/
+bool CWinStack::Initialise(float _fX, float _fY)
+{
+	CCard* pBlank = new CCard;
+	
+	pBlank->SetFlipped(true);
+	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, ACE));
+	pBlank->SetX(_fX);
+	pBlank->SetY(_fY);
+		
+	m_pCards->push_back(pBlank);
+
+	return (true);
+
+}
+
+/***********************
+* Draw: Draws all the cards in the stack
+* @author: Callan Moore
+* @author: Jc Fowles
+* @return: void
+********************/
+void CWinStack::Draw()
+{
+	
+	/*if(m_pCards->size() > 1)
+	{
+		for(unsigned int i = 1; i < m_pCards->size() ; i++)
+		{
+			(*m_pCards)[i]->SetX((*m_pCards)[i-1]->GetX());
+			
+			if((*m_pCards)[i - 1]->IsFlipped())
+			{
+				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 40);
+			}
+			else
+			{
+				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 10);
+			}
+			
+			(*m_pCards)[i]->Draw();
+		}
+	}
+	else*/
+	//{
+		(*m_pCards)[0]->Draw();
+	//}
+	
+}
+
+/***********************
+* Process: Process the card stack
+* @author: Jc Fowles
+* @parameter: _fDeltaTick: How long it takes to do the procces
+* @return: void
+********************/
+void CWinStack::Process(float _fDeltaTick)
+{
+}
 
 /***********************
 * AddCard: Adds a cards to the card win stack

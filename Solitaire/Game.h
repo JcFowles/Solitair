@@ -29,11 +29,13 @@
 #include "Clock.h"
 #include "BackBuffer.h"
 #include "Deck.h"
+#include "WinStack.h"
 
 // Types
 // Constants
 
 // Prototypes
+class CWinStack;
 class CBackBuffer;
 class CPlayStack;
 
@@ -66,6 +68,8 @@ protected:
 
 	vector<CPlayStack*>* m_PlayStacks;
 	CDeck* m_pDeck;
+	vector<CWinStack*>* m_WinStacks;
+
 
 	//Application data
 	HINSTANCE m_hApplicationInstance;

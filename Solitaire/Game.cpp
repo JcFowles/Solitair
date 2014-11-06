@@ -38,6 +38,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_pBackBuffer(0)
 				, m_pDeck(0)
 				, m_PlayStacks(0)
+				, m_WinStacks(0)
 {
 	/*
 	for(int i = 0 ; i < 7; i++)
@@ -101,10 +102,12 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 
 	//Card Stacks
 	CPlayStack* tempStack;
+	CWinStack* tempWinStack;
 	m_PlayStacks = new vector<CPlayStack*>;
+	m_WinStacks = new vector<CWinStack*>;
 
 	const float fkGap = 40.0f;
-	const float fkYPlayStack = 400.0f;
+	const float fkYPlayStack = 380.0f;
 	const float fkXPlayStack = 100.0f;
 	const float fkCardWidth = 120.0f;
 	const float fkPlusX = fkGap + fkCardWidth;
@@ -116,14 +119,30 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 		m_PlayStacks->push_back(tempStack);
 	}
 
+	//Win Stacks
+	const float fkYWinStack = 130.0f;
+	const float fkXWinStack = 580.0f;
+	const float fkWInPlusX = fkGap + fkCardWidth;
+	
+	for(int i = 0 ; i < 4; i++)
+	{
+		tempWinStack = new CWinStack; 
+		VALIDATE(tempWinStack->Initialise( ((i*fkWInPlusX)+fkXWinStack), fkYWinStack) );
+		m_WinStacks->push_back(tempWinStack);
+	}
+
+
 	//The Deck
-	const float fkYDeck = 150.0f;
+	const float fkYDeck = 130.0f;
 	const float fkXDeck = 100.0f;
 	
 
 	m_pDeck = new CDeck();
 	VALIDATE(m_pDeck->Initialise(fkXDeck, fkYDeck, m_PlayStacks));
 	
+
+
+
 	return (true);
 
 
@@ -145,6 +164,11 @@ void CGame::Draw()
 	for(int i = 0; i < 7 ; i++)
 	{
 		(*m_PlayStacks)[i]->Draw();
+	}
+
+	for(int i = 0; i < 4 ; i++)
+	{
+		(*m_WinStacks)[i]->Draw();
 	}
 
 	m_pBackBuffer->Present();

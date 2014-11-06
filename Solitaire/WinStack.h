@@ -25,18 +25,23 @@
 // Local Includes
 #include "Card.h"
 #include "Utilities.h"
-//#include "Entity.h"
 
 
-class CWinStack
+
+class CWinStack : public CEntity
 {
 	//Member Functions
 public:
 	CWinStack(void);
 	~CWinStack(void);
 
+	virtual bool Initialise(float _iX, float _iY);
+	virtual void Draw();
+	virtual void Process(float _fDeltaTick);
+
 	bool AddCard(CCard*_pCards);
 	CCard* RemoveCard();
+	bool Complete();
 
 
 private:

@@ -39,14 +39,21 @@ CPlayStack::~CPlayStack(void)
 	m_pCards = 0;
 }
 
-bool CPlayStack::Initialise(float _iX, float _iY)
+/***********************
+* Initialise: Initialises the PlayStack with a blank card to start with
+* @author: Jc Fowles
+* @parameter: _fX : x position of the playStack
+* @parameter: _fY : y position of the playStack
+* @return: void
+********************/
+bool CPlayStack::Initialise(float _fX, float _fY)
 {
 	CCard* pBlank = new CCard;
 	
 	pBlank->SetFlipped(true);
 	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, ACE));
-	pBlank->SetX(_iX);
-	pBlank->SetY(_iY);
+	pBlank->SetX(_fX);
+	pBlank->SetY(_fY);
 	//CEntity::SetX(_iX);
 	//CEntity::SetY(_iY);
 	
@@ -56,8 +63,13 @@ bool CPlayStack::Initialise(float _iX, float _iY)
 	return (true);
 
 }
-//* @author: Jc Fowles
-//* @author: Callan Moore
+
+/***********************
+* Draw: Draws all the cards in the stack
+* @author: Callan Moore
+* @author: Jc Fowles
+* @return: void
+********************/
 void CPlayStack::Draw()
 {
 	
@@ -67,7 +79,7 @@ void CPlayStack::Draw()
 		{
 			(*m_pCards)[i]->SetX((*m_pCards)[i-1]->GetX());
 			
-			if((*m_pCards)[i - 1]->IsFlipped())
+			if((*m_pCards)[i - 1]->IsFlipped() && ((*m_pCards)[i - 1]->GetSuit() != SUIT_DEFAULT) )
 			{
 				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 40);
 			}
@@ -86,6 +98,12 @@ void CPlayStack::Draw()
 	
 }
 
+/***********************
+* Process: Process the card stack
+* @author: Jc Fowles
+* @parameter: _fDeltaTick: How long it takes to do the procces
+* @return: void
+********************/
 void CPlayStack::Process(float _fDeltaTick)
 {
 	FlipCard();
@@ -215,12 +233,23 @@ bool CPlayStack::BlankCheck( CCard*  _kpCard)
 	}
 }
 
-void CPlayStack::setStack(vector<CCard*>* _InitialStack)
+/***********************
+* SetStack: Sets the stack to the passed in stack only used when adding the first initial stack
+* @author: Jc Fowles
+* @parameter: _InitialStack: pointer to vector of cards pointers to set the play Stack to 
+* @return: void
+********************/
+void CPlayStack::SetStack(vector<CCard*>* _InitialStack)
 {
 	m_pCards = _InitialStack;
 }
 
-vector<CCard*>* CPlayStack::getStack()
+/***********************
+* getStack: Returns the play stack in the form of a pointer to a vector of card pointers
+* @author: Jc Fowles
+* @return: vector<CCard*>* : a pointer to a vector of card pointers, which is the stack
+********************/
+vector<CCard*>* CPlayStack::GetStack()
 {
 	return m_pCards;
 }

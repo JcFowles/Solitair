@@ -51,7 +51,11 @@ CDeck::~CDeck(void)
 /***********************
 * Initialise: Intialise the Deck with the 52 cards
 * @author: Callan Moore
-* @return: bool : Returns true if everything is initialise correctly
+* @author: Jc Fowles
+* @parameter: _fX : x position of the playStack
+* @parameter: _fY : y position of the playStack
+* @parameter: _pThePlayStacks : pointer all 7 PlayStacks
+* @return: bool : return true if it worked
 ********************/
 bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStacks)
 {
@@ -83,6 +87,12 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 	return true;
 }
 
+/***********************
+* Draw: Draws all the cards in the Deck, both the deck itself and pick Up pile
+* @author: Callan Moore
+* @author: Jc Fowles
+* @return: void
+********************/
 void CDeck::Draw()
 {
 	if(m_pDeck->empty())
@@ -100,24 +110,40 @@ void CDeck::Draw()
 	}
 }
 
+/***********************
+* Process: Process the Deck
+* @author: Jc Fowles
+* @parameter: _fDeltaTick: How long it takes to do the procces
+* @return: void
+********************/
 void CDeck::Process(float _fDeltaTick)
 {
 
 }
 
+/***********************
+* Shuffle: Shuffles the Deck
+* @author: Jc Fowles
+* @return: bool: always return true;
+********************/
 bool CDeck::Shuffle()
 {
 	random_shuffle ( (*m_pDeck).begin(), (*m_pDeck).end() );
 	return true;
 }
 
+/***********************
+* Deal: Deals out the cards from the Deck, to the play stacks
+* @author: Jc Fowles
+* @return: bool: always return true;
+********************/
 bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 {
 	vector<CCard*>* tempCardStack ;
 	for(int i = 0 ; i < 7 ; i++)
 	{
 		
-		tempCardStack = (*_pThePlayStack)[i]->getStack();
+		tempCardStack = (*_pThePlayStack)[i]->GetStack();
 
 		for(int k = 0; k <= i; k++)
 		{
@@ -130,6 +156,12 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 	return true;
 }
 
+/***********************
+* Flip: Flip the top number of cards, based on the passed in value
+* @author: Jc Fowles
+* @parameter: _num : The number of cards to flip
+* @return: bool: always return true;
+********************/
 bool CDeck::Flip(int _num)
 {
 	for(int i = 0; i < _num ; i++)
@@ -144,6 +176,11 @@ bool CDeck::Flip(int _num)
 	return true;
 }
 
+/***********************
+* Reset: Resets The cards in the pick up pile back to the deck in the correct order
+* @author: Jc Fowles
+* @return: bool: always return true;
+********************/
 bool CDeck::Reset()
 {
 	for(unsigned int i = 0; i < m_pPickUp->size() ; i++)
@@ -158,6 +195,11 @@ bool CDeck::Reset()
 	return true;
 }
 
+/***********************
+* Remove: Returns and Removes the top card of the pick up pile
+* @author: Jc Fowles
+* @return: vector<CCard*>*: The top card;
+********************/
 vector<CCard*>* CDeck::Remove()
 {
 	vector<CCard*>* pThisCard = 0;

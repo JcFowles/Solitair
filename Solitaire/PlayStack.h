@@ -43,8 +43,8 @@ public:
 	
 	bool FlipCard();
 	
-	void setStack(vector<CCard*>* _InitialStack);
-	vector<CCard*>* getStack();
+	void SetStack(vector<CCard*>* _InitialStack);
+	vector<CCard*>* GetStack();
 
 private:
 	// Disallowing copies
