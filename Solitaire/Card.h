@@ -42,21 +42,25 @@ public:
 
 	ESuit GetSuit();
 	ECardNum GetNumber();
-	bool IsVisible();
+	bool IsFlipped();
 
 	void SetSuit(ESuit _eSuit);
 	void SetNumber(ECardNum _eCardNum);
-	void SetVisible(bool _bIsVisible);
+	void SetFlipped(bool _bIsFlipped);
 
 protected:
 	ESuit m_eSuit;
 	ECardNum m_eCardNum;
-	bool m_bIsVisible;
+	bool m_bFlipped;
 
 private:
-	int m_iSpriteID_X;
-	int m_iSpriteID_Y;
+	//int m_iSpriteID_X;
+	//int m_iSpriteID_Y;
 	int m_iMaskID;
+
+	//int m_iBackingID_X;
+	//int m_iBackingID_Y;
+
 };
 
 

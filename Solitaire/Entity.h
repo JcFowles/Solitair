@@ -36,8 +36,8 @@ class CEntity
 public:
 	CEntity();
 	virtual ~CEntity();
-	virtual bool Initialise(const int _kiSpriteID, const int _kiMaskID);
-	virtual void Draw();
+	virtual bool Initialise();
+	virtual void Draw(bool _bFlipped);
 	virtual void Process(float _fDeltaTick);
 	void SetX(float _f);
 	void SetY(float _f);
@@ -45,6 +45,8 @@ public:
 	float GetY() const;
 	float GetHeight() const;
 	float GetWidth() const;
+	void SetSuit(ESuit _eSuit);
+	void SetNumber(ECardNum _eCardNum);
 
 private:
 	// Disallowing copies

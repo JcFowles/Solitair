@@ -116,11 +116,11 @@ bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 ********************/
 bool CPlayStack::FlipCard()
 {
-	if(!((*m_pCards).back()->IsVisible()))
+	if(!((*m_pCards).back()->IsFlipped()))
 	{
 		//callans switch animations shit here
 		
-		(*m_pCards).back()->SetVisible(true);
+		(*m_pCards).back()->SetFlipped(true);
 	}
 	
 	return true;

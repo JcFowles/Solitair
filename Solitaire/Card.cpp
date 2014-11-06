@@ -19,14 +19,27 @@
 // This Include
 #include "Card.h"
 
+
+/***********************
+* CCard: Contructor for Card class
+* @author: Nick Gould
+* @author: Callan Moore
+* @return: void
+********************/
 CCard::CCard(void)
 {
-	m_bIsVisible = false;
-	m_eSuit = SUIT_DEFAULT;
-	m_eCardNum = NUM_DEFAULT;
+	m_bFlipped = false;;
+	//m_iBackingID_X = 5;
+	//m_iBackingID_Y = 4;
+	//m_eSuit = SUIT_DEFAULT;
+	//m_eCardNum = NUM_DEFAULT;
 }
 
-
+/***********************
+* ~CCard: Destructor for Card class
+* @author: Nick Gould
+* @return: void
+********************/
 CCard::~CCard(void)
 {
 
@@ -43,8 +56,11 @@ CCard::~CCard(void)
 bool CCard::Initialise(ESuit _ESuit, ECardNum _ECardnum)
 {
 	m_iMaskID = IDB_MASK_CARD;
-	m_iSpriteID_Y = _ESuit;
-	m_iSpriteID_X = _ECardnum;
+	//m_iSpriteID_Y = _ESuit;
+	//m_iSpriteID_X = _ECardnum;
+	m_eSuit = _ESuit;
+	m_eCardNum = _ECardnum;
+	VALIDATE(CEntity::Initialise());
 	return true;
 }
 
@@ -55,7 +71,7 @@ bool CCard::Initialise(ESuit _ESuit, ECardNum _ECardnum)
 ********************/
 void CCard::Draw()
 {
-
+	CEntity::Draw(m_bFlipped);
 }
 
 /***********************
@@ -91,44 +107,46 @@ ECardNum CCard::GetNumber()
 }
 
 /***********************
-* IsVisible: Shows 
+* IsFlipped: Returns whether the card is flipped or not
 * @author: Nick Gould
-* @return: bool
+* @return: bool: true if the card is flipped
 ********************/
-bool CCard::IsVisible()
+bool CCard::IsFlipped()
 {
-	return m_bIsVisible; 
+	return m_bFlipped; 
 }
 
 /***********************
 * SetSuit: Sets the suit of the card
 * @author: Nick Gould
-* @parameter: _fDeltaTick
+* @parameter: _eSuit: The new suit of the card
 * @return: void
 ********************/
 void CCard::SetSuit(ESuit _eSuit)
 {
-	_eSuit = m_eSuit;
+	m_eSuit = _eSuit;
+	CEntity::SetSuit(_eSuit);
 }
 
 /***********************
 * SetNumber: Sets the number of the card
 * @author: Nick Gould
-* @parameter: _eCardNum
+* @parameter: _eCardNum: The new Card value
 * @return: void
 ********************/
 void CCard::SetNumber(ECardNum _eCardNum)
 {
-	_eCardNum = m_eCardNum;
+	m_eCardNum = _eCardNum;
+	CEntity::SetNumber(_eCardNum);
 }
 
 /***********************
-* SetVisible: Sets whether the card is visible or not.
-* @author: Nick Gould
-* @parameter: _bIsVisible
+* SetFlipped: Sets whether the card is flipped(value visible) or not.
+* @author: Callan Moore
+* @parameter: _bFlipped: The new value for Flipped
 * @return: void
 ********************/
-void CCard::SetVisible(bool _bIsVisible)
+void CCard::SetFlipped (bool _bFlipped)
 {
-	_bIsVisible = m_bIsVisible;
+	m_bFlipped = _bFlipped;
 }

@@ -46,25 +46,26 @@ CEntity::~CEntity()
 /***********************
 * Initialise: Initialises the entity and creates its sprite (image)
 * @author: Asma Shakil
-* @parameter: _kiSpriteID: Integer value used to locate the sprites image when initialising the sprite
-* @parameter: _kiMaskID: Integer value to locate the sprites mask when initialising the sprite
+* @author: Callan Moore
 * @return: bool: always returns true
 ********************/
-bool CEntity::Initialise(const int _kiSpriteID, const int _kiMaskID)
+bool CEntity::Initialise()
 {
 	m_pSprite = new CSprite();
-	VALIDATE(m_pSprite->Initialise(_kiSpriteID, _kiMaskID));
+	VALIDATE(m_pSprite->Initialise());
 	return (true);
 }
 
 /***********************
 * Draw: Calls the entities sprites draw function
 * @author: Asma Shakil
+* @author: Callan Moore
+* @parameter: _bFlipped: Whether the card has been flipped or not
 * @return: void
 ********************/
-void CEntity::Draw()
+void CEntity::Draw(bool _bFlipped)
 {
-	m_pSprite->Draw();
+	m_pSprite->Draw(_bFlipped);
 }
 
 /***********************
@@ -140,4 +141,26 @@ void CEntity::SetX(float _f)
 void CEntity::SetY(float _f)
 {
 	m_fY = _f;
+}
+
+/***********************
+* SetSuit: Sets the suit of the Sprite
+* @author: Callan Moore
+* @parameter: _eSuit: The new suit of the card
+* @return: void
+********************/
+void CEntity::SetSuit(ESuit _eSuit)
+{
+	m_pSprite->SetSuit(_eSuit);
+}
+
+/***********************
+* SetNumber: Sets the number of the Sprite
+* @author: Callan Moore
+* @parameter: _eCardNum: The new Card value
+* @return: void
+********************/
+void CEntity::SetNumber(ECardNum _eCardNum)
+{
+	m_pSprite->SetNumber(_eCardNum);
 }
