@@ -6,8 +6,8 @@
  
 * (c) 2005 - 2014 Media Design School 
  
-* File Name : Backbuffer.h
-* Description : Header file for the Backbuffer class
+* File Name : Card.h
+* Description : Header file for the Card class
 * Author :	Callan Moore
 *			JC Fowles
 *			Nick Gould
@@ -42,16 +42,16 @@ public:
 
 	ESuit GetSuit();
 	ECardNum GetNumber();
-	bool IsVisible();
+	bool IsFlipped();
 
 	void SetSuit(ESuit _eSuit);
 	void SetNumber(ECardNum _eCardNum);
-	void SetVisible(bool _bIsVisible);
+	void SetFlipped(bool _bIsFlipped);
 
 protected:
 	ESuit m_eSuit;
 	ECardNum m_eCardNum;
-	bool m_bIsVisible;
+	bool m_bFlipped;
 
 private:
 	int m_iSpriteID_X;

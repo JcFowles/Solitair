@@ -34,6 +34,27 @@ CPlayStack::~CPlayStack(void)
 
 }
 
+bool CPlayStack::Initialise(float _iX, float _iY)
+{
+	CCard* pBlank = new CCard;
+	pBlank->SetFlipped(true);
+	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, NUM_DEFAULT));
+	CEntity::SetX(_iX);
+	CEntity::SetY(_iY);
+
+	return (true);
+
+}
+
+void CPlayStack::Draw()
+{
+
+}
+
+void CPlayStack::Process(float _fDeltaTick)
+{
+	FlipCard();
+}
 
 /***********************
 * AddCards: Adds cards to the card play stack
@@ -91,13 +112,13 @@ vector<CCard*>* CPlayStack::RemoveCards(int _iCardFromTop)
 bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 {
 	
-	if( ((_kpCard->GetSuit()) < 3) &&
-		((*m_pCards).back()->GetSuit() > 2) )
+	if( ((_kpCard->GetSuit()) < 2) &&
+		((*m_pCards).back()->GetSuit() > 1) )
 	{
 		return CardCheckValue(_kpCard);
 	}
-	else if( ((_kpCard->GetSuit()) > 2) &&
-			 ((*m_pCards).back()->GetSuit() < 3) )
+	else if( ((_kpCard->GetSuit()) > 1) &&
+			 ((*m_pCards).back()->GetSuit() < 2) )
 	{
 		return CardCheckValue(_kpCard);
 	}
@@ -116,11 +137,9 @@ bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 ********************/
 bool CPlayStack::FlipCard()
 {
-	if(!((*m_pCards).back()->IsVisible()))
+	if(!((*m_pCards).back()->IsFlipped()))
 	{
-		//callans switch animations shit here
-		
-		(*m_pCards).back()->SetVisible(true);
+		(*m_pCards).back()->SetFlipped(true);
 	}
 	
 	return true;
@@ -159,4 +178,14 @@ bool CPlayStack::BlankCheck( CCard*  _kpCard)
 	{
 		return false;
 	}
+}
+
+void CPlayStack::setStack(vector<CCard*>* _InitialStack)
+{
+	m_pCards = _InitialStack;
+}
+
+vector<CCard*>* CPlayStack::getStack()
+{
+	return m_pCards;
 }

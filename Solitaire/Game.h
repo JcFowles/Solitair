@@ -28,8 +28,7 @@
 // Local Includes
 #include "Clock.h"
 #include "BackBuffer.h"
-#include "Utilities.h"
-#include "PlayStack.h"
+#include "Deck.h"
 
 // Types
 // Constants
@@ -65,7 +64,8 @@ protected:
 	CClock* m_pClock;
 	CBackBuffer* m_pBackBuffer;
 
-	CPlayStack* m_PlayStack[7];
+	vector<CPlayStack*> m_PlayStack;
+	CDeck* m_pDeck;
 
 	//Application data
 	HINSTANCE m_hApplicationInstance;

@@ -36,6 +36,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_hApplicationInstance(0)
 				, m_hMainWindow(0)
 				, m_pBackBuffer(0)
+				, m_pDeck(0)
 {
 	for(int i = 0 ; i < 7; i++)
 	{
@@ -67,6 +68,7 @@ CGame::~CGame()
 /***********************
 * Initialise: Initialises the game member variables, starts the clock and backbuffer. Also sets the cursor to invisible
 * @author: Asma Shakil
+* @author: Jc Fowles
 * @Parameters: _hInstance:  Handle to the specific instance of the running game
 * @Parameters: _hWnd: Handle to the game window
 * @Parameters: _iWidth: Width of the game window
@@ -84,17 +86,31 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 	//ShowCursor(false);
 	
+	
+
 	//Card Stacks
-	CPlayStack* tempStack = 0;
+	CPlayStack* tempStack = new CPlayStack;
 
+	const float fkGap = 40.0f;
+	const float fkYPlayStack = 400.0f;
+	const float fkXPlayStack = 100.0f;
+	const float fkCardWidth = 120.0f;
+	const float fkPlusX = fkGap + fkCardWidth;
 
-	/*for(int i = 0 ; i < 7; i++)
+	for(int i = 0 ; i < 7; i++)
 	{
-		
 		tempStack = new CPlayStack; 
-		VALIDATE(tempStack->Initialise(fCurrentX, fCurrentY));
-		m_PlayStack[i] = tempStack;
-	}*/
+		VALIDATE(tempStack->Initialise( ((i*fkPlusX)+fkXPlayStack), fkYPlayStack) );
+		m_PlayStack.push_back(tempStack);
+	}
+
+	//The Deck
+	const float fkYDeck = 150.0f;
+	const float fkXDeck = 100.0f;
+	
+
+	m_pDeck = new CDeck();
+	VALIDATE(m_pDeck->Initialise(fkXDeck, fkYDeck, &m_PlayStack));
 	
 	return (true);
 
@@ -110,6 +126,14 @@ void CGame::Draw()
 {
 	m_pBackBuffer->Clear();
 	// Do all the game’s drawing here...
+	
+	m_pDeck->Draw();
+	
+	for(int i = 0; i < 7 ; i++)
+	{
+		m_PlayStack[i]->Draw();
+	}
+
 	m_pBackBuffer->Present();
 }
 

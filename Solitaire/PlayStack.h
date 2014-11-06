@@ -24,26 +24,27 @@
 
 // Local Includes
 #include "Card.h"
-#include "Utilities.h"
-//#include "Entity.h"
+
 
 class CCard;
-class CPlayStack //: public CEntity
+class CPlayStack : public CEntity
 {
 	// Member Functions
 public:
 	CPlayStack(void);
 	~CPlayStack(void);
 
-	//virtual bool Initialise();
-	//virtual void Draw();
-	//virtual void Process(float _fDeltaTick);
+	virtual bool Initialise(float _iX, float _iY);
+	virtual void Draw();
+	virtual void Process(float _fDeltaTick);
 
 	bool AddCards(vector<CCard*>* _pCards);
 	vector<CCard*>* RemoveCards(int _iCardFromTop);
 	
 	bool FlipCard();
 	
+	void setStack(vector<CCard*>* _InitialStack);
+	vector<CCard*>* getStack();
 
 private:
 	// Disallowing copies
@@ -59,7 +60,7 @@ private:
 	// Member Variables
 protected:
 	vector<CCard*>*  m_pCards;
-	bool m_bIsEmpty;
+	bool m_bIsFlipped;
 };
 
 #endif //__PLAYSTACK_H__

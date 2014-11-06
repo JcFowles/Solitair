@@ -21,7 +21,7 @@
 
 CCard::CCard(void)
 {
-	m_bIsVisible = false;
+	m_bFlipped = false;
 	m_eSuit = SUIT_DEFAULT;
 	m_eCardNum = NUM_DEFAULT;
 }
@@ -95,9 +95,9 @@ ECardNum CCard::GetNumber()
 * @author: Nick Gould
 * @return: bool
 ********************/
-bool CCard::IsVisible()
+bool CCard::IsFlipped()
 {
-	return m_bIsVisible; 
+	return m_bFlipped; 
 }
 
 /***********************
@@ -128,7 +128,7 @@ void CCard::SetNumber(ECardNum _eCardNum)
 * @parameter: _bIsVisible
 * @return: void
 ********************/
-void CCard::SetVisible(bool _bIsVisible)
+void CCard::SetFlipped(bool _bIsFlipped)
 {
-	_bIsVisible = m_bIsVisible;
+	_bIsFlipped = m_bFlipped;
 }

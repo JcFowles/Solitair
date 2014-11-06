@@ -25,6 +25,8 @@
 
 // Library Includes
 #include <strstream>
+#include <cstdlib>
+#include <deque>
 #include <vector>
 #include <algorithm>
 
@@ -56,11 +58,11 @@ std::string ToString(const T& _value)
 ********************/
 enum ESuit
 	{
-		SUIT_DEFAULT,
 		HEART,
 		DIAMOND,
 		CLUB,
 		SPADE,
+		SUIT_DEFAULT,
 	};
 
 

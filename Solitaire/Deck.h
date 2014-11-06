@@ -19,36 +19,38 @@
 #if !defined(__DECK_H__)
 #define __DECK_H__
 
-// Library Includes
-#include "windows.h"
-
 // Local Includes
-#include "Card.h"
-#include "Utilities.h"
-//#include "Entity.h"
+#include "PlayStack.h"
+
+// Prototypes
 class CCard;
-class CDeck
+class CPlayStack;
+class CDeck : public CEntity
 {
 public:
+	// Member Functions
 	CDeck(void);
 	~CDeck(void);
 
 	
-	virtual bool Initialise();
+	virtual bool Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStacks);
 	virtual void Draw();
 	virtual void Process(float _fDeltaTick);
 
 	bool Shuffle();
-	bool Deal();
+	bool Deal(vector<CPlayStack*>* _pThePlayStack);
 
 	bool Flip(int _num);
 	bool Reset();
 
-	CCard* Remove();
+	vector<CCard*>* Remove();
 
+	// Member Variables
 protected:
-	vector<CCard*>* m_pDeck;
-	vector<CCard*>* m_pPickUp;
+	deque<CCard*>* m_pDeck;
+	deque<CCard*>* m_pPickUp;
+
+	CCard* theBackCard;
 };
 
 #endif //__DECK_H__
