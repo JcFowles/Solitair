@@ -54,9 +54,13 @@ protected:
 	bool m_bFlipped;
 
 private:
-	int m_iSpriteID_X;
-	int m_iSpriteID_Y;
+	//int m_iSpriteID_X;
+	//int m_iSpriteID_Y;
 	int m_iMaskID;
+
+	//int m_iBackingID_X;
+	//int m_iBackingID_Y;
+
 };
 
 

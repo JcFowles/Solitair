@@ -39,8 +39,8 @@ class CSprite
 public:
 	CSprite();
 	~CSprite();
-	bool Initialise(int _iResourceID, int _iMaskResourceID);
-	void Draw();
+	bool Initialise();
+	void Draw(bool _bFlipped);
 	void Process(float _fDeltaTick);
 	int GetWidth() const;
 	int GetHeight() const;
@@ -50,6 +50,8 @@ public:
 	void SetY(int _i);
 	void TranslateRelative(int _iX, int _iY);
 	void TranslateAbsolute(int _iX, int _iY);
+	void SetSuit(ESuit _eSuit);
+	void SetNumber(ECardNum _eCardNum);
 private:
 	// Disallowing copies
 	CSprite(const CSprite& _kr);
@@ -65,6 +67,11 @@ protected:
 	BITMAP m_bitmapMask;
 	static HDC s_hSharedSpriteDC;
 	static int s_iRefCount;
+
+	int m_iBackingID_X;
+	int m_iBackingID_Y;
+	ESuit m_eSuit;
+	ECardNum m_eNumber;
 };
 
 #endif // __SPRITE_H__

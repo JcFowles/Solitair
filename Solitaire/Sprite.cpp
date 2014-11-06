@@ -33,6 +33,8 @@ CSprite::CSprite()	: m_iX(0)
 					, m_iY(0)
 {
 	++s_iRefCount;
+	m_iBackingID_X = 5;
+	m_iBackingID_Y = 4;
 }
 
 /***********************
@@ -54,20 +56,19 @@ CSprite::~CSprite()
 /***********************
 * Initialise: Initialises all the Sprite member variables
 * @author: Asma Shakil
-* @parameter: _iSpriteResourceID: ID as an integer value used to locate the Sprite Image
-* @parameter: _iMaskResourceID:	ID as an integer value used to locate the Sprite Mask
+* @author: Callan Moore
 * @return: bool: always returns true
 ********************/
-bool CSprite::Initialise(int _iSpriteResourceID, int _iMaskResourceID)
+bool CSprite::Initialise()
 {
 	HINSTANCE hInstance = CGame::GetInstance().GetAppInstance();
 	if (!s_hSharedSpriteDC)
 	{
 		s_hSharedSpriteDC = CreateCompatibleDC(NULL);
 	}
-	m_hSprite = LoadBitmap(hInstance, MAKEINTRESOURCE(_iSpriteResourceID));
+	m_hSprite = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_SPRITE_CARD));
 	VALIDATE(m_hSprite);
-	m_hMask = LoadBitmap(hInstance, MAKEINTRESOURCE(_iMaskResourceID));
+	m_hMask = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_MASK_CARD));
 	VALIDATE(m_hMask);
 	GetObject(m_hSprite, sizeof(BITMAP), &m_bitmapSprite);
 	GetObject(m_hMask, sizeof(BITMAP), &m_bitmapMask);
@@ -77,10 +78,25 @@ bool CSprite::Initialise(int _iSpriteResourceID, int _iMaskResourceID)
 /***********************
 * Draw: Draws the sprite onto the backbuffer
 * @author: Asma Shakil
+* @author: Callan Moore
+* @parameter: _bFlipped: Whethere the card has been flipped or not
 * @return: void
 ********************/
-void CSprite::Draw()
+void CSprite::Draw(bool _bFlipped)
 {
+	int iSpriteID_X, iSpriteID_Y;
+
+	if(_bFlipped)
+	{
+		iSpriteID_X = m_eNumber;
+		iSpriteID_Y = m_eSuit;
+	}
+	else
+	{
+		iSpriteID_X = m_iBackingID_X;
+		iSpriteID_Y = m_iBackingID_Y;
+	}
+
 	int iW = GetWidth();
 	int iH = GetHeight();
 	int iX = m_iX - (iW / 2);
@@ -89,7 +105,7 @@ void CSprite::Draw()
 	HGDIOBJ hOldObj = SelectObject(s_hSharedSpriteDC, m_hMask);
 	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, 0, 0, SRCAND);
 	SelectObject(s_hSharedSpriteDC, m_hSprite);
-	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, 0, 0, SRCPAINT);
+	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, iSpriteID_X, iSpriteID_Y, SRCPAINT);
 	SelectObject(s_hSharedSpriteDC, hOldObj);
 }
 
@@ -106,21 +122,23 @@ void CSprite::Process(float _fDeltaTick)
 /***********************
 * GetWidth: Retrieves the width of the sprites bitmap image
 * @author: Asma Shakil
+* @author: Callan Moore
 * @return: int: Width of the sprites bitmap image
 ********************/
 int CSprite::GetWidth() const
 {
-	return (m_bitmapSprite.bmWidth);
+	return (m_bitmapSprite.bmWidth / 13);	// The number of cards on the sprite sheet across
 }
 
 /***********************
 * GetHeight: Retrieves the height of the sprites bitmap image
 * @author: Asma Shakil
+* @author: Callan Moore
 * @return: int: Height of the sprites bitmap image
 ********************/
 int CSprite::GetHeight() const
 {
-	return (m_bitmapSprite.bmHeight);
+	return (m_bitmapSprite.bmHeight / 5);	// The number of cards on the sprite sheet down
 }
 
 /***********************
@@ -189,4 +207,26 @@ void CSprite::TranslateAbsolute(int _iX, int _iY)
 {
 	m_iX = _iX;
 	m_iY = _iY;
+}
+
+/***********************
+* SetSuit: Sets the suit of the Sprite
+* @author: Callan Moore
+* @parameter: _eSuit: The new suit of the card
+* @return: void
+********************/
+void CSprite::SetSuit(ESuit _eSuit)
+{
+	m_eSuit = _eSuit;
+}
+
+/***********************
+* SetNumber: Sets the number of the Sprite
+* @author: Callan Moore
+* @parameter: _eCardNum: The new Card value
+* @return: void
+********************/
+void CSprite::SetNumber(ECardNum _eCardNum)
+{
+	m_eNumber = _eCardNum;
 }
