@@ -52,9 +52,16 @@ public:
 	HINSTANCE GetAppInstance();
 	HWND GetWindow();
 
+	void MouseClick(int _iMouseX, int _iMouseY);
+
+
+
 	// Singleton Methods
 	static CGame& GetInstance();
 	static void DestroyInstance();
+
+
+
 private:
 	//Disallowing copies and extra constructions
 	CGame();

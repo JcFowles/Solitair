@@ -31,6 +31,9 @@
     <ClCompile Include="WinStack.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="MoveSprite.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Backbuffer.h">
@@ -64,6 +67,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveSprite.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -66,7 +66,6 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 	m_pDraw->push_back(theBackCard);
 
 
-
 	CCard* pCardTemp = 0;
 	for( int i = HEART; i != SUIT_DEFAULT; i++)	// Cycle through the suits
 	{
