@@ -171,7 +171,7 @@ bool CDeck::Flip(int _num)
 		m_pPickUp->push_back(m_pDraw->back());
 		m_pDraw->pop_back();
 		m_pPickUp->back()->SetFlipped(true);
-		m_pPickUp->back()->SetX((280) + i*30);
+		m_pPickUp->back()->SetX((280.0f) + i*30.0f);
 	}
 	return true;
 }
@@ -209,12 +209,22 @@ vector<CCard*>* CDeck::Remove()
 	return pThisCard;
 }
 
+/***********************
+* GetDrawPile: Returns the Draw pile
+* @author: Jc Fowles
+* @return: deque<CCard*>*: pointer to the draw pile
+********************/
 deque<CCard*>* CDeck::GetDrawPile()
 {
 	return m_pDraw;
 }
 
-deque<CCard*> GetPickUpPile()
+/***********************
+* GetPickUpPile: Returns the pickUp pile
+* @author: Jc Fowles
+* @return: deque<CCard*>*: pointer to the pickUP pile
+********************/
+deque<CCard*>* CDeck::GetPickUpPile()
 {
 	return m_pPickUp;
 }
