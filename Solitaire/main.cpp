@@ -29,10 +29,11 @@
 #include "Utilities.h"
 #define WINDOW_CLASS_NAME L"SOLITAIRE"
 
-
 /***********************
 * WindowProc: Process the window 
 * @author: Asma Shakil
+* @author: Callan Moore
+* @author: Nick Gould
 * @Parameter: _hWnd: Handle to the Window sending the message
 * @Parameter: _uiMsg: The message ID being sent
 * @Parameter: _wParam: Additional detail about the message being sent
@@ -81,18 +82,23 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 	case WM_LBUTTONDOWN:
 		{
 
-			int iMouseX = LOWORD(_lParam);
-			int iMouseY = HIWORD(_lParam);
+			float fMouseX = LOWORD(_lParam);
+			float fMouseY = HIWORD(_lParam);
 
-			CGame::GetInstance().MouseClick(iMouseX, iMouseY);
-
+			CGame::GetInstance().GetMouseStack()->SetMousePosition(fMouseX,  fMouseY);
+			CGame::GetInstance().MouseClick(fMouseX, fMouseY);
 		}
+	case WM_MOUSEMOVE:
+		{
+			//g_fMouseX = LOWORD(_lParam);
+			//g_fMouseY = HIWORD(_lParam);
 
-  
+			float fMouseX = LOWORD(_lParam);
+			float fMouseY = HIWORD(_lParam);
 
-
-
-
+			CGame::GetInstance().GetMouseStack()->SetMousePosition(fMouseX,  fMouseY);
+			CGame::GetInstance().Draw();
+		}
 
 	break;
 	default:break;

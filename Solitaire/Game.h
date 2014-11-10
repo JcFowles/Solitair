@@ -30,6 +30,7 @@
 #include "BackBuffer.h"
 #include "Deck.h"
 #include "WinStack.h"
+#include "MouseStack.h"
 
 // Types
 // Constants
@@ -38,6 +39,7 @@
 class CWinStack;
 class CBackBuffer;
 class CPlayStack;
+class CMouseStack;
 
 class CGame
 {
@@ -52,13 +54,15 @@ public:
 	HINSTANCE GetAppInstance();
 	HWND GetWindow();
 
-	void MouseClick(int _iMouseX, int _iMouseY);
-
+	CMouseStack* GetMouseStack();
+	void MouseClick(float _fMouseX, float _fMouseY);
+	//void SetMouseX(float _fMouseX);
+	//void SetMouseY(float _fMouseY);
 
 
 	// Singleton Methods
 	static CGame& GetInstance();
-	static void DestroyInstance();
+	static void DestroyInstance(); 
 
 
 
@@ -76,7 +80,10 @@ protected:
 	vector<CPlayStack*>* m_PlayStacks;
 	CDeck* m_pDeck;
 	vector<CWinStack*>* m_WinStacks;
+	CMouseStack* m_pMouseStack;
 
+	float m_fMouseX;
+	float m_fMouseY;
 
 	//Application data
 	HINSTANCE m_hApplicationInstance;
