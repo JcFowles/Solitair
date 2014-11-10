@@ -124,6 +124,7 @@ float CEntity::GetHeight() const
 /***********************
 * SetX: Sets the X value of the Entity to the input value
 * @author: Asma Shakil
+* @author: Callan Moore
 * @parameter: _f: The new X value
 * @return: void
 ********************/
@@ -136,6 +137,7 @@ void CEntity::SetX(float _f)
 /***********************
 * SetY: Sets the Y value of the Entity to the input value
 * @author: Asma Shakil
+* @author: Callan Moore
 * @parameter: _f: The new Y value
 * @return: void
 ********************/
