@@ -31,7 +31,9 @@
     <ClCompile Include="WinStack.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="MouseStack.cpp" />
+    <ClCompile Include="MouseStack.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Backbuffer.h">
@@ -67,7 +69,9 @@
     <ClInclude Include="Entity.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="MouseStack.h" />
+    <ClInclude Include="MouseStack.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Card_Mask.bmp">

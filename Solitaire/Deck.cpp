@@ -166,7 +166,7 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 			m_pDraw->pop_back();
 			//tempCardStack->back()->SetY()
 		}
-		
+		tempCardStack->back()->SetFlipped(true);
 	}
 	return true;
 }

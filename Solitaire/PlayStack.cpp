@@ -75,21 +75,34 @@ void CPlayStack::Draw()
 	
 	if(m_pCards->size() > 1)
 	{
+
 		for(unsigned int i = 1; i < m_pCards->size() ; i++)
 		{
+			//sets the X value
 			(*m_pCards)[i]->SetX((*m_pCards)[i-1]->GetX());
 			
+			//Sets the Y value based on if its previous card is flipped or not
 			if((*m_pCards)[i - 1]->IsFlipped() && ((*m_pCards)[i - 1]->GetSuit() != SUIT_DEFAULT) )
 			{
 				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 40);
 			}
+			//
 			else
 			{
-				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 10);
+				//sets the first card in the deck to the same position as the blank
+				if( i == 1 )
+				{
+					(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) );
+				}
+				else
+				{
+						(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 10);
+				}
 			}
 			
 			(*m_pCards)[i]->Draw();
 		}
+
 	}
 	else
 	{
@@ -106,7 +119,7 @@ void CPlayStack::Draw()
 ********************/
 void CPlayStack::Process(float _fDeltaTick)
 {
-	FlipCard();
+	//FlipCard();
 }
 
 /***********************
