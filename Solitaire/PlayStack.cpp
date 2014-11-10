@@ -153,7 +153,7 @@ bool CPlayStack::AddCards(vector<CCard*>* _pCards)
 ********************/
 vector<CCard*>* CPlayStack::RemoveCards(int _iCardFromTop)
 {
-	vector<CCard*>* pCardsToRemove = 0;
+	vector<CCard*>* pCardsToRemove = new vector<CCard*>;
 
 	for(unsigned int i = _iCardFromTop; i < m_pCards->size() ; i++)
 	{
