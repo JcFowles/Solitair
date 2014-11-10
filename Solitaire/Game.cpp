@@ -285,6 +285,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 {
 	CCard* pPointedCard = 0;
 	CPlayStack* pPointedStack = 0;
+	int iPointedCardPosition = 0;
 	CCard* pCurrentCard = 0; 
 	CPlayStack* pCurrentStack = 0;
 
@@ -345,21 +346,24 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					// Save current card and stack
 					pPointedCard = pCurrentCard;
 					pPointedStack = pCurrentStack;
+					iPointedCardPosition = j;
 				}
 			}
 		}
 
 		// If the mouse was over a viable card when clicked
-		if( pPointedCard != 0 && pPointedCard == pPointedStack->GetStack()->back())
+		if( pPointedCard != 0)
 		{
 			// If the viable card is flipped then take it and add it to the MouseStack vector
 			if( pPointedStack->GetStack()->back()->IsFlipped() )
 			{
-				m_pMouseStack->GetHeldCards()->push_back(pPointedCard);
-				pPointedStack->GetStack()->pop_back();
+				vector<CCard*>* pCardsToTake = pPointedStack->RemoveCards(iPointedCardPosition);
+
+				m_pMouseStack->SetHeldCards(pCardsToTake);
+				pCardsToTake = 0;
 			}
 			// Card was front card of stack but not flipped yet so flip it only
-			else
+			else if( pPointedCard == pPointedStack->GetStack()->back())
 			{
 				pPointedStack->GetStack()->back()->SetFlipped(true);
 			}
