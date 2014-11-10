@@ -24,6 +24,7 @@ CDeck::CDeck(void)
 {
 	m_pDraw = new deque<CCard*>;
 	m_pPickUp = new deque<CCard*>;
+	m_NumFlip = 3;
 }
 
 /***********************
@@ -84,6 +85,7 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 	//CEntity::SetY(_iY);
 
 	Shuffle();
+	theBackCard->SetFlipped(true);
 	m_pDraw->push_front(theBackCard);
 	Deal(_pThePlayStacks);
 	return true;
@@ -106,9 +108,20 @@ void CDeck::Draw()
 		m_pDraw->back()->Draw();
 	}
 
-	for(unsigned int i = 0 ; i < m_pPickUp->size() ; i++)
+	int iPickUpSize = m_pPickUp->size() ;
+
+	
+	/*for(int i = 0 ; i < iPickUpSize  ; i++)
 	{
 		(*m_pPickUp)[i]->Draw();
+	}*/
+
+	for(int i = m_NumFlip; i > 0; i--)
+	{
+		if(!(m_pPickUp->empty()))
+		{
+			(*m_pPickUp)[iPickUpSize - i]->Draw();
+		}
 	}
 }
 
@@ -161,19 +174,28 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 /***********************
 * Flip: Flip the top number of cards, based on the passed in value
 * @author: Jc Fowles
-* @parameter: _num : The number of cards to flip
 * @return: bool: always return true;
 ********************/
-bool CDeck::Flip(int _num)
+bool CDeck::Flip()
 {
-
-	for(int i = 0; i < _num ; i++)
+	/*if(m_NumFlip > 1)
+	{*/
+	for(int i = 0; i < m_NumFlip ; i++)
 	{
-		m_pPickUp->push_back(m_pDraw->back());
-		m_pDraw->pop_back();
-		m_pPickUp->back()->SetFlipped(true);
-		m_pPickUp->back()->SetX((260.0f) + i*30.0f);
+		if((*m_pDraw->back()).GetSuit() ==  SUIT_DEFAULT )
+		{
+			Reset();
+			break;
+		}
+		else
+		{
+			m_pPickUp->push_back(m_pDraw->back());
+			m_pDraw->pop_back();
+			m_pPickUp->back()->SetFlipped(true);
+			m_pPickUp->back()->SetX((260.0f) + i*30.0f);
+		}
 	}
+
 	return true;
 }
 
@@ -184,14 +206,18 @@ bool CDeck::Flip(int _num)
 ********************/
 bool CDeck::Reset()
 {
-	for(unsigned int i = 0; i < m_pPickUp->size() ; i++)
+	//for(unsigned int i = 0; i < m_pPickUp->size() ; i++)
+	while(!(m_pPickUp->empty()))
 	{
-		m_pPickUp->front()->SetFlipped(false);
-		m_pPickUp->front()->SetX(m_pDraw->front()->GetX());
-		m_pDraw->push_front(m_pPickUp->front());
+		
+		m_pPickUp->back()->SetFlipped(false);
+		m_pPickUp->back()->SetX(m_pDraw->front()->GetX());
+		m_pDraw->push_back(m_pPickUp->back());
 		m_pPickUp->pop_back();
 		
 	}
+
+	
 
 	return true;
 }
@@ -228,4 +254,15 @@ deque<CCard*>* CDeck::GetDrawPile()
 deque<CCard*>* CDeck::GetPickUpPile()
 {
 	return m_pPickUp;
+}
+
+/***********************
+* setFlipNum: sets the number of cards to flip
+* @author: Jc Fowles
+* @parameter: _num : The number of cards to flip
+* @return: deque<CCard*>*: pointer to the pickUP pile
+********************/
+void CDeck::setFlipNum(int _iNum)
+{
+	m_NumFlip = _iNum;
 }

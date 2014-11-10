@@ -40,7 +40,7 @@ public:
 	bool Shuffle();
 	bool Deal(vector<CPlayStack*>* _pThePlayStack);
 
-	bool Flip(int _num);
+	bool Flip();
 	bool Reset();
 
 	deque<CCard*>* GetDrawPile();
@@ -48,10 +48,14 @@ public:
 
 	vector<CCard*>* Remove();
 
+	void setFlipNum(int _iNum);
+
 	// Member Variables
 protected:
 	deque<CCard*>* m_pDraw;
 	deque<CCard*>* m_pPickUp;
+
+	int m_NumFlip;
 
 	CCard* theBackCard;
 };
