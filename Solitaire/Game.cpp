@@ -275,11 +275,7 @@ CMouseStack* CGame::GetMouseStack()
 /***********************
 * MouseClick: Check to see if over a card
 * @author: Callan Moore
-<<<<<<< HEAD
-* @author: JC Fowles
-=======
 * @author: Jc Fowles
->>>>>>> origin/Fowles
 * @author: Nick Gould
 * @parameter: _fMouseX: The mouse X position
 * @parameter: _fMouseY: The mouse Y position
@@ -309,11 +305,8 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 		float fPickHalfW = m_pDeck->GetPickUpPile()->back()->GetWidth() / 2;
 		float fPickHalfH = m_pDeck->GetPickUpPile()->back()->GetHeight() / 2;
 
-<<<<<<< HEAD
+
 		if ( (_fMouseX < fPickX + fPickHalfW && _fMouseX > fPickX - fPickHalfW) && (_fMouseY < fPickY + fPickHalfH && _fMouseY > fPickY - fPickHalfH) )
-=======
-		if ( (_iMouseX < fPickX + fPickHalfW && _iMouseX > fPickX - fPickHalfW) && (_iMouseY < fPickY + fPickHalfH && _iMouseY > fPickY - fPickHalfH) )
->>>>>>> origin/Fowles
 		{
 			m_pDeck->GetPickUpPile()->pop_back();
 		}
@@ -352,16 +345,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 
 	if( pMouseCard != 0 && pMouseCard == pMouseStack->back())
 	{
-<<<<<<< HEAD
+
 		if( pMouseStack->back()->IsFlipped() )
 		{
 			m_pMouseStack->GetHeldCards()->push_back(pMouseCard);
-=======
-		pMouseCard->SetX(_iMouseX);
-		pMouseCard->SetY(_iMouseY);
-		if(pMouseStack->back()->IsFlipped())
-		{
->>>>>>> origin/Fowles
 			pMouseStack->pop_back();
 		}
 		else
@@ -369,12 +356,5 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			pMouseStack->back()->SetFlipped(true);
 		}
 	}
-<<<<<<< HEAD
-=======
 
-
-
-
-	
->>>>>>> origin/Fowles
 }
