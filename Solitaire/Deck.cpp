@@ -63,7 +63,7 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 	VALIDATE(theBackCard->Initialise(SUIT_DEFAULT, THREE));
 	theBackCard->SetX(_iX);
 	theBackCard->SetY(_iY);
-	m_pDraw->push_back(theBackCard);
+	
 
 
 	CCard* pCardTemp = 0;
@@ -84,6 +84,7 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 	//CEntity::SetY(_iY);
 
 	Shuffle();
+	m_pDraw->push_front(theBackCard);
 	Deal(_pThePlayStacks);
 	return true;
 }
@@ -171,7 +172,7 @@ bool CDeck::Flip(int _num)
 		m_pPickUp->push_back(m_pDraw->back());
 		m_pDraw->pop_back();
 		m_pPickUp->back()->SetFlipped(true);
-		m_pPickUp->back()->SetX((280.0f) + i*30.0f);
+		m_pPickUp->back()->SetX((260.0f) + i*30.0f);
 	}
 	return true;
 }
