@@ -69,7 +69,9 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 
 			case ID_GAME_NEWGAME:
 				{
-
+					//place all cards back in deck
+					//shuffle deck
+					//deal cards out
 				}
 				break;
 			} // End Switch
