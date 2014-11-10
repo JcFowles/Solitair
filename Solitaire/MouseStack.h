@@ -30,6 +30,7 @@ public:
 	virtual void Draw();
 	virtual void Process(float _fDeltaTick);
 	vector<CCard*>* GetHeldCards();
+	void SetHeldCards(vector<CCard*>* _pCards);
 	void SetMousePosition(float _fMouseX, float _fMouseY);
 	float GetMouseX();
 	float GetMouseY();

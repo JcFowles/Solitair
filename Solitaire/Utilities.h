@@ -87,4 +87,17 @@ enum ECardNum
 		//NUM_DEFAULT,
 	};
 
+/***********************
+* ESuit: Gives the back for a card  
+* @author: Nick Gould
+********************/
+enum ECardBack
+{
+	FACE,
+	ROSE,
+	DEFAULT,
+	PURPLE,
+	CROWN,
+};
+
 #endif // __UTILITIES_H__
