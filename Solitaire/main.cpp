@@ -29,10 +29,14 @@
 #include "Utilities.h"
 #define WINDOW_CLASS_NAME L"SOLITAIRE"
 
+CGame& g_rGame = CGame::GetInstance();
+
+
 /***********************
 * WindowProc: Process the window 
 * @author: Asma Shakil
 * @author: Callan Moore
+* @author: Jc Fowles
 * @author: Nick Gould
 * @Parameter: _hWnd: Handle to the Window sending the message
 * @Parameter: _uiMsg: The message ID being sent
@@ -70,9 +74,32 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 
 			case ID_GAME_NEWGAME:
 				{
-					//place all cards back in deck
-					//shuffle deck
-					//deal cards out
+					//getting the game instance
+					HINSTANCE hInstance = (HINSTANCE)GetWindowLong(_hWnd, GWL_HINSTANCE);
+
+					//width and height of the window
+					int iWndWidth;
+					int iWndHeight;
+					
+					//getting the width and height of the window
+					RECT rect;
+					if(GetWindowRect(_hWnd, &rect))
+					{
+					  iWndWidth = rect.right - rect.left;
+					  iWndHeight = rect.bottom - rect.top;
+					}
+
+					//destroy and recreate the game
+					(&g_rGame)->DestroyInstance();
+					g_rGame.GetInstance();
+
+					if (!(g_rGame).Initialise(hInstance, _hWnd, iWndWidth, iWndHeight))
+					{
+						// Failed
+						return (0);
+					}
+
+
 				}
 				break;
 			} // End Switch
@@ -170,7 +197,7 @@ HWND CreateAndRegisterWindow(HINSTANCE _hInstance, int _iWidth, int _iHeight, LP
 * WinMain: Program starts here 
 * @author: Asma Shakil
 * @author: Callan Moore
-
+* @author: Jc Fowles
 * @Parameter: _hInstance: Instance handle that Windows generates for your application
 * @Parameter: _hPrevInstance: Tracker for the previous instance for the application
 * @Parameter: _lpCmdline: Wide char string that contains the passed in arguments 
@@ -184,12 +211,12 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 	const int kiWidth = 1160;
 	const int kiHeight = 1040;
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
-	CGame& rGame = CGame::GetInstance();
+	//CGame& rGame = CGame::GetInstance();
 
 
 	std::srand ( unsigned ( time(0) ) );
 
-	if (!rGame.Initialise(_hInstance, hwnd, kiWidth, kiHeight))
+	if (!g_rGame.Initialise(_hInstance, hwnd, kiWidth, kiHeight))
 	{
 		// Failed
 		return (0);
@@ -203,10 +230,12 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 		}
 		else
 		{
-			rGame.ExecuteOneFrame();
+			//rGame.GetInstance();
+			g_rGame.ExecuteOneFrame();
 		}
 	}
 	CGame::DestroyInstance();
 
 	return (static_cast<int>(msg.wParam));
 }
+
