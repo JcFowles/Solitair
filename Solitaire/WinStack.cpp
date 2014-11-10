@@ -85,7 +85,7 @@ void CWinStack::Draw()
 	}
 	else*/
 	//{
-		(*m_pCards)[0]->Draw();
+		(*m_pCards)[m_pCards->size() - 1]->Draw();
 	//}
 	
 }
