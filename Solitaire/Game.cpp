@@ -274,7 +274,7 @@ void CGame::MouseClick(int _iMouseX, int _iMouseY)
 
 	if ( (_iMouseX < fDeckX + fDeckHalfW && _iMouseX > fDeckX - fDeckHalfW) && (_iMouseY < fDeckY + fDeckHalfH && _iMouseY > fDeckY - fDeckHalfH) )
 	{
-		m_pDeck->Flip(3);
+		m_pDeck->Flip();
 	}
 
 
