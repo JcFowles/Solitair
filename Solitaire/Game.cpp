@@ -283,13 +283,13 @@ CMouseStack* CGame::GetMouseStack()
 ********************/
 void CGame::MouseClick(float _fMouseX, float _fMouseY)
 {
+	CCard* pPointedCard = 0;
+	CPlayStack* pPointedStack = 0;
+	CCard* pCurrentCard = 0; 
+	CPlayStack* pCurrentStack = 0;
+
 	if( m_pMouseStack->GetHeldCards()->empty() )
 	{
-		CCard* pPointedCard = 0;
-		vector<CCard*>* pPointedStack = 0;
-		CCard* pCurrentCard = 0; 
-		vector<CCard*>* pCurrentStack = 0;
-
 		float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
 		float fDeckY = m_pDeck->GetDrawPile()->back()->GetY();
 		float fDeckHalfW = m_pDeck->GetDrawPile()->back()->GetWidth() / 2;
@@ -326,12 +326,12 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 		// Loop through all Play Stacks
 		for(unsigned int i = 0; i < m_PlayStacks->size(); i++)
 		{
-			pCurrentStack = (*m_PlayStacks)[i]->GetStack();
+			pCurrentStack = (*m_PlayStacks)[i];
 
 			// Loop through all cards within current play stack
-			for (unsigned int j = 1; j < pCurrentStack->size(); j++)
+			for (unsigned int j = 1; j < pCurrentStack-> GetStack()->size(); j++)
 			{
-				pCurrentCard = ((*pCurrentStack)[j]);
+				pCurrentCard = (*(pCurrentStack->GetStack()))[j];
 
 				fCardX = pCurrentCard->GetX();
 				fCardY = pCurrentCard->GetY();
@@ -350,23 +350,64 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 		}
 
 		// If the mouse was over a viable card when clicked
-		if( pPointedCard != 0 && pPointedCard == pPointedStack->back())
+		if( pPointedCard != 0 && pPointedCard == pPointedStack->GetStack()->back())
 		{
 			// If the viable card is flipped then take it and add it to the MouseStack vector
-			if( pPointedStack->back()->IsFlipped() )
+			if( pPointedStack->GetStack()->back()->IsFlipped() )
 			{
 				m_pMouseStack->GetHeldCards()->push_back(pPointedCard);
-				pPointedStack->pop_back();
+				pPointedStack->GetStack()->pop_back();
 			}
 			// Card was front card of stack but not flipped yet so flip it only
 			else
 			{
-				pPointedStack->back()->SetFlipped(true);
+				pPointedStack->GetStack()->back()->SetFlipped(true);
 			}
 		}
 	}
 	else
 	{
+		float fCardX;
+		float fCardY;
+		float fCardHalfW;
+		float fCardHalfH;
+
+		// Loop through all Play Stacks
+		for(unsigned int i = 0; i < m_PlayStacks->size(); i++)
+		{
+			pCurrentStack = (*m_PlayStacks)[i];
+
+			// Loop through all cards within current play stack
+			for (unsigned int j = 1; j < pCurrentStack->GetStack()->size(); j++)
+			{
+				pCurrentCard = (*(pCurrentStack->GetStack()))[j];
+
+				fCardX = pCurrentCard->GetX();
+				fCardY = pCurrentCard->GetY();
+				fCardHalfW = pCurrentCard->GetWidth() / 2;
+				fCardHalfH = pCurrentCard->GetHeight() / 2;
+
+				// Check if mouse is within borders of current card
+				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
+					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
+				{
+					// Save current card and stack
+					pPointedCard = pCurrentCard;
+					pPointedStack = pCurrentStack;
+				}
+			}
+		}
+
+		if( pPointedCard == pPointedStack->GetStack()->back())
+		{
+			if( pPointedStack->AddCards(m_pMouseStack->GetHeldCards()) )
+			{
+				while( !(m_pMouseStack->GetHeldCards()->empty()) )
+				{
+					m_pMouseStack->GetHeldCards()->pop_back();
+				}
+			}
+		}
 
 	}
 }

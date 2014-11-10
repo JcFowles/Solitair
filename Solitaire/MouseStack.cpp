@@ -99,6 +99,17 @@ vector<CCard*>* CMouseStack::GetHeldCards()
 }
 
 /***********************
+* SetHeldCards: Sets the Mouse stacks vector of cards to the input 
+* @author: Callan Moore
+* @parameter: vector<CCard*>*: Vector of Cards to add to the Held Cards
+* @return: void:
+********************/
+void CMouseStack::SetHeldCards(vector<CCard*>* _pCards)
+{
+	m_pHeldCards = _pCards;
+}
+
+/***********************
 * SetMousePosition: Sets the X and Y coordinates of the MouseStack to the input Mouse coordinates
 * @author: Callan Moore
 * @parameter: _fMouseX: Mouse X coordinate
