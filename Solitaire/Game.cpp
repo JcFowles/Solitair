@@ -39,6 +39,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_pDeck(0)
 				, m_PlayStacks(0)
 				, m_WinStacks(0)
+				, m_pMouseStack(0)
 {
 	/*
 	for(int i = 0 ; i < 7; i++)
@@ -105,6 +106,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	CWinStack* tempWinStack;
 	m_PlayStacks = new vector<CPlayStack*>;
 	m_WinStacks = new vector<CWinStack*>;
+	m_pMouseStack = new CMouseStack();
 
 	const float fkGap = 40.0f;
 	const float fkYPlayStack = 380.0f;
@@ -139,16 +141,16 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 
 	m_pDeck = new CDeck();
 	VALIDATE(m_pDeck->Initialise(fkXDeck, fkYDeck, m_PlayStacks));
+	VALIDATE(m_pMouseStack->Initialise());
 
 
 	return (true);
-
-
 }
 
 /***********************
 * Draw: All the games drawing and redrawing will be done here, and drawing will be done to the backbuffer
 * @author: Asma Shakil
+* @author: Callan Moore
 * @author: Jc Fowles
 * @return: void
 ********************/
@@ -169,6 +171,8 @@ void CGame::Draw()
 		(*m_WinStacks)[i]->Draw();
 	}
 
+	m_pMouseStack->Draw();
+
 	m_pBackBuffer->Present();
 }
 
@@ -177,7 +181,7 @@ void CGame::Draw()
 * @author: Asma Shakil
 * @author: Callan Moore
 * @author: Jc Fowles
-* @parameter: _fDeltaTick: How long it takes to do the procces
+* @parameter: _fDeltaTick: How long it takes to do the proccess
 * @return: void
 ********************/
 void CGame::Process(float _fDeltaTick)
@@ -259,13 +263,25 @@ HWND CGame::GetWindow()
 }
 
 /***********************
+* GetWindow: Retrieves the Games Mouse stack pointer
+* @author: Callan Moore
+* @return: CMouseStack*: Pointer to the games mouse stack
+********************/
+CMouseStack* CGame::GetMouseStack()
+{
+	return m_pMouseStack;
+}
+
+/***********************
 * MouseClick: Check to see if over a card
 * @author: Callan Moore
+* @author: JC Fowles
 * @author: Nick Gould
+* @parameter: _fMouseX: The mouse X position
+* @parameter: _fMouseY: The mouse Y position
 * @return: void
 ********************/
-
-void CGame::MouseClick(int _iMouseX, int _iMouseY)
+void CGame::MouseClick(float _fMouseX, float _fMouseY)
 {
 	CCard* pMouseCard = 0;
 	vector<CCard*>* pMouseStack = 0;
@@ -277,10 +293,24 @@ void CGame::MouseClick(int _iMouseX, int _iMouseY)
 	float fDeckHalfW = m_pDeck->GetDrawPile()->back()->GetWidth() / 2;
 	float fDeckHalfH = m_pDeck->GetDrawPile()->back()->GetHeight() / 2;
 
-	if ( (_iMouseX < fDeckX + fDeckHalfW && _iMouseX > fDeckX - fDeckHalfW) && (_iMouseY < fDeckY + fDeckHalfH && _iMouseY > fDeckY - fDeckHalfH) )
+	if ( (_fMouseX < fDeckX + fDeckHalfW && _fMouseX > fDeckX - fDeckHalfW) && (_fMouseY < fDeckY + fDeckHalfH && _fMouseY > fDeckY - fDeckHalfH) )
 	{
 		m_pDeck->Flip();
 	}
+
+	if(!(m_pDeck->GetPickUpPile()->empty()))
+	{
+		float fPickX = m_pDeck->GetPickUpPile()->back()->GetX();
+		float fPickY = m_pDeck->GetPickUpPile()->back()->GetY();
+		float fPickHalfW = m_pDeck->GetPickUpPile()->back()->GetWidth() / 2;
+		float fPickHalfH = m_pDeck->GetPickUpPile()->back()->GetHeight() / 2;
+
+		if ( (_fMouseX < fPickX + fPickHalfW && _fMouseX > fPickX - fPickHalfW) && (_fMouseY < fPickY + fPickHalfH && _fMouseY > fPickY - fPickHalfH) )
+		{
+			m_pDeck->GetPickUpPile()->pop_back();
+		}
+	}
+
 
 	float fCardX;
 	float fCardY;
@@ -302,21 +332,26 @@ void CGame::MouseClick(int _iMouseX, int _iMouseY)
 			fCardHalfW = pCurrentCard->GetWidth() / 2;
 			fCardHalfH = pCurrentCard->GetHeight() / 2;
 
-			// Check if mouse is within borders of curret card
-			if (	(_iMouseX < fCardX + fCardHalfW && _iMouseX > fCardX - fCardHalfW) 
-				&&	(_iMouseY < fCardY + fCardHalfH && _iMouseY > fCardY - fCardHalfH) )
+			// Check if mouse is within borders of current card
+			if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
+				&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 			{
 				pMouseCard = pCurrentCard;
 				pMouseStack = pCurrentStack;
-				//pCurrentStack->pop_back();
 			}
 		}
 	}
-	if( pMouseCard != 0)
+
+	if( pMouseCard != 0 && pMouseCard == pMouseStack->back())
 	{
-		pMouseCard->SetX(_iMouseX);
-		pMouseCard->SetY(_iMouseY);
-		pMouseStack->pop_back();
+		if( pMouseStack->back()->IsFlipped() )
+		{
+			m_pMouseStack->GetHeldCards()->push_back(pMouseCard);
+			pMouseStack->pop_back();
+		}
+		else
+		{
+			pMouseStack->back()->SetFlipped(true);
+		}
 	}
-	
 }
