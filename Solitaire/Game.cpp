@@ -267,6 +267,11 @@ HWND CGame::GetWindow()
 
 void CGame::MouseClick(int _iMouseX, int _iMouseY)
 {
+	CCard* pMouseCard = 0;
+	vector<CCard*>* pMouseStack = 0;
+	CCard* pCurrentCard = 0; 
+	vector<CCard*>* pCurrentStack = 0;
+
 	float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
 	float fDeckY = m_pDeck->GetDrawPile()->back()->GetY();
 	float fDeckHalfW = m_pDeck->GetDrawPile()->back()->GetWidth() / 2;
@@ -277,5 +282,41 @@ void CGame::MouseClick(int _iMouseX, int _iMouseY)
 		m_pDeck->Flip(3);
 	}
 
+	float fCardX;
+	float fCardY;
+	float fCardHalfW;
+	float fCardHalfH;
 
+	// Loop through all Play Stacks
+	for(unsigned int i = 0; i < m_PlayStacks->size(); i++)
+	{
+		pCurrentStack = (*m_PlayStacks)[i]->GetStack();
+
+		// Loop through all cards within current play stack
+		for (unsigned int j = 1; j < pCurrentStack->size(); j++)
+		{
+			pCurrentCard = ((*pCurrentStack)[j]);
+
+			fCardX = pCurrentCard->GetX();
+			fCardY = pCurrentCard->GetY();
+			fCardHalfW = pCurrentCard->GetWidth() / 2;
+			fCardHalfH = pCurrentCard->GetHeight() / 2;
+
+			// Check if mouse is within borders of curret card
+			if (	(_iMouseX < fCardX + fCardHalfW && _iMouseX > fCardX - fCardHalfW) 
+				&&	(_iMouseY < fCardY + fCardHalfH && _iMouseY > fCardY - fCardHalfH) )
+			{
+				pMouseCard = pCurrentCard;
+				pMouseStack = pCurrentStack;
+				//pCurrentStack->pop_back();
+			}
+		}
+	}
+	if( pMouseCard != 0)
+	{
+		pMouseCard->SetX(_iMouseX);
+		pMouseCard->SetY(_iMouseY);
+		pMouseStack->pop_back();
+	}
+	
 }

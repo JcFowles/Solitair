@@ -86,7 +86,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MoveSprite.cpp" />
+    <ClCompile Include="MouseStack.cpp" />
     <ClCompile Include="PlayStack.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="WinStack.cpp" />
@@ -98,7 +98,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="MoveSprite.h" />
+    <ClInclude Include="MouseStack.h" />
     <ClInclude Include="PlayStack.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sprite.h" />
