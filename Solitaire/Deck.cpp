@@ -22,7 +22,7 @@
 ********************/
 CDeck::CDeck(void)
 {
-	m_pDeck = new deque<CCard*>;
+	m_pDraw = new deque<CCard*>;
 	m_pPickUp = new deque<CCard*>;
 }
 
@@ -33,12 +33,12 @@ CDeck::CDeck(void)
 CDeck::~CDeck(void)
 {
 	
-	while(!m_pDeck->empty())
+	while(!m_pDraw->empty())
 	{
-		m_pDeck->pop_back();
+		m_pDraw->pop_back();
 	}
-	delete m_pDeck;
-	m_pDeck = 0;
+	delete m_pDraw;
+	m_pDraw = 0;
 
 	while(!m_pPickUp->empty())
 	{
@@ -63,6 +63,8 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 	VALIDATE(theBackCard->Initialise(SUIT_DEFAULT, THREE));
 	theBackCard->SetX(_iX);
 	theBackCard->SetY(_iY);
+	m_pDraw->push_back(theBackCard);
+
 
 
 	CCard* pCardTemp = 0;
@@ -75,7 +77,7 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 			VALIDATE(pCardTemp->Initialise(static_cast<ESuit>(i), static_cast<ECardNum>(j)));
 			pCardTemp->SetX(theBackCard->GetX());
 			pCardTemp->SetY(theBackCard->GetY());
-			m_pDeck->push_back(pCardTemp);
+			m_pDraw->push_back(pCardTemp);
 		}
 	}
 
@@ -95,13 +97,13 @@ bool CDeck::Initialise(float _iX, float _iY, vector<CPlayStack*>* _pThePlayStack
 ********************/
 void CDeck::Draw()
 {
-	if(m_pDeck->empty())
+	if(m_pDraw->empty())
 	{
 		theBackCard->Draw();
 	}
 	else
 	{
-		m_pDeck->back()->Draw();
+		m_pDraw->back()->Draw();
 	}
 
 	for(unsigned int i = 0 ; i < m_pPickUp->size() ; i++)
@@ -128,7 +130,7 @@ void CDeck::Process(float _fDeltaTick)
 ********************/
 bool CDeck::Shuffle()
 {
-	random_shuffle ( (*m_pDeck).begin(), (*m_pDeck).end() );
+	random_shuffle ( (*m_pDraw).begin(), (*m_pDraw).end() );
 	return true;
 }
 
@@ -147,8 +149,8 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 
 		for(int k = 0; k <= i; k++)
 		{
-			tempCardStack->push_back(m_pDeck->back());
-			m_pDeck->pop_back();
+			tempCardStack->push_back(m_pDraw->back());
+			m_pDraw->pop_back();
 			//tempCardStack->back()->SetY()
 		}
 		
@@ -164,14 +166,13 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 ********************/
 bool CDeck::Flip(int _num)
 {
+
 	for(int i = 0; i < _num ; i++)
 	{
-		m_pPickUp->push_back(m_pDeck->back());
-		m_pDeck->pop_back();
+		m_pPickUp->push_back(m_pDraw->back());
+		m_pDraw->pop_back();
 		m_pPickUp->back()->SetFlipped(true);
-		m_pPickUp->back()->SetX((m_pPickUp->back()->GetX()+100) + i*30);
-			
-	 
+		m_pPickUp->back()->SetX((280) + i*30);
 	}
 	return true;
 }
@@ -186,8 +187,8 @@ bool CDeck::Reset()
 	for(unsigned int i = 0; i < m_pPickUp->size() ; i++)
 	{
 		m_pPickUp->front()->SetFlipped(false);
-		m_pPickUp->front()->SetX(m_pDeck->front()->GetX());
-		m_pDeck->push_front(m_pPickUp->front());
+		m_pPickUp->front()->SetX(m_pDraw->front()->GetX());
+		m_pDraw->push_front(m_pPickUp->front());
 		m_pPickUp->pop_back();
 		
 	}
@@ -209,3 +210,12 @@ vector<CCard*>* CDeck::Remove()
 	return pThisCard;
 }
 
+deque<CCard*>* CDeck::GetDrawPile()
+{
+	return m_pDraw;
+}
+
+deque<CCard*> GetPickUpPile()
+{
+	return m_pPickUp;
+}

@@ -43,11 +43,14 @@ public:
 	bool Flip(int _num);
 	bool Reset();
 
+	deque<CCard*>* GetDrawPile();
+	deque<CCard*>* GetPickUpPile();
+
 	vector<CCard*>* Remove();
 
 	// Member Variables
 protected:
-	deque<CCard*>* m_pDeck;
+	deque<CCard*>* m_pDraw;
 	deque<CCard*>* m_pPickUp;
 
 	CCard* theBackCard;
