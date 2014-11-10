@@ -98,6 +98,6 @@ enum ECardBack
 	DEFAULT,
 	PURPLE,
 	CROWN,
-}
+};
 
 #endif // __UTILITIES_H__
