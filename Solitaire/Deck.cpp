@@ -110,19 +110,29 @@ void CDeck::Draw()
 
 	int iPickUpSize = m_pPickUp->size() ;
 
-	
-	/*for(int i = 0 ; i < iPickUpSize  ; i++)
+	if(iPickUpSize > 0)
 	{
-		(*m_pPickUp)[i]->Draw();
-	}*/
-
-	for(int i = m_NumFlip; i > 0; i--)
-	{
-		if(!(m_pPickUp->empty()))
+		int flip = m_NumFlip;
+		if(iPickUpSize < m_NumFlip)
 		{
-			(*m_pPickUp)[iPickUpSize - i]->Draw();
+			flip = iPickUpSize;
+		}
+		for(int k = 0; k < flip; k++)
+		{
+			(*m_pPickUp)[iPickUpSize - 1 - k ]->SetX(260.0f + k*30.0f);
+		}
+
+		for(int i = 0 ; i < iPickUpSize  ; i++)
+		{
+			(*m_pPickUp)[i]->Draw();
+		}
+
+		for(int k = 0; k < flip; k++)
+		{
+			(*m_pPickUp)[iPickUpSize - 1 - k ]->SetX(260.0f );
 		}
 	}
+
 }
 
 /***********************
@@ -192,7 +202,7 @@ bool CDeck::Flip()
 			m_pPickUp->push_back(m_pDraw->back());
 			m_pDraw->pop_back();
 			m_pPickUp->back()->SetFlipped(true);
-			m_pPickUp->back()->SetX((260.0f) + i*30.0f);
+			m_pPickUp->back()->SetX((260.0f)); // + i*30.0f);
 		}
 	}
 

@@ -261,6 +261,7 @@ HWND CGame::GetWindow()
 /***********************
 * MouseClick: Check to see if over a card
 * @author: Callan Moore
+* @author: Jc Fowles
 * @author: Nick Gould
 * @return: void
 ********************/
@@ -281,6 +282,20 @@ void CGame::MouseClick(int _iMouseX, int _iMouseY)
 	{
 		m_pDeck->Flip();
 	}
+
+	if(!(m_pDeck->GetPickUpPile()->empty()))
+	{
+		float fPickX = m_pDeck->GetPickUpPile()->back()->GetX();
+		float fPickY = m_pDeck->GetPickUpPile()->back()->GetY();
+		float fPickHalfW = m_pDeck->GetPickUpPile()->back()->GetWidth() / 2;
+		float fPickHalfH = m_pDeck->GetPickUpPile()->back()->GetHeight() / 2;
+
+		if ( (_iMouseX < fPickX + fPickHalfW && _iMouseX > fPickX - fPickHalfW) && (_iMouseY < fPickY + fPickHalfH && _iMouseY > fPickY - fPickHalfH) )
+		{
+			m_pDeck->GetPickUpPile()->pop_back();
+		}
+	}
+
 
 	float fCardX;
 	float fCardY;
@@ -316,7 +331,18 @@ void CGame::MouseClick(int _iMouseX, int _iMouseY)
 	{
 		pMouseCard->SetX(_iMouseX);
 		pMouseCard->SetY(_iMouseY);
-		pMouseStack->pop_back();
+		if(pMouseStack->back()->IsFlipped())
+		{
+			pMouseStack->pop_back();
+		}
+		else
+		{
+			pMouseStack->back()->SetFlipped(true);
+		}
 	}
+
+
+
+
 	
 }
