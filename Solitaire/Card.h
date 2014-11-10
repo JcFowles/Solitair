@@ -8,12 +8,8 @@
  
 * File Name : Card.h
 * Description : Header file for the Card class
-* Author :	Callan Moore
-*			JC Fowles
-*			Nick Gould
-* Mail :	Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz	
-*			Nick.gould@mediadesign.school.nz
+* Author :	Nick Gould
+* Mail :	Nick.gould@mediadesign.school.nz
 */
 
 #pragma once

@@ -41,6 +41,7 @@
 ********************/
 LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 {
+
 	switch (_uiMsg)
 	{
 	case ID_GAME_NEWGAME:
@@ -50,13 +51,37 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 		break;
 	case ID_GAME_EXIT: // Fall through
 	case WM_DESTROY:
-	{
-		PostQuitMessage(0);
-		return(0);
-	}
+		{
+			PostQuitMessage(0);
+			return(0);
+		};
+
+	case WM_LBUTTONDOWN:
+		{
+
+			int iMouseX = LOWORD(_lParam);
+			int iMouseY = HIWORD(_lParam);
+
+			CGame::GetInstance().MouseClick(iMouseX, iMouseY);
+
+		}
+
+  
+
+
+
+
+
 	break;
 	default:break;
 	}
+
+
+
+
+
+
+
 	return (DefWindowProc(_hWnd, _uiMsg, _wParam, _lParam));
 }
 
