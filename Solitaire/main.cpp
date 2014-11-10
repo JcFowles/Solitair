@@ -44,18 +44,38 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 
 	switch (_uiMsg)
 	{
-	case ID_GAME_NEWGAME:
-		{
-
-		}
-		break;
-	case ID_GAME_EXIT: // Fall through
 	case WM_DESTROY:
 		{
 			PostQuitMessage(0);
 			return(0);
 		};
+		break;
+	case WM_COMMAND:
+		{
+			switch(_wParam)
+			{
+			case (ID_HELP_ABOUT):
+				{
+					MessageBoxA(_hWnd, "Made by Callan, JC, and Nick" , "About", MB_OK);
+				}
+				break;
 
+			case ID_GAME_EXIT: 
+				{
+					PostQuitMessage(0);
+					return(0);
+				};
+				break;
+
+			case ID_GAME_NEWGAME:
+				{
+
+				}
+				break;
+			} // End Switch
+			
+		}
+		break;
 	case WM_LBUTTONDOWN:
 		{
 
