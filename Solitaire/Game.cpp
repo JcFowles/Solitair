@@ -260,20 +260,21 @@ HWND CGame::GetWindow()
 
 /***********************
 * MouseClick: Check to see if over a card
+* @author: Callan Moore
 * @author: Nick Gould
-* @return: 
+* @return: void
 ********************/
 
 void CGame::MouseClick(int _iMouseX, int _iMouseY)
 {
-	int iDeckX = 130; // m_pDeck->GetX();
-	int iDeckY = 110; //m_pDeck->GetY();
-	int iDeckHalfW = 60; //m_pDeck->GetWidth()/2;
-	int iDeckHalfH = 100; //m_pDeck->GetHeight()/2;
+	float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
+	float fDeckY = m_pDeck->GetDrawPile()->back()->GetY();
+	float fDeckHalfW = m_pDeck->GetDrawPile()->back()->GetWidth() / 2;
+	float fDeckHalfH = m_pDeck->GetDrawPile()->back()->GetHeight() / 2;
 
-	if ( (_iMouseX < iDeckX + iDeckHalfW && _iMouseX > iDeckX - iDeckHalfW) && (_iMouseY < iDeckY + iDeckHalfH && _iMouseY > iDeckY - iDeckHalfH) )
+	if ( (_iMouseX < fDeckX + fDeckHalfW && _iMouseX > fDeckX - fDeckHalfW) && (_iMouseY < fDeckY + fDeckHalfH && _iMouseY > fDeckY - fDeckHalfH) )
 	{
-		m_pDeck->Flip(1);
+		m_pDeck->Flip(3);
 	}
 
 
