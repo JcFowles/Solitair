@@ -63,7 +63,7 @@ bool CBackBuffer::Initialise(HWND _hWnd, int _iWidth, int _iHeight)
 	m_hSurface = CreateCompatibleBitmap(hWindowDC, m_iWidth, m_iHeight);
 	ReleaseDC(m_hWnd, hWindowDC);
 	m_hOldObject = static_cast<HBITMAP>(SelectObject(m_hDC, m_hSurface));
-	HBRUSH brushWhite = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH));
+	HBRUSH brushWhite = static_cast<HBRUSH>(CreateSolidBrush(RGB( 0, 128, 0)));
 	HBRUSH oldBrush = static_cast<HBRUSH>(SelectObject(m_hDC, brushWhite));
 	Rectangle(m_hDC, 0, 0, m_iWidth, m_iHeight);
 	SelectObject(m_hDC, oldBrush);
@@ -77,7 +77,7 @@ bool CBackBuffer::Initialise(HWND _hWnd, int _iWidth, int _iHeight)
 ********************/
 void CBackBuffer::Clear()
 {
-	HBRUSH hOldBrush = static_cast<HBRUSH>(SelectObject(GetBFDC(), GetStockObject(LTGRAY_BRUSH)));
+	HBRUSH hOldBrush = static_cast<HBRUSH>(SelectObject(GetBFDC(), CreateSolidBrush(RGB( 0, 128, 0))));
 	Rectangle(GetBFDC(), 0, 0, GetWidth(), GetHeight());
 	SelectObject(GetBFDC(), hOldBrush);
 }
