@@ -91,7 +91,15 @@ void CWinStack::Draw()
 ********************/
 void CWinStack::Process(float _fDeltaTick)
 {
+	while(!(m_pCards->empty()))
+	{
+		m_pCards->pop_back();
+	}
+
+	delete m_pCards;
+	m_pCards = 0;
 }
+
 
 /***********************
 * AddCard: Adds a cards to the card win stack
