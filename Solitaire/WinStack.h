@@ -8,10 +8,8 @@
   
 * File Name : CWinStack.h 
 * Description : Header file for the WinStack Class.
-* Author :	JC Fowles
-*			
+* Author :	JC Fowles		
 * Mail :	Jc.Fowles@mediadesign.school.nz 
-*
 */
 
 #pragma once
@@ -19,14 +17,8 @@
 #if !defined(__WINSTACK_H__)
 #define __WINSTACK_H__
 
-// Library Includes
-#include "windows.h"
-
 // Local Includes
 #include "Card.h"
-#include "Utilities.h"
-
-
 
 class CWinStack : public CEntity
 {
@@ -35,17 +27,16 @@ public:
 	CWinStack(void);
 	~CWinStack(void);
 
-	virtual bool Initialise(float _iX, float _iY);
+	virtual bool Initialise(float _fX, float _fY);
 	virtual void Draw();
 	virtual void Process(float _fDeltaTick);
-
 	bool AddCard(CCard*_pCards);
 	CCard* RemoveCard();
 	bool Complete();
 
+	//Getter
 	vector<CCard*>* GetCards();
-
-
+	
 private:
 	// Disallowing copies
 	CWinStack(const CWinStack& _kr);

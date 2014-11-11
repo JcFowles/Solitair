@@ -9,12 +9,8 @@
 * File Name : Utilities.h 
 * Description : Header file for the Utilities used.
 * Author :	Asma Shakil
-*			Callan Moore
-* 			JC Fowles
 *			Nick Gould
 * Mail :	Asma.Shakil@mediadesign.school.nz 
-* 			Callan.Moore@mediadesign.school.nz 
-*			Jc.Fowles@mediadesign.school.nz 
 *			Nick.gould@mediadesign.school.nz
 */
 
@@ -24,6 +20,7 @@
 #define __UTILITIES_H__
 
 // Library Includes
+#include <windows.h>
 #include <strstream>
 #include <cstdlib>
 #include <deque>
@@ -50,7 +47,6 @@ std::string ToString(const T& _value)
 	return (theStream.str());
 }
 
-
 /***********************
 * ESuit: Gives the suit for a card  
 * @author: Nick Gould
@@ -63,7 +59,6 @@ enum ESuit
 		SPADE,
 		SUIT_DEFAULT,
 	};
-
 
 /***********************
 * ESuit: Gives the number for a card  

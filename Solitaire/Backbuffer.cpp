@@ -9,13 +9,9 @@
 * File Name : Backbuffer.cpp
 * Description : Implementation file for the Backbuffer class
 * Author :	Asma Shakil
-*			Callan Moore
 *			JC Fowles
-*			Nick Gould
 * Mail :	Asma.shakil@mediadesign.school.nz
-*			Callan.moore@mediadesign.school.nz
 *			Jc.fowles@mediadesign.school.nz		
-*			Nick.gould@mediadesign.school.nz
 */
 
 // This include
@@ -48,6 +44,7 @@ CBackBuffer::~CBackBuffer()
 /***********************
 * Initialise: Initialises all the Backbuffer member variables
 * @author: Asma Shakil
+* @author: Jc Fowles
 * @parameter: _hWnd: Handle to the main window.
 * @parameter: _iWidth: Width of the main window to determine the backbuffer height.
 * @parameter: _iHeight: Height of the main window to determine the backbuffer height.
@@ -55,6 +52,7 @@ CBackBuffer::~CBackBuffer()
 ********************/
 bool CBackBuffer::Initialise(HWND _hWnd, int _iWidth, int _iHeight)
 {
+	
 	m_hWnd = _hWnd;
 	m_iWidth = _iWidth;
 	m_iHeight = _iHeight;
@@ -63,8 +61,8 @@ bool CBackBuffer::Initialise(HWND _hWnd, int _iWidth, int _iHeight)
 	m_hSurface = CreateCompatibleBitmap(hWindowDC, m_iWidth, m_iHeight);
 	ReleaseDC(m_hWnd, hWindowDC);
 	m_hOldObject = static_cast<HBITMAP>(SelectObject(m_hDC, m_hSurface));
-	HBRUSH brushWhite = static_cast<HBRUSH>(CreateSolidBrush(RGB(0,128,0)));
-	HBRUSH oldBrush = static_cast<HBRUSH>(SelectObject(m_hDC, brushWhite));
+	m_brushGreen = static_cast<HBRUSH>(CreateSolidBrush(RGB(0,128,0)));
+	HBRUSH oldBrush = static_cast<HBRUSH>(SelectObject(m_hDC, m_brushGreen));
 	Rectangle(m_hDC, 0, 0, m_iWidth, m_iHeight);
 	SelectObject(m_hDC, oldBrush);
 	return (true);
@@ -73,11 +71,12 @@ bool CBackBuffer::Initialise(HWND _hWnd, int _iWidth, int _iHeight)
 /***********************
 * Clear: Clears the backbuffer to an empty state
 * @author: Asma Shakil
+* @author: Jc Fowles
 * @return: void
 ********************/
 void CBackBuffer::Clear()
 {
-	HBRUSH hOldBrush = static_cast<HBRUSH>(SelectObject(GetBFDC(), CreateSolidBrush(RGB(0,128,0))));
+	HBRUSH hOldBrush = static_cast<HBRUSH>(SelectObject(GetBFDC(),m_brushGreen )); 
 	Rectangle(GetBFDC(), 0, 0, GetWidth(), GetHeight());
 	SelectObject(GetBFDC(), hOldBrush);
 }
