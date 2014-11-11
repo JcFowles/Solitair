@@ -69,6 +69,47 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 					//g_rGame.m_bWin = true;
 				}
 				break;
+			case ID_GAME_OPTIONS:
+				{
+					
+					case ID_FLIPNUMBER_ONE :
+						{
+							g_rGame.GetDeck()->setFlipNum(1);
+						}
+						break;
+					case ID_FLIPNUMBER_THREE:
+						{
+							g_rGame.GetDeck()->setFlipNum(3);
+						}
+						break;
+					case ID_CARDBACKS_FACE:
+						{
+							g_rGame.SetCardBack(FACE);
+						}
+						break;
+					case ID_CARDBACKS_ROSE:
+						{
+							g_rGame.SetCardBack(ROSE);
+						}
+						break;
+					case ID_CARDBACKS_BLUE:
+						{
+							g_rGame.SetCardBack(DEFAULT);
+						}
+						break;
+					case ID_CARDBACKS_CROWN:
+						{
+							g_rGame.SetCardBack(CROWN);
+						}
+						break;
+					case ID_CARDBACKS_PURPLE:
+						{
+							g_rGame.SetCardBack(PURPLE);
+						}
+						break;
+					
+				}
+				break;
 			case ID_GAME_EXIT: 
 				{
 					PostQuitMessage(0);
