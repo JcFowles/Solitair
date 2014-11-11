@@ -10,12 +10,8 @@
 * Description : Implementation file for the Entity class
 * Author :	Asma Shakil
 *			Callan Moore
-*			JC Fowles
-*			Nick Gould
 * Mail :	Asma.shakil@mediadesign.school.nz
 *			Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz		
-*			Nick.gould@mediadesign.school.nz
 */
 
 // Local Includes

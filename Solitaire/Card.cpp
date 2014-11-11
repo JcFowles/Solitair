@@ -6,19 +6,16 @@
  
 * (c) 2005 - 2014 Media Design School 
  
-* File Name : Backbuffer.h
-* Description : Header file for the Backbuffer class
+* File Name : Card.cpp
+* Description : Implementation file for the Card class
 * Author :	Callan Moore
-*			JC Fowles
 *			Nick Gould
 * Mail :	Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz	
 *			Nick.gould@mediadesign.school.nz
 */
 
 // This Include
 #include "Card.h"
-
 
 /***********************
 * CCard: Contructor for Card class

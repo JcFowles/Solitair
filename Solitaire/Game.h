@@ -19,6 +19,7 @@
 */
 
 #pragma once
+
 #if !defined(__GAME_H__)
 #define __GAME_H__
 
@@ -33,9 +34,6 @@
 #include "MouseStack.h"
 #include "Entity.h"
 
-// Types
-// Constants
-
 // Prototypes
 class CWinStack;
 class CBackBuffer;
@@ -47,32 +45,27 @@ class CGame
 	// Member Functions
 public:
 	~CGame();
+
 	bool Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight);
 	void Draw();
 	void Process(float _fDeltaTick);
 	void ExecuteOneFrame();
+	void MouseClick(float _fMouseX, float _fMouseY);
+
+	// Getters
 	CBackBuffer* GetBackBuffer();
 	HINSTANCE GetAppInstance();
 	HWND GetWindow();
-
 	CDeck* GetDeck();
-
 	CMouseStack* GetMouseStack();
-	void MouseClick(float _fMouseX, float _fMouseY);
-
+	
+	// Setters
 	void SetCardBack(ECardBack _eCardBacking);
 	void SetCardFlipNum(int _iCardFlipNum);
-
-	//void SetMouseX(float _fMouseX);
-	//void SetMouseY(float _fMouseY);
-
 
 	// Singleton Methods
 	static CGame& GetInstance();
 	static void DestroyInstance(); 
-
-	bool HasWon();
-	bool m_bWin;
 private:
 	//Disallowing copies and extra constructions
 	CGame();
@@ -83,14 +76,13 @@ private:
 protected:
 	CClock* m_pClock;
 	CBackBuffer* m_pBackBuffer;
-	bool bCursorVisible;
-
 	vector<CPlayStack*>* m_PlayStacks;
 	CDeck* m_pDeck;
 	vector<CWinStack*>* m_WinStacks;
 	CMouseStack* m_pMouseStack;
 
-	
+	bool bCursorVisible;
+	bool m_bWin;
 
 	float m_fMouseX;
 	float m_fMouseY;
@@ -101,8 +93,5 @@ protected:
 
 	// Singleton Instance
 	static CGame* s_pGame;
-
-	//bool m_bWin;
-
 };
 #endif // __GAME_H__

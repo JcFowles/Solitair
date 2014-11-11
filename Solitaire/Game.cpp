@@ -101,7 +101,7 @@ CGame::~CGame()
 * @Parameters: _hWnd: Handle to the game window
 * @Parameters: _iWidth: Width of the game window
 * @Parameters: _iHeight: Height of the game window
-* @return: void
+* @return: bool: True if successful
 ********************/
 bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 {
@@ -594,16 +594,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			ShowCursor(true);
 		}
 	}
-}
-
-/***********************
-* HasWon: Check to see if you have won
-* @author: Jc Fowles
-* @return: bool: true if you have won
-********************/
-bool CGame::HasWon()
-{
-	return m_bWin;
 }
 
 /***********************

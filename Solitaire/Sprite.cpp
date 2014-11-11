@@ -10,12 +10,8 @@
 * Description : Implementation file for the Sprite class
 * Author :	Asma Shakil
 *			Callan Moore
-*			JC Fowles
-*			Nick Gould
 * Mail :	Asma.shakil@mediadesign.school.nz
 *			Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz		
-*			Nick.gould@mediadesign.school.nz
 */
 
 // This include
@@ -44,8 +40,6 @@ CSprite::CSprite()	: m_iX(0)
 ********************/
 CSprite::~CSprite()
 {
-	//DeleteObject(m_hSprite);
-	//DeleteObject(m_hMask);
 	--s_iRefCount;
 	if (s_iRefCount == 0)
 	{
@@ -60,7 +54,7 @@ CSprite::~CSprite()
 * Initialise: Initialises all the Sprite member variables
 * @author: Asma Shakil
 * @author: Callan Moore
-* @return: bool: always returns true
+* @return: bool: True if successful
 ********************/
 bool CSprite::Initialise()
 {
@@ -89,11 +83,13 @@ void CSprite::Draw(bool _bFlipped)
 {
 	int iSpriteID_X, iSpriteID_Y;
 
+	// If the Card is flipped show the front of the card
 	if(_bFlipped)
 	{
 		iSpriteID_X = m_eNumber;
 		iSpriteID_Y = m_eSuit;
 	}
+	// Show the current Card Backing choice
 	else
 	{
 		iSpriteID_X =  m_eCardBack + 3;
