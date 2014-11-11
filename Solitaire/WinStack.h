@@ -43,6 +43,8 @@ public:
 	CCard* RemoveCard();
 	bool Complete();
 
+	vector<CCard*>* GetCards();
+
 
 private:
 	// Disallowing copies

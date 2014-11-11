@@ -54,6 +54,8 @@ public:
 	HINSTANCE GetAppInstance();
 	HWND GetWindow();
 
+	CDeck* GetDeck();
+
 	CMouseStack* GetMouseStack();
 	void MouseClick(float _fMouseX, float _fMouseY);
 	//void SetMouseX(float _fMouseX);

@@ -273,6 +273,16 @@ CMouseStack* CGame::GetMouseStack()
 }
 
 /***********************
+* GetDeck: Returns a pointer to the games Deck
+* @author: Jc Fowles
+* @return: CDeck* : pointer to the games Deck
+********************/
+CDeck* CGame::GetDeck()
+{
+	return m_pDeck;
+}
+
+/***********************
 * MouseClick: Check to see if over a card
 * @author: Callan Moore
 * @author: Jc Fowles
@@ -288,6 +298,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 	int iPointedCardPosition = 0;
 	CCard* pCurrentCard = 0; 
 	CPlayStack* pCurrentStack = 0;
+	CWinStack* pCurrentWinStack = 0;
 
 	if( m_pMouseStack->GetHeldCards()->empty() )
 	{
@@ -351,6 +362,13 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 
+
+
+
+		
+
+
+
 		// If the mouse was over a viable card when clicked
 		if( pPointedCard != 0)
 		{
@@ -382,7 +400,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			pCurrentStack = (*m_PlayStacks)[i];
 
 			// Loop through all cards within current play stack
-			for (unsigned int j = 1; j < pCurrentStack->GetStack()->size(); j++)
+			for (unsigned int j = 0; j < pCurrentStack->GetStack()->size(); j++)
 			{
 				pCurrentCard = (*(pCurrentStack->GetStack()))[j];
 
@@ -402,16 +420,57 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 
-		if( pPointedCard == pPointedStack->GetStack()->back())
+
+
+		//breaking when pPointedCard = 0, not pointing to a card
+		if(pPointedCard != 0)
 		{
-			if( pPointedStack->AddCards(m_pMouseStack->GetHeldCards()) )
+			if( pPointedCard == pPointedStack->GetStack()->back())
 			{
-				while( !(m_pMouseStack->GetHeldCards()->empty()) )
+				if( pPointedStack->AddCards(m_pMouseStack->GetHeldCards()) )
 				{
-					m_pMouseStack->GetHeldCards()->pop_back();
+					while( !(m_pMouseStack->GetHeldCards()->empty()) )
+					{
+						m_pMouseStack->GetHeldCards()->pop_back();
+					}
 				}
 			}
 		}
+		
+
+		//loop through the win stacks
+		for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
+		{
+			pCurrentWinStack =  (*m_WinStacks)[i];
+			CCard* pCardInWinStack = (*(pCurrentWinStack->GetCards()))[0];
+
+			fCardX = pCardInWinStack->GetX();
+			fCardY = pCardInWinStack->GetY();
+			fCardHalfW = pCardInWinStack->GetWidth() / 2;
+			fCardHalfH = pCardInWinStack->GetHeight() / 2;
+
+			// Check if mouse is within borders of current card
+			if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
+				&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
+			{
+				// Save current card and stack
+				//pPointedCard = pCurrentCard;
+				//pPointedStack = pCurrentStack;
+				if((m_pMouseStack->GetHeldCards())->size() == 1)
+				{
+					CCard* theCard = (*(m_pMouseStack->GetHeldCards()))[0];
+					if(pCurrentWinStack->AddCard(theCard))
+					{
+						m_pMouseStack->GetHeldCards()->pop_back();
+					}
+
+				}
+				
+			}
+
+
+		}
+
 
 	}
 }

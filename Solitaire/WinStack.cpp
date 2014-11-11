@@ -24,6 +24,7 @@
 CWinStack::CWinStack(void)
 {
 	m_pCards = new vector<CCard*>;
+	m_bIsFull = false;
 }
 
 /***********************
@@ -160,9 +161,26 @@ bool CWinStack::CardCheckSuit( CCard*  _kpCard)
 ********************/
 bool CWinStack::CardCheckValue( CCard* _kpCard)
 {
-	if( (_kpCard->GetNumber()) == (((*m_pCards).back()->GetNumber()) - 1) )
+	
+	ECardNum eThisCardNum = _kpCard->GetNumber();
+	ECardNum eBackCardNum = ((*m_pCards).back()->GetNumber());
+
+	int iThisCardNum = static_cast<int>(eThisCardNum);
+	int iBackCardNum = static_cast<int>(eBackCardNum);
+	
+	if( iThisCardNum == (iBackCardNum + 1) )
 	{
 		return true;
 	}
 	return false;
+}
+
+/***********************
+* GetCards: Returns a pointer to the cards in the winstack
+* @author: Jc Fowles
+* @return: vector<CCard*>* : pointer to the cards in the winStack
+********************/
+vector<CCard*>* CWinStack::GetCards()
+{
+	return m_pCards;
 }
