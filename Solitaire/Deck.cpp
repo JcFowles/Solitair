@@ -190,21 +190,28 @@ bool CDeck::Deal(vector<CPlayStack*>* _pThePlayStack)
 ********************/
 bool CDeck::Flip()
 {
-	/*if(m_NumFlip > 1)
-	{*/
-	for(int i = 0; i < m_NumFlip ; i++)
+	if((*m_pDraw->back()).GetSuit() ==  SUIT_DEFAULT )
 	{
-		if((*m_pDraw->back()).GetSuit() ==  SUIT_DEFAULT )
-		{
 			Reset();
-			break;
-		}
-		else
+	}
+	else
+	{
+		int iFlipAmount = m_NumFlip;
+
+		if(static_cast<int>(m_pDraw->size()) < m_NumFlip)
 		{
-			m_pPickUp->push_back(m_pDraw->back());
-			m_pDraw->pop_back();
-			m_pPickUp->back()->SetFlipped(true);
-			m_pPickUp->back()->SetX((260.0f)); // + i*30.0f);
+			iFlipAmount = m_pDraw->size() - 1;
+		}
+		
+		for(int i = 0; i < iFlipAmount ; i++)
+		{
+			if((m_pDraw->back()->GetSuit() != SUIT_DEFAULT))
+			{
+				m_pPickUp->push_back(m_pDraw->back());
+				m_pDraw->pop_back();
+				m_pPickUp->back()->SetFlipped(true);
+				m_pPickUp->back()->SetX((260.0f)); 
+			}
 		}
 	}
 

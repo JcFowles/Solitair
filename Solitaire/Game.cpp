@@ -408,6 +408,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					m_pMouseStack->SetPrevDeck(0);
 					m_pMouseStack->SetPrevWinStack(pCurrentWinStack);
 					m_pMouseStack->SetPrevPlayStack(0);
+					break;
 				}
 			}
 		}
