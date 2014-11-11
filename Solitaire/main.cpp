@@ -64,7 +64,11 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 					MessageBoxA(_hWnd, "Made by Callan, JC, and Nick" , "About", MB_OK);
 				}
 				break;
-
+			case ID_GAME_UNDO:
+				{
+					g_rGame.m_bWin = true;
+				}
+				break;
 			case ID_GAME_EXIT: 
 				{
 					PostQuitMessage(0);
@@ -130,51 +134,6 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 	break;
 	default:break;
 	}
-
-
-
-	if(g_rGame.HasWon())
-	{
-		switch(MessageBoxA(_hWnd, "You Have Won \n Would you like to play again" , "Winning", MB_YESNO))
-		{
-		case IDYES:
-			{
-				//getting the game instance
-				HINSTANCE hInstance = (HINSTANCE)GetWindowLong(_hWnd, GWL_HINSTANCE);
-
-				//width and height of the window
-				int iWndWidth;
-				int iWndHeight;
-					
-				//getting the width and height of the window
-				RECT rect;
-				if(GetWindowRect(_hWnd, &rect))
-				{
-					iWndWidth = rect.right - rect.left;
-					iWndHeight = rect.bottom - rect.top;
-				}
-
-				//destroy and recreate the game
-				(&g_rGame)->DestroyInstance();
-				g_rGame.GetInstance();
-
-				if (!(g_rGame).Initialise(hInstance, _hWnd, iWndWidth, iWndHeight))
-				{
-					// Failed
-					return (0);
-				}
-
-			}
-			break;
-		case IDNO:
-			{
-				PostQuitMessage(0);
-				return(0);
-			}
-
-		}
-	}
-
 
 
 	return (DefWindowProc(_hWnd, _uiMsg, _wParam, _lParam));
