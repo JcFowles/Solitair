@@ -42,11 +42,6 @@ CGame::CGame()	: m_pClock(0)
 {
 	m_bWin = false;
 	bCursorVisible = true;
-	/*
-	for(int i = 0 ; i < 7; i++)
-	{
-		m_PlayStack[i] = new CPlayStack; 
-	}*/
 }
 
 /***********************
@@ -60,15 +55,34 @@ CGame::~CGame()
 {
 	delete m_pBackBuffer;
 	m_pBackBuffer = 0;
+
 	delete m_pClock;
 	m_pClock = 0;
 
-	while(!(m_PlayStacks->empty()))
+	delete m_pDeck;
+	m_pDeck = 0;
+
+	// Delete all PlayStacks
+	while( !(m_PlayStacks->empty()))
 	{
 		m_PlayStacks->pop_back();
 	}
 	delete m_PlayStacks;
 	m_PlayStacks = 0;
+
+	// Delete all WinStacks
+	while( !(m_WinStacks->empty()))
+	{
+		m_WinStacks->pop_back();
+	}
+	delete m_WinStacks;
+	m_WinStacks = 0;
+
+	delete m_pMouseStack;
+	m_pMouseStack = 0;
+
+
+
 	/*for(int i = 0 ; i < 7; i++)
 	{
 		delete m_PlayStack[i] ; 

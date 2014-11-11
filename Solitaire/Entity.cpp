@@ -27,10 +27,12 @@
 /***********************
 * CEntity: Contructor for the Entity class
 * @author: Asma Shakil
+* @author: Callan Moore
 ********************/
 CEntity::CEntity()	: m_fX(0.0f)
 					, m_fY(0.0f)
 {
+	m_pSprite = 0;
 }
 
 /***********************
@@ -47,7 +49,7 @@ CEntity::~CEntity()
 * Initialise: Initialises the entity and creates its sprite (image)
 * @author: Asma Shakil
 * @author: Callan Moore
-* @return: bool: always returns true
+* @return: bool: True if successful
 ********************/
 bool CEntity::Initialise()
 {

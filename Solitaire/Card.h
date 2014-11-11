@@ -30,7 +30,7 @@ class CCard : public CEntity
 {
 public:
 	CCard(void);
-	~CCard(void);
+	virtual ~CCard(void);
 
 	virtual bool Initialise(ESuit, ECardNum);
 	virtual void Draw();
@@ -50,13 +50,7 @@ protected:
 	bool m_bFlipped;
 
 private:
-	//int m_iSpriteID_X;
-	//int m_iSpriteID_Y;
 	int m_iMaskID;
-
-	//int m_iBackingID_X;
-	//int m_iBackingID_Y;
-
 };
 
 
