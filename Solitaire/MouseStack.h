@@ -35,8 +35,12 @@ public:
 	float GetMouseX();
 	float GetMouseY();
 
+
+
 	// Member Variables
 private:
+	float m_fPrevX;
+	float m_fPrevY;
 	vector<CCard*>* m_pHeldCards;
 };
 

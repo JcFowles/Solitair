@@ -58,6 +58,7 @@ public:
 
 	CMouseStack* GetMouseStack();
 	void MouseClick(float _fMouseX, float _fMouseY);
+	void CGame::SetCardBack(ECardBack _eCardBacking);
 	//void SetMouseX(float _fMouseX);
 	//void SetMouseY(float _fMouseY);
 
@@ -66,7 +67,7 @@ public:
 	static CGame& GetInstance();
 	static void DestroyInstance(); 
 
-
+	bool HasWon();
 
 private:
 	//Disallowing copies and extra constructions
@@ -84,6 +85,8 @@ protected:
 	vector<CWinStack*>* m_WinStacks;
 	CMouseStack* m_pMouseStack;
 
+	
+
 	float m_fMouseX;
 	float m_fMouseY;
 
@@ -93,6 +96,8 @@ protected:
 
 	// Singleton Instance
 	static CGame* s_pGame;
+
+	bool m_bWin;
 
 };
 #endif // __GAME_H__
