@@ -556,38 +556,3 @@ void CGame::SetCardBack(ECardBack _eCardBacking)
 	}
 }
 
-/***********************
-* SetCardBack: Sets the Card Backing for the game cards
-* @author: Callan Moore
-* @parameter: _eCardBacking: Enum for the Card Backing
-* @return: void
-********************/
-void CGame::SetCardBack(ECardBack _eCardBacking)
-{
-	deque<CCard*>* pTempDeckCards = 0;
-	pTempDeckCards = m_pDeck->GetDrawPile();
-
-	// Set the Draw pile card backs
-	for( unsigned int i = 0; i < pTempDeckCards->size(); i++)
-	{
-		(*pTempDeckCards)[i]->SetCardBack(_eCardBacking);
-	}
-
-	// Set the Pick up pile card backs
-	pTempDeckCards = m_pDeck->GetPickUpPile();
-	for( unsigned int i = 0; i < pTempDeckCards->size(); i++)
-	{
-		(*pTempDeckCards)[i]->SetCardBack(_eCardBacking);
-	}
-
-	// Set all Play Stacks card backs
-	vector<CCard*>* pTempStackCards = 0;
-	for( unsigned int i = 0; i < m_PlayStacks->size(); i++)
-	{
-		pTempStackCards = (*m_PlayStacks)[i]->GetStack();
-		for( unsigned int j = 0; j < pTempStackCards->size(); j++)
-		{
-			(*pTempStackCards)[j]->SetCardBack(_eCardBacking);
-		}
-	}
-}

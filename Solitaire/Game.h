@@ -59,11 +59,9 @@ public:
 
 	CMouseStack* GetMouseStack();
 	void MouseClick(float _fMouseX, float _fMouseY);
-<<<<<<< HEAD
+
 	void SetCardBack(ECardBack _eCardBacking);
-=======
-	void CGame::SetCardBack(ECardBack _eCardBacking);
->>>>>>> origin/Fowles
+
 	//void SetMouseX(float _fMouseX);
 	//void SetMouseY(float _fMouseY);
 
