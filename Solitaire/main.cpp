@@ -62,9 +62,14 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 			{
 			case (ID_HELP_ABOUT):
 				{
-					MessageBoxA(_hWnd, "Made by Callan, JC, and Nick" , "About", MB_OK);
+					MessageBoxA(_hWnd, "This game was created by: \nCallan Moore, JC Fowles, and Nick Gould \n\nFor Media Design School 2014 \nBachelor of Software Engineering\nGD1P02 Algorithms and Data Structures" , "About", MB_ICONQUESTION||MB_OK);
 				}
 				break;
+
+			case ID_HELP_HOWTOPLAY:
+				{
+					MessageBoxA(_hWnd, " Each Home stack must start with an ace. If you don't have any, you'll have to move cards between columns until you uncover one. \nYou can't move cards between columns at random, however. Columns must be built in descending order, from king to ace. \nSo you can place a 10 on a jack, but not on a 3. As an added twist, cards in columns must also alternate red and black. \n\nYou aren't limited to moving single cards. You can also move sequentially organized runs of cards between columns. Just click the deepest card in the run and drag them all to another column. \nIf you run out of moves, you'll have to draw more cards by clicking the deck in the upper-left corner. If the deck runs out, click its outline on the table to replace drawn cards back into the deck. \nYou can move a card to the Home stack by dragging it there." , "Help", MB_OK);
+				}
 			case ID_GAME_UNDO:
 				{
 
