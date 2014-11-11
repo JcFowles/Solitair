@@ -83,6 +83,7 @@ private:
 protected:
 	CClock* m_pClock;
 	CBackBuffer* m_pBackBuffer;
+	bool bCursorVisible;
 
 	vector<CPlayStack*>* m_PlayStacks;
 	CDeck* m_pDeck;

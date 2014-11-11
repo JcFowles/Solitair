@@ -41,6 +41,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_pMouseStack(0)
 {
 	m_bWin = false;
+	bCursorVisible = true;
 	/*
 	for(int i = 0 ; i < 7; i++)
 	{
@@ -315,6 +316,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 	CPlayStack* pCurrentStack = 0;
 	CWinStack* pCurrentWinStack = 0;
 
+	POINT ptMoveCursor;
+	ptMoveCursor.x = 0;
+	ptMoveCursor.y = 0;
+
 	if( m_pMouseStack->GetHeldCards()->empty() )
 	{
 		float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
@@ -340,6 +345,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			// Take the top card if the click was inside the borders
 			if ( (_fMouseX < fPickX + fPickHalfW && _fMouseX > fPickX - fPickHalfW) && (_fMouseY < fPickY + fPickHalfH && _fMouseY > fPickY - fPickHalfH) )
 			{
+				// Move the mouse to the centre of the card
+				ptMoveCursor.x = pPickUpTopCard->GetX();
+				ptMoveCursor.y = pPickUpTopCard->GetY();
+
 				m_pMouseStack->GetHeldCards()->push_back(pPickUpTopCard);
 				m_pDeck->GetPickUpPile()->pop_back();
 
@@ -373,6 +382,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
+					// Move the mouse to the centre of the card
+					ptMoveCursor.x = fCardX;
+					ptMoveCursor.y = fCardY;
+
 					// Save current card and stack
 					pPointedCard = pCurrentCard;
 					pPointedStack = pCurrentStack;
@@ -403,6 +416,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
+					// Move the mouse to the centre of the card
+					ptMoveCursor.x = fCardX;
+					ptMoveCursor.y = fCardY;
+
 					m_pMouseStack->GetHeldCards()->push_back(pCurrentWinStack->RemoveCard());
 
 					m_pMouseStack->SetPrevDeck(0);
@@ -533,6 +550,34 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 	}
+
+	if( ptMoveCursor.x != 0 && ptMoveCursor.y !=0)
+	{
+		ClientToScreen(m_hMainWindow , &ptMoveCursor);
+		SetCursorPos(ptMoveCursor.x,ptMoveCursor.y);
+	}
+
+	// Show cursor only when no cards are in mouse stack
+	if( m_pMouseStack->GetHeldCards()->empty() == false)
+	{
+		// Set cursor to false only if the cursor was true 
+		if( bCursorVisible == true)
+		{
+			bCursorVisible = false;
+			ShowCursor(false);
+		}
+	}
+	else
+	{
+		// Set cursor to true only if the cursor was false 
+		if( bCursorVisible == false)
+		{
+			bCursorVisible = true;
+			ShowCursor(true);
+		}
+	}
+
+
 }
 
 /***********************
