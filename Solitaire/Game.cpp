@@ -41,6 +41,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_pMouseStack(0)
 {
 	m_bWin = false;
+	bCursorVisible = true;
 	/*
 	for(int i = 0 ; i < 7; i++)
 	{
@@ -315,6 +316,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 	CPlayStack* pCurrentStack = 0;
 	CWinStack* pCurrentWinStack = 0;
 
+	POINT ptMoveCursor;
+	ptMoveCursor.x = 0;
+	ptMoveCursor.y = 0;
+
 	if( m_pMouseStack->GetHeldCards()->empty() )
 	{
 		float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
@@ -385,6 +390,24 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 
+		// If the mouse was over a viable Playstack card when clicked
+		if( pPointedCard != 0)
+		{
+			// If the viable card is flipped then take it and add it to the MouseStack vector
+			if( pPointedCard->IsFlipped() )
+			{
+				vector<CCard*>* pCardsToTake = pPointedStack->RemoveCards(iPointedCardPosition);
+
+				m_pMouseStack->SetHeldCards(pCardsToTake);
+				pCardsToTake = 0;
+			}
+			// Card was front card of stack but not flipped yet so flip it only
+			else if( pPointedCard == pPointedStack->GetStack()->back())
+			{
+				pPointedStack->GetStack()->back()->SetFlipped(true);
+			}
+		}
+
 		//loop through the win stacks
 		for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
 		{
@@ -410,24 +433,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					m_pMouseStack->SetPrevPlayStack(0);
 					break;
 				}
-			}
-		}
-
-		// If the mouse was over a viable card when clicked
-		if( pPointedCard != 0)
-		{
-			// If the viable card is flipped then take it and add it to the MouseStack vector
-			if( pPointedStack->GetStack()->back()->IsFlipped() )
-			{
-				vector<CCard*>* pCardsToTake = pPointedStack->RemoveCards(iPointedCardPosition);
-
-				m_pMouseStack->SetHeldCards(pCardsToTake);
-				pCardsToTake = 0;
-			}
-			// Card was front card of stack but not flipped yet so flip it only
-			else if( pPointedCard == pPointedStack->GetStack()->back())
-			{
-				pPointedStack->GetStack()->back()->SetFlipped(true);
 			}
 		}
 	}
@@ -532,6 +537,26 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					m_pMouseStack->GetHeldCards()->pop_back();
 				}
 			}
+		}
+	}
+
+	// Show cursor only when no cards are in mouse stack
+	if( m_pMouseStack->GetHeldCards()->empty() == false)
+	{
+		// Set cursor to false only if the cursor was true 
+		if( bCursorVisible == true)
+		{
+			bCursorVisible = false;
+			ShowCursor(false);
+		}
+	}
+	else
+	{
+		// Set cursor to true only if the cursor was false 
+		if( bCursorVisible == false)
+		{
+			bCursorVisible = true;
+			ShowCursor(true);
 		}
 	}
 }
