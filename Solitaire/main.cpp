@@ -66,9 +66,7 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 				break;
 			case ID_GAME_UNDO:
 				{
-<<<<<<< HEAD
-					g_rGame.m_bWin = true;
-=======
+
 					//g_rGame.m_bWin = true;
 				}
 				break;
@@ -111,7 +109,6 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 						}
 						break;
 					
->>>>>>> origin/Combined
 				}
 				break;
 			case ID_GAME_EXIT: 
