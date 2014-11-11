@@ -61,6 +61,7 @@ public:
 	void MouseClick(float _fMouseX, float _fMouseY);
 
 	void SetCardBack(ECardBack _eCardBacking);
+	void SetCardFlipNum(int _iCardFlipNum);
 
 	//void SetMouseX(float _fMouseX);
 	//void SetMouseY(float _fMouseY);
@@ -82,6 +83,7 @@ private:
 protected:
 	CClock* m_pClock;
 	CBackBuffer* m_pBackBuffer;
+	bool bCursorVisible;
 
 	vector<CPlayStack*>* m_PlayStacks;
 	CDeck* m_pDeck;

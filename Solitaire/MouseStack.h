@@ -19,6 +19,9 @@
 // Local Includes
 #include "Card.h"
 
+class CPlayStack;
+class CWinStack;
+class CDeck;
 class CCard;
 class CMouseStack : public CEntity
 {
@@ -35,6 +38,12 @@ public:
 	float GetMouseX();
 	float GetMouseY();
 
+	CDeck* GetPrevDeck();
+	CWinStack* GetPrevWinStack();
+	CPlayStack* GetPrevPlayStack();
+	void SetPrevDeck( CDeck* _pPrevDeck);
+	void SetPrevWinStack( CWinStack* _pPrevWinStack);
+	void SetPrevPlayStack( CPlayStack* _pPrevPlayStack);
 
 
 	// Member Variables
@@ -42,5 +51,10 @@ private:
 	float m_fPrevX;
 	float m_fPrevY;
 	vector<CCard*>* m_pHeldCards;
+
+	CDeck* m_pPrevDeck;
+	CWinStack* m_pPrevWinStack;
+	CPlayStack* m_pPrevPlayStack;
+
 };
 
