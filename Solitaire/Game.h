@@ -71,7 +71,7 @@ public:
 	static void DestroyInstance(); 
 
 	bool HasWon();
-
+	bool m_bWin;
 private:
 	//Disallowing copies and extra constructions
 	CGame();
@@ -100,7 +100,7 @@ protected:
 	// Singleton Instance
 	static CGame* s_pGame;
 
-	bool m_bWin;
+	//bool m_bWin;
 
 };
 #endif // __GAME_H__

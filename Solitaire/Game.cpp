@@ -193,6 +193,8 @@ void CGame::Process(float _fDeltaTick)
 		(*m_PlayStacks)[i]->Process(_fDeltaTick);
 	}
 
+
+	//WINNING CHECK
 	m_bWin = true;
 	for(unsigned int i = 0; i < m_WinStacks->size() ; i++)
 	{
@@ -202,6 +204,25 @@ void CGame::Process(float _fDeltaTick)
 			m_bWin = false;
 		}
 	}
+	
+	if(m_bWin)
+	{
+		switch(MessageBoxA(m_hMainWindow, "You Have Won \n Would you like to play again" , "Winning", MB_YESNO))
+		{
+		case IDYES:
+			{
+				
+				SendMessage(m_hMainWindow, WM_COMMAND, ID_GAME_NEWGAME, 0);
+				
+			}
+			break;
+		case IDNO:
+			{
+				PostQuitMessage(0);
+			}
+		}
+	}
+		
 
 
 }
