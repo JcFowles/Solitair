@@ -31,6 +31,7 @@
 #include "Deck.h"
 #include "WinStack.h"
 #include "MouseStack.h"
+#include "Entity.h"
 
 // Types
 // Constants
@@ -58,6 +59,7 @@ public:
 
 	CMouseStack* GetMouseStack();
 	void MouseClick(float _fMouseX, float _fMouseY);
+	void SetCardBack(ECardBack _eCardBacking);
 	//void SetMouseX(float _fMouseX);
 	//void SetMouseY(float _fMouseY);
 

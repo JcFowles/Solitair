@@ -52,6 +52,7 @@ public:
 	void TranslateAbsolute(int _iX, int _iY);
 	void SetSuit(ESuit _eSuit);
 	void SetNumber(ECardNum _eCardNum);
+	void SetCardBack(ECardBack _eCardBacking);
 private:
 	// Disallowing copies
 	CSprite(const CSprite& _kr);
@@ -68,8 +69,8 @@ protected:
 	static HDC s_hSharedSpriteDC;
 	static int s_iRefCount;
 
-	int m_iBackingID_X;
 	int m_iBackingID_Y;
+	ECardBack m_eCardBack;
 	ESuit m_eSuit;
 	ECardNum m_eNumber;
 };

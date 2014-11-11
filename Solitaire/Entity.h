@@ -27,6 +27,8 @@
 #if !defined(__ENTITY_H__)
 #define __ENTITY_H__
 
+
+
 // Prototypes
 class CSprite;
 
@@ -47,6 +49,7 @@ public:
 	float GetWidth() const;
 	void SetSuit(ESuit _eSuit);
 	void SetNumber(ECardNum _eCardNum);
+	void SetCardBack(ECardBack _eCardBacking);
 
 private:
 	// Disallowing copies

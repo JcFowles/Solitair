@@ -169,3 +169,14 @@ void CEntity::SetNumber(ECardNum _eCardNum)
 {
 	m_pSprite->SetNumber(_eCardNum);
 }
+
+/***********************
+* SetCardBack: Sets the Card Backing for the Entity
+* @author: Callan Moore
+* @parameter: _eCardBacking: Enum for the Card Backing
+* @return: void
+********************/
+void CEntity::SetCardBack(ECardBack _eCardBacking)
+{
+	m_pSprite->SetCardBack(_eCardBacking);
+}

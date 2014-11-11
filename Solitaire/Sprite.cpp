@@ -33,7 +33,6 @@ CSprite::CSprite()	: m_iX(0)
 					, m_iY(0)
 {
 	++s_iRefCount;
-	m_iBackingID_X = 5;
 	m_iBackingID_Y = 4;
 	m_eSuit = SUIT_DEFAULT;
 	m_eNumber = ACE;
@@ -97,7 +96,7 @@ void CSprite::Draw(bool _bFlipped)
 	}
 	else
 	{
-		iSpriteID_X = m_iBackingID_X;
+		iSpriteID_X =  m_eCardBack + 3;
 		iSpriteID_Y = m_iBackingID_Y;
 	}
 
@@ -233,4 +232,15 @@ void CSprite::SetSuit(ESuit _eSuit)
 void CSprite::SetNumber(ECardNum _eCardNum)
 {
 	m_eNumber = _eCardNum;
+}
+
+/***********************
+* SetCardBack: Sets the Card Backing for the Sprite
+* @author: Callan Moore
+* @parameter: _eCardBacking: Enum for the Card Backing
+* @return: void
+********************/
+void CSprite::SetCardBack(ECardBack _eCardBacking)
+{
+	m_eCardBack = _eCardBacking;
 }
