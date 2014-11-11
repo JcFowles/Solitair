@@ -9,13 +9,7 @@
 * File Name : Clock.h 
 * Description : Header file for the Clock class
 * Author :	Asma Shakil
-*			Callan Moore
-* 			JC Fowles
-*			Nick Gould
 * Mail :	Asma.Shakil@mediadesign.school.nz 
-* 			Callan.Moore@mediadesign.school.nz 
-*			Jc.Fowles@mediadesign.school.nz 
-*			Nick.gould@mediadesign.school.nz
 */
 
 #pragma once
@@ -26,11 +20,6 @@
 #if !defined(__CLOCK_H__)
 #define __CLOCK_H__
 
-// Library Includes
-// Local Includes
-// Types
-// Constants
-
 // Prototypes
 class CClock
 {
@@ -38,8 +27,11 @@ class CClock
 public:
 	CClock();
 	~CClock();
+
 	bool Initialise();
 	void Process();
+
+	// Getters
 	float GetDeltaTick();
 
 private:

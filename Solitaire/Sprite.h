@@ -10,21 +10,14 @@
 * Description : Header file for the sprite class
 * Author :	Asma Shakil
 *			Callan Moore
-*			JC Fowles
-*			Nick Gould
 * Mail :	Asma.shakil@mediadesign.school.nz
 *			Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz	
-*			Nick.gould@mediadesign.school.nz
 */
 
 #pragma once
 
 #if !defined(__SPRITE_H__)
 #define __SPRITE_H__
-
-// Library Includes
-#include "windows.h"
 
 // Local Includes
 #include "resource.h"
@@ -39,17 +32,22 @@ class CSprite
 public:
 	CSprite();
 	~CSprite();
-	bool Initialise();
-	void Draw(bool _bFlipped);
-	void Process(float _fDeltaTick);
+
+	virtual bool Initialise();
+	virtual void Draw(bool _bFlipped);
+	virtual void Process(float _fDeltaTick);
+	void TranslateRelative(int _iX, int _iY);
+	void TranslateAbsolute(int _iX, int _iY);
+
+	// Getters
 	int GetWidth() const;
 	int GetHeight() const;
 	int GetX() const;
 	int GetY() const;
+
+	// Setters
 	void SetX(int _i);
 	void SetY(int _i);
-	void TranslateRelative(int _iX, int _iY);
-	void TranslateAbsolute(int _iX, int _iY);
 	void SetSuit(ESuit _eSuit);
 	void SetNumber(ECardNum _eCardNum);
 	void SetCardBack(ECardBack _eCardBacking);
@@ -60,16 +58,18 @@ private:
 
 	// Member Variables
 protected:
+	static HDC s_hSharedSpriteDC;
+	static int s_iRefCount;
+
 	int m_iX;
 	int m_iY;
+	int m_iBackingID_Y;
+
 	HBITMAP m_hSprite;
 	HBITMAP m_hMask;
 	BITMAP m_bitmapSprite;
 	BITMAP m_bitmapMask;
-	static HDC s_hSharedSpriteDC;
-	static int s_iRefCount;
-
-	int m_iBackingID_Y;
+	
 	ECardBack m_eCardBack;
 	ESuit m_eSuit;
 	ECardNum m_eNumber;

@@ -9,13 +9,7 @@
 * File Name : Clock.cpp 
 * Description : Implementaion file for the Clock Class
 * Author :	Asma Shakil
-*			Callan Moore
-* 			JC Fowles
-*			Nick Gould
 * Mail :	Asma.Shakil@mediadesign.school.nz 
-* 			Callan.Moore@mediadesign.school.nz 
-*			Jc.Fowles@mediadesign.school.nz 
-*			Nick.gould@mediadesign.school.nz
 */
 
 // Local Includes

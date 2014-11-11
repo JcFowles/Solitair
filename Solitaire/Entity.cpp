@@ -10,12 +10,8 @@
 * Description : Implementation file for the Entity class
 * Author :	Asma Shakil
 *			Callan Moore
-*			JC Fowles
-*			Nick Gould
 * Mail :	Asma.shakil@mediadesign.school.nz
 *			Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz		
-*			Nick.gould@mediadesign.school.nz
 */
 
 // Local Includes
@@ -27,10 +23,12 @@
 /***********************
 * CEntity: Contructor for the Entity class
 * @author: Asma Shakil
+* @author: Callan Moore
 ********************/
 CEntity::CEntity()	: m_fX(0.0f)
 					, m_fY(0.0f)
 {
+	m_pSprite = 0;
 }
 
 /***********************
@@ -47,7 +45,7 @@ CEntity::~CEntity()
 * Initialise: Initialises the entity and creates its sprite (image)
 * @author: Asma Shakil
 * @author: Callan Moore
-* @return: bool: always returns true
+* @return: bool: True if successful
 ********************/
 bool CEntity::Initialise()
 {

@@ -6,19 +6,16 @@
  
 * (c) 2005 - 2014 Media Design School 
  
-* File Name : Backbuffer.h
-* Description : Header file for the Backbuffer class
+* File Name : Card.cpp
+* Description : Implementation file for the Card class
 * Author :	Callan Moore
-*			JC Fowles
 *			Nick Gould
 * Mail :	Callan.moore@mediadesign.school.nz
-*			Jc.fowles@mediadesign.school.nz	
 *			Nick.gould@mediadesign.school.nz
 */
 
 // This Include
 #include "Card.h"
-
 
 /***********************
 * CCard: Contructor for Card class
@@ -28,13 +25,7 @@
 ********************/
 CCard::CCard(void)
 {
-
 	m_bFlipped = false;;
-	//m_iBackingID_X = 5;
-	//m_iBackingID_Y = 4;
-	//m_eSuit = SUIT_DEFAULT;
-	//m_eCardNum = NUM_DEFAULT;
-
 }
 
 /***********************
@@ -58,12 +49,9 @@ CCard::~CCard(void)
 bool CCard::Initialise(ESuit _ESuit, ECardNum _ECardnum)
 {
 	m_iMaskID = IDB_MASK_CARD;
-	//m_iSpriteID_Y = _ESuit;
-	//m_iSpriteID_X = _ECardnum;
 	VALIDATE(CEntity::Initialise());
 	SetSuit(_ESuit);
 	SetNumber(_ECardnum);
-	//VALIDATE(CEntity::Initialise());
 	return true;
 }
 

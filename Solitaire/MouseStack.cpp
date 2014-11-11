@@ -19,7 +19,6 @@
 /***********************
 * CMouseStack: Contructor for Mouse Stack class
 * @author: Callan Moore
-* @return: void
 ********************/
 CMouseStack::CMouseStack(void)
 {
@@ -32,20 +31,21 @@ CMouseStack::CMouseStack(void)
 /***********************
 * ~CMouseStack: Destructor for Mouse Stack class
 * @author: Callan Moore
-* @return: void
 ********************/
 CMouseStack::~CMouseStack(void)
 {
+	if( m_pHeldCards->empty() == false)
+	{
+		m_pHeldCards->pop_back();
+	}
+	delete m_pHeldCards;
+	m_pHeldCards = 0;
 }
 
 /***********************
 * Initialise: Initialises the Mouse Stack member variables
 * @author: Callan Moore
-* @Parameters: _hInstance:  Handle to the specific instance of the running game
-* @Parameters: _hWnd: Handle to the game window
-* @Parameters: _iWidth: Width of the game window
-* @Parameters: _iHeight: Height of the game window
-* @return: void
+* @return: bool: True if successful
 ********************/
 bool CMouseStack::Initialise()
 {
@@ -139,7 +139,7 @@ float CMouseStack::GetMouseX()
 }
 
 /***********************
-* GetMouseY: Retrieves the Mousestacks X position
+* GetMouseY: Retrieves the Mousestacks Y position
 * @author: Callan Moore
 * @return: float: The Mouse Y coordinate
 ********************/
@@ -161,7 +161,7 @@ CDeck* CMouseStack::GetPrevDeck()
 /***********************
 * GetPrevWinStack: Retrieves the Previous WinStack location
 * @author: Callan Moore
-* @return: CDeck*: Pointer to the previous location in the Winstack
+* @return: CWinStack*: Pointer to the previous location in the Winstack
 ********************/
 CWinStack* CMouseStack::GetPrevWinStack()
 {
@@ -171,7 +171,7 @@ CWinStack* CMouseStack::GetPrevWinStack()
 /***********************
 * GetPrevPlayStack: Retrieves the Previous Playstack location
 * @author: Callan Moore
-* @return: CDeck*: Pointer to the previous location in the Playstack
+* @return: CPlayStack*: Pointer to the previous location in the Playstack
 ********************/
 CPlayStack* CMouseStack::GetPrevPlayStack()
 {
@@ -203,7 +203,7 @@ void CMouseStack::SetPrevWinStack( CWinStack* _pPrevWinStack)
 /***********************
 * SetPrevPlayStack: Sets the Previous Playstack location
 * @author: Callan Moore
-* @parameter: _pPrevDeck: Location of previous Playstack
+* @parameter: _pPrevPlayStack: Location of previous Playstack
 * @return: void
 ********************/
 void CMouseStack::SetPrevPlayStack( CPlayStack* _pPrevPlayStack)
