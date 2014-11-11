@@ -202,11 +202,11 @@ void CGame::Draw()
 ********************/
 void CGame::Process(float _fDeltaTick)
 {
-	// Process all the game’s logic here.
-	for(unsigned int i = 0; i < m_PlayStacks->size() ; i++)
-	{
-		(*m_PlayStacks)[i]->Process(_fDeltaTick);
-	}
+	//// Process all the game’s logic here.
+	//for(unsigned int i = 0; i < m_PlayStacks->size() ; i++)
+	//{
+	//	(*m_PlayStacks)[i]->Process(_fDeltaTick);
+	//}
 
 
 	//WINNING CHECK
@@ -226,15 +226,14 @@ void CGame::Process(float _fDeltaTick)
 		{
 		case IDYES:
 			{
-				
 				SendMessage(m_hMainWindow, WM_COMMAND, ID_GAME_NEWGAME, 0);
-				
 			}
 			break;
 		case IDNO:
 			{
 				PostQuitMessage(0);
 			}
+			break;
 		}
 	}
 		

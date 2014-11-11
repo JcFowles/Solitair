@@ -10,7 +10,6 @@
 * File Name : CPlayStack.cpp
 * Description : Implementation file for the PlayStack class
 * Author :	JC Fowles
-
 * Mail :	Jc.fowles@mediadesign.school.nz		
 */
 
@@ -33,6 +32,13 @@ CWinStack::CWinStack(void)
 ********************/
 CWinStack::~CWinStack(void)
 {
+	while(!(m_pCards->empty()))
+	{
+		m_pCards->pop_back();
+	}
+
+	delete m_pCards;
+	m_pCards = 0;
 }
 
 /***********************
@@ -40,7 +46,7 @@ CWinStack::~CWinStack(void)
 * @author: Jc Fowles
 * @parameter: _fX : x position of the playStack
 * @parameter: _fY : y position of the playStack
-* @return: void
+* @return: bool: true if successful 
 ********************/
 bool CWinStack::Initialise(float _fX, float _fY)
 {
@@ -65,22 +71,10 @@ bool CWinStack::Initialise(float _fX, float _fY)
 ********************/
 void CWinStack::Draw()
 {
-	
-	if(m_pCards->size() > 1)
-	{
-		for(unsigned int i = 1; i < m_pCards->size() ; i++)
-		{
-			(*m_pCards)[i]->SetX((*m_pCards)[0]->GetX());
-			(*m_pCards)[i]->SetY( ((*m_pCards)[0]->GetY()));
-			
-			(*m_pCards)[i]->Draw();
-		}
-	}
-	else
-	{
-		(*m_pCards)[m_pCards->size() - 1]->Draw();
-	}
-	
+	//Only Draws the top card in the win stack
+	(m_pCards)->back()->SetX((*m_pCards)[0]->GetX());
+	(m_pCards)->back()->SetY( ((*m_pCards)[0]->GetY()));
+	(m_pCards)->back()->Draw();
 }
 
 /***********************
@@ -91,45 +85,34 @@ void CWinStack::Draw()
 ********************/
 void CWinStack::Process(float _fDeltaTick)
 {
-	while(!(m_pCards->empty()))
-	{
-		m_pCards->pop_back();
-	}
-
-	delete m_pCards;
-	m_pCards = 0;
 }
 
 
 /***********************
-* AddCard: Adds a cards to the card win stack
+* AddCard: Adds a single card to the card win stack
 * @author: Jc Fowles
 * @parameter: _pCards: the card to add to the stack
 * @return: bool : True if card was added, False if not
 ********************/
 bool CWinStack::AddCard(CCard* _pCards)
 {
+	//If its only the blank card on the Winstack
 	if( ((*m_pCards).back()->GetSuit()) == SUIT_DEFAULT)
 	{
+		//check if the card being added is an Ace
 		if(_pCards->GetNumber() == ACE)
 		{
 			m_pCards->push_back(_pCards);
 			return true;
 		}
-		else
-		{
-			return false;
-		}
 	}
-	else if(CardCheckSuit(_pCards) )
+	else if(CardCheckSuit(_pCards) )  //if there is any actual card on the Winstack, check the card value
 	{
 		m_pCards->push_back(_pCards);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	//Card could not be added
+	return (false);
 }
 
 /***********************
@@ -140,7 +123,7 @@ bool CWinStack::AddCard(CCard* _pCards)
 CCard* CWinStack::RemoveCard()
 {
 	CCard* returnCard = m_pCards->back();
-	m_pCards->pop_back(); // remove from the win stack
+	m_pCards->pop_back(); // remove one card from the win stack
 	return returnCard;
 }
 
@@ -152,16 +135,16 @@ CCard* CWinStack::RemoveCard()
 ********************/
 bool CWinStack::CardCheckSuit( CCard*  _kpCard)
 {
-	
+	//checks if the current suit is the same as th ecard on the win stack
 	if( (_kpCard->GetSuit()) == ((*m_pCards).back()->GetSuit()) )
 	{
+		//checks the card value
 		return CardCheckValue(_kpCard);
 	}
 	else
 	{
 		return false;
 	}
-
 }
 
 /***********************
@@ -172,13 +155,13 @@ bool CWinStack::CardCheckSuit( CCard*  _kpCard)
 ********************/
 bool CWinStack::CardCheckValue( CCard* _kpCard)
 {
-	
+	//converts enums to ints
 	ECardNum eThisCardNum = _kpCard->GetNumber();
 	ECardNum eBackCardNum = ((*m_pCards).back()->GetNumber());
-
 	int iThisCardNum = static_cast<int>(eThisCardNum);
 	int iBackCardNum = static_cast<int>(eBackCardNum);
 	
+	//Checks if the value of current card is one greater than card on the Winstack already
 	if( iThisCardNum == (iBackCardNum + 1) )
 	{
 		return true;
@@ -196,14 +179,17 @@ vector<CCard*>* CWinStack::GetCards()
 	return m_pCards;
 }
 
+/***********************
+* Complete: Checks if the win stack is complete
+* @author: Jc Fowles
+* @return: bool : pointer to the cards in the winStack
+********************/
 bool CWinStack::Complete()
 {
 	if(m_pCards->back()->GetNumber() == KING)
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	
+	return (false);
 }

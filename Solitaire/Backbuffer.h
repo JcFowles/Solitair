@@ -9,13 +9,9 @@
 * File Name : Backbuffer.h
 * Description : Header file for the Backbuffer class
 * Author :	Asma Shakil
-*			Callan Moore
 *			JC Fowles
-*			Nick Gould
 * Mail :	Asma.shakil@mediadesign.school.nz
-*			Callan.moore@mediadesign.school.nz
 *			Jc.fowles@mediadesign.school.nz	
-*			Nick.gould@mediadesign.school.nz
 */
 
 #pragma once
@@ -52,6 +48,7 @@ protected:
 	HBITMAP m_hOldObject;
 	int m_iWidth;
 	int m_iHeight;
+	HBRUSH m_brushGreen ;
 
 };
 

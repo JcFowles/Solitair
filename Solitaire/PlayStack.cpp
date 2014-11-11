@@ -8,9 +8,10 @@
  
 * File Name : CPlayStack.cpp
 * Description : Implementation file for the PlayStack class
-* Author :	JC Fowles
-
-* Mail :	Jc.fowles@mediadesign.school.nz		
+* Author :	Callan Moore
+*		    JC Fowles
+* Mail :	Callan.Moore@mediadesign.school.nz	
+*			Jc.fowles@mediadesign.school.nz
 */
 
 // This include
@@ -44,7 +45,7 @@ CPlayStack::~CPlayStack(void)
 * @author: Jc Fowles
 * @parameter: _fX : x position of the playStack
 * @parameter: _fY : y position of the playStack
-* @return: void
+* @return: bool : True if successfull
 ********************/
 bool CPlayStack::Initialise(float _fX, float _fY)
 {
@@ -54,9 +55,6 @@ bool CPlayStack::Initialise(float _fX, float _fY)
 	VALIDATE(pBlank->Initialise(SUIT_DEFAULT, ACE));
 	pBlank->SetX(_fX);
 	pBlank->SetY(_fY);
-	//CEntity::SetX(_iX);
-	//CEntity::SetY(_iY);
-	
 	
 	m_pCards->push_back(pBlank);
 
@@ -72,7 +70,6 @@ bool CPlayStack::Initialise(float _fX, float _fY)
 ********************/
 void CPlayStack::Draw()
 {
-	
 	if(m_pCards->size() > 1)
 	{
 
@@ -104,7 +101,7 @@ void CPlayStack::Draw()
 		}
 
 	}
-	else
+	else	//No Cards in the play stack draw the blank card
 	{
 		(*m_pCards)[0]->Draw();
 	}
@@ -119,7 +116,6 @@ void CPlayStack::Draw()
 ********************/
 void CPlayStack::Process(float _fDeltaTick)
 {
-	//FlipCard();
 }
 
 /***********************
@@ -130,8 +126,9 @@ void CPlayStack::Process(float _fDeltaTick)
 ********************/
 bool CPlayStack::AddCards(vector<CCard*>* _pCards)
 {
+	//Checks the cards suit is of oposite color, or if its a blank card do the blank check
 	if( (CardCheckSuit((*_pCards)[0])) ||
-		(BlankCheck((*_pCards)[0]))     )
+		(BlankCheck((*_pCards)[0]))  )
 	{
 		for(unsigned int i = 0 ; i < _pCards->size() ; i++)
 		{
@@ -139,10 +136,7 @@ bool CPlayStack::AddCards(vector<CCard*>* _pCards)
 		}
 		return true;
 	}
-	else 
-	{
-		return false;
-	}
+	return (false);	
 }
 
 /***********************
@@ -191,7 +185,7 @@ vector<CCard*>* CPlayStack::RemoveCards(int _iCardFromTop)
 ********************/
 bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 {
-	
+	//checks if a red card is trying to be placed on a black or vice versa
 	if( ((_kpCard->GetSuit()) < 2) &&
 		((*m_pCards).back()->GetSuit() > 1) )
 	{
@@ -217,6 +211,7 @@ bool CPlayStack::CardCheckSuit( CCard*  _kpCard)
 ********************/
 bool CPlayStack::FlipCard()
 {
+	//flip a card if it is not flipped already
 	if(!((*m_pCards).back()->IsFlipped()))
 	{
 		(*m_pCards).back()->SetFlipped(true);
@@ -234,6 +229,7 @@ bool CPlayStack::FlipCard()
 ********************/
 bool CPlayStack::CardCheckValue( CCard*  _kpCard)
 {
+	//checks to see if the card value is valid, its one less 
 	if( (_kpCard->GetNumber()) == (((*m_pCards).back()->GetNumber()) - 1) )
 	{
 		return true;
@@ -249,6 +245,7 @@ bool CPlayStack::CardCheckValue( CCard*  _kpCard)
 ********************/
 bool CPlayStack::BlankCheck( CCard*  _kpCard)
 {
+	//check if the play stack oinly has a blank  card, check if the added card is a king
 	if( ((_kpCard->GetNumber()) == KING ) &&
 		(((*m_pCards).back()->GetSuit()) == SUIT_DEFAULT))
 	{

@@ -65,15 +65,9 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 					MessageBoxA(_hWnd, "This game was created by: \nCallan Moore, JC Fowles, and Nick Gould \n\nFor Media Design School 2014 \nBachelor of Software Engineering\nGD1P02 Algorithms and Data Structures" , "About", MB_ICONQUESTION||MB_OK);
 				}
 				break;
-
 			case ID_HELP_HOWTOPLAY:
 				{
 					MessageBoxA(_hWnd, " Each Home stack must start with an ace. If you don't have any, you'll have to move cards between columns until you uncover one. \nYou can't move cards between columns at random, however. Columns must be built in descending order, from king to ace. \nSo you can place a 10 on a jack, but not on a 3. As an added twist, cards in columns must also alternate red and black. \n\nYou aren't limited to moving single cards. You can also move sequentially organized runs of cards between columns. Just click the deepest card in the run and drag them all to another column. \nIf you run out of moves, you'll have to draw more cards by clicking the deck in the upper-left corner. If the deck runs out, click its outline on the table to replace drawn cards back into the deck. \nYou can move a card to the Home stack by dragging it there." , "Help", MB_OK);
-				}
-			case ID_GAME_UNDO:
-				{
-
-					//g_rGame.m_bWin = true;
 				}
 				break;
 			case ID_GAME_OPTIONS:
@@ -169,9 +163,6 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 		}
 	case WM_MOUSEMOVE:
 		{
-			//g_fMouseX = LOWORD(_lParam);
-			//g_fMouseY = HIWORD(_lParam);
-
 			float fMouseX = LOWORD(_lParam);
 			float fMouseY = HIWORD(_lParam);
 
@@ -182,7 +173,6 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 	break;
 	default:break;
 	}
-
 
 	return (DefWindowProc(_hWnd, _uiMsg, _wParam, _lParam));
 }
@@ -258,9 +248,8 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 	const int kiWidth = 1160;
 	const int kiHeight = 1040;
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
-	//CGame& rGame = CGame::GetInstance();
-
-
+	
+	//seed used for the random shuffle
 	std::srand ( unsigned ( time(0) ) );
 
 	if (!g_rGame.Initialise(_hInstance, hwnd, kiWidth, kiHeight))
@@ -268,6 +257,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 		// Failed
 		return (0);
 	}
+
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
@@ -277,7 +267,6 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 		}
 		else
 		{
-			//rGame.GetInstance();
 			g_rGame.ExecuteOneFrame();
 		}
 	}
