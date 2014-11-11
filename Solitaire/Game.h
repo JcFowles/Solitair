@@ -61,6 +61,7 @@ public:
 	void MouseClick(float _fMouseX, float _fMouseY);
 
 	void SetCardBack(ECardBack _eCardBacking);
+	void SetCardFlipNum(int _iCardFlipNum);
 
 	//void SetMouseX(float _fMouseX);
 	//void SetMouseY(float _fMouseY);

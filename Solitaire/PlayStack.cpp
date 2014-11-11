@@ -146,6 +146,20 @@ bool CPlayStack::AddCards(vector<CCard*>* _pCards)
 }
 
 /***********************
+* ReturnCards: Returns Cards back to the playstack
+* @author: Callan Moore
+* @parameter: _pCards: Vector of cards to add to the stack
+* @return: void
+********************/
+void CPlayStack::ReturnCards(vector<CCard*>* _pCards)
+{
+	for(unsigned int i = 0 ; i < _pCards->size() ; i++)
+	{
+		m_pCards->push_back((*_pCards)[i]);
+	}
+}
+
+/***********************
 * RemoveCards: Remove cards to the card play stack
 * @author: Jc Fowles
 * @parameter: _pCards: Vector of cards to remove from the stack

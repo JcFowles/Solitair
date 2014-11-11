@@ -24,6 +24,9 @@
 CMouseStack::CMouseStack(void)
 {
 	m_pHeldCards = 0;
+	m_pPrevDeck = 0;
+	m_pPrevWinStack = 0;
+	m_pPrevPlayStack = 0;
 }
 
 /***********************
@@ -57,15 +60,19 @@ bool CMouseStack::Initialise()
 ********************/
 void CMouseStack::Draw()
 {
+	// Draw cards if the Held Cards has something in it
 	if(m_pHeldCards->empty() != true)
 	{
+		// All cards in Held Stack
 		for(unsigned int i = 0; i < m_pHeldCards->size() ; i++)
 		{	
+			// Draw the card to the X and Y position of the Mouse if its the first card
 			if( i == 0)
 			{
 				(*m_pHeldCards)[i]->CEntity::SetX(m_fX);
 				(*m_pHeldCards)[i]->CEntity::SetY(m_fY);
 			}
+			// Draw the card 40 pixels down (Y) if not the first card
 			else
 			{
 				(*m_pHeldCards)[i]->CEntity::SetX( (*m_pHeldCards)[i-1]->GetX());
@@ -85,7 +92,6 @@ void CMouseStack::Draw()
 ********************/
 void CMouseStack::Process(float _fDeltaTick)
 {
-
 }
 
 /***********************
@@ -118,8 +124,6 @@ void CMouseStack::SetHeldCards(vector<CCard*>* _pCards)
 ********************/
 void CMouseStack::SetMousePosition(float _fMouseX, float _fMouseY)
 {
-	//CEntity::SetX(_fMouseX);
-	//CEntity::SetY(_fMouseY);
 	m_fX = _fMouseX;
 	m_fY = _fMouseY;
 }
@@ -144,3 +148,65 @@ float CMouseStack::GetMouseY()
 	return m_fY;
 }
 
+/***********************
+* GetPrevDeck: Retrieves the Previous Deck location
+* @author: Callan Moore
+* @return: CDeck*: Pointer to the previous location in the deck
+********************/
+CDeck* CMouseStack::GetPrevDeck()
+{
+	return m_pPrevDeck;
+}
+
+/***********************
+* GetPrevWinStack: Retrieves the Previous WinStack location
+* @author: Callan Moore
+* @return: CDeck*: Pointer to the previous location in the Winstack
+********************/
+CWinStack* CMouseStack::GetPrevWinStack()
+{
+	return m_pPrevWinStack;
+}
+
+/***********************
+* GetPrevPlayStack: Retrieves the Previous Playstack location
+* @author: Callan Moore
+* @return: CDeck*: Pointer to the previous location in the Playstack
+********************/
+CPlayStack* CMouseStack::GetPrevPlayStack()
+{
+	return m_pPrevPlayStack;
+}
+
+/***********************
+* SetPrevDeck: Sets the Previous Deck location
+* @author: Callan Moore
+* @parameter: _pPrevDeck: Location of previous deck
+* @return: void
+********************/
+void CMouseStack::SetPrevDeck( CDeck* _pPrevDeck)
+{
+	m_pPrevDeck = _pPrevDeck;
+}
+
+/***********************
+* SetPrevWinStack: Sets the Previous Winstack location
+* @author: Callan Moore
+* @parameter: _pPrevWinStack: Location of previous Winstack
+* @return: void
+********************/
+void CMouseStack::SetPrevWinStack( CWinStack* _pPrevWinStack)
+{
+	m_pPrevWinStack = _pPrevWinStack;
+}
+
+/***********************
+* SetPrevPlayStack: Sets the Previous Playstack location
+* @author: Callan Moore
+* @parameter: _pPrevDeck: Location of previous Playstack
+* @return: void
+********************/
+void CMouseStack::SetPrevPlayStack( CPlayStack* _pPrevPlayStack)
+{
+	m_pPrevPlayStack = _pPrevPlayStack;
+}

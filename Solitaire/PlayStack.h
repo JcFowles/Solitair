@@ -39,6 +39,7 @@ public:
 	virtual void Process(float _fDeltaTick);
 
 	bool AddCards(vector<CCard*>* _pCards);
+	void ReturnCards(vector<CCard*>* _pCards);
 	vector<CCard*>* RemoveCards(int _iCardFromTop);
 	
 	bool FlipCard();

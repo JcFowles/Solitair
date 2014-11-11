@@ -315,8 +315,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 	CPlayStack* pCurrentStack = 0;
 	CWinStack* pCurrentWinStack = 0;
 
-
-
 	if( m_pMouseStack->GetHeldCards()->empty() )
 	{
 		float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
@@ -344,6 +342,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			{
 				m_pMouseStack->GetHeldCards()->push_back(pPickUpTopCard);
 				m_pDeck->GetPickUpPile()->pop_back();
+
+				m_pMouseStack->SetPrevDeck(m_pDeck);
+				m_pMouseStack->SetPrevWinStack(0);
+				m_pMouseStack->SetPrevPlayStack(0);
 			}
 		}
 
@@ -375,10 +377,13 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					pPointedCard = pCurrentCard;
 					pPointedStack = pCurrentStack;
 					iPointedCardPosition = j;
+
+					m_pMouseStack->SetPrevDeck(0);
+					m_pMouseStack->SetPrevWinStack(0);
+					m_pMouseStack->SetPrevPlayStack(pPointedStack);
 				}
 			}
 		}
-
 
 		//loop through the win stacks
 		for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
@@ -399,15 +404,13 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
 					m_pMouseStack->GetHeldCards()->push_back(pCurrentWinStack->RemoveCard());
+
+					m_pMouseStack->SetPrevDeck(0);
+					m_pMouseStack->SetPrevWinStack(pCurrentWinStack);
+					m_pMouseStack->SetPrevPlayStack(0);
 				}
 			}
-			
-
 		}
-
-		
-
-
 
 		// If the mouse was over a viable card when clicked
 		if( pPointedCard != 0)
@@ -427,7 +430,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 	}
-	else //mouse stack has some cards in it
+	else // mouse stack has some cards in it
 	{
 		float fCardX;
 		float fCardY;
@@ -460,9 +463,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 
-
-
-		//breaking when pPointedCard = 0, not pointing to a card
+		// If the mouse was over a viable card when clicked check to see if cards can be added from the mouse stack to the clicked on area
 		if(pPointedCard != 0)
 		{
 			if( pPointedCard == pPointedStack->GetStack()->back())
@@ -476,37 +477,61 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 				}
 			}
 		}
-		
-
-		//loop through the win stacks
-		for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
+		else
 		{
-			pCurrentWinStack =  (*m_WinStacks)[i];
-			CCard* pCardInWinStack = (*(pCurrentWinStack->GetCards()))[0];
-
-			fCardX = pCardInWinStack->GetX();
-			fCardY = pCardInWinStack->GetY();
-			fCardHalfW = pCardInWinStack->GetWidth() / 2;
-			fCardHalfH = pCardInWinStack->GetHeight() / 2;
-
-			// Check if mouse is within borders of the playstack
-			if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
-				&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
+			// Loop through the win stacks
+			for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
 			{
-				if((m_pMouseStack->GetHeldCards())->size() == 1)
+				pCurrentWinStack =  (*m_WinStacks)[i];
+				CCard* pCardInWinStack = (*(pCurrentWinStack->GetCards()))[0];
+
+				fCardX = pCardInWinStack->GetX();
+				fCardY = pCardInWinStack->GetY();
+				fCardHalfW = pCardInWinStack->GetWidth() / 2;
+				fCardHalfH = pCardInWinStack->GetHeight() / 2;
+
+				// Check if mouse is within borders of the Winstack
+				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
+					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
-					//check if adding a card is valid
-					CCard* theCard = (*(m_pMouseStack->GetHeldCards()))[0];
-					
-					if(pCurrentWinStack->AddCard(theCard))
+					if((m_pMouseStack->GetHeldCards())->size() == 1)
 					{
-						m_pMouseStack->GetHeldCards()->pop_back();
+						// Check if adding a card is valid
+						CCard* theCard = (*(m_pMouseStack->GetHeldCards()))[0];
+					
+						if(pCurrentWinStack->AddCard(theCard))
+						{
+							m_pMouseStack->GetHeldCards()->pop_back();
+						}
 					}
 				}
 			}
 		}
 
-
+		if( m_pMouseStack->GetHeldCards()->empty() == false)
+		{
+			//Returns Cards to the Deck if that was its last position before mouse stack
+			if( m_pMouseStack->GetPrevDeck() != 0)
+			{
+				m_pMouseStack->GetPrevDeck()->GetPickUpPile()->push_back((m_pMouseStack->GetHeldCards()->back()));
+				m_pMouseStack->GetHeldCards()->pop_back();
+			}
+			// Returns Cards to the correct WinStack if that was its last position before mouse stack
+			else if( m_pMouseStack->GetPrevWinStack() != 0)
+			{
+				m_pMouseStack->GetPrevWinStack()->AddCard(m_pMouseStack->GetHeldCards()->back());
+				m_pMouseStack->GetHeldCards()->pop_back();
+			}
+			// Returns Cards to the correct PlayStack if that was its last position before mouse stack
+			else if( m_pMouseStack->GetPrevPlayStack() != 0)
+			{
+				m_pMouseStack->GetPrevPlayStack()->ReturnCards(m_pMouseStack->GetHeldCards());
+				while( m_pMouseStack->GetHeldCards()->empty() == false)
+				{
+					m_pMouseStack->GetHeldCards()->pop_back();
+				}
+			}
+		}
 	}
 }
 
@@ -556,3 +581,13 @@ void CGame::SetCardBack(ECardBack _eCardBacking)
 	}
 }
 
+/***********************
+* SetCardFlipNum: Sets the Number of cards to flip from draw pile
+* @author: Callan Moore
+* @parameter: _iCardFlipNum: Number fo cards to flip
+* @return: void
+********************/
+void CGame::SetCardFlipNum(int _iCardFlipNum)
+{
+	m_pDeck->setFlipNum(_iCardFlipNum);
+}
