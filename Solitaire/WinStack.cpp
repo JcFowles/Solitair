@@ -66,28 +66,20 @@ bool CWinStack::Initialise(float _fX, float _fY)
 void CWinStack::Draw()
 {
 	
-	/*if(m_pCards->size() > 1)
+	if(m_pCards->size() > 1)
 	{
 		for(unsigned int i = 1; i < m_pCards->size() ; i++)
 		{
-			(*m_pCards)[i]->SetX((*m_pCards)[i-1]->GetX());
-			
-			if((*m_pCards)[i - 1]->IsFlipped())
-			{
-				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 40);
-			}
-			else
-			{
-				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 10);
-			}
+			(*m_pCards)[i]->SetX((*m_pCards)[0]->GetX());
+			(*m_pCards)[i]->SetY( ((*m_pCards)[0]->GetY()));
 			
 			(*m_pCards)[i]->Draw();
 		}
 	}
-	else*/
-	//{
+	else
+	{
 		(*m_pCards)[m_pCards->size() - 1]->Draw();
-	//}
+	}
 	
 }
 
@@ -109,13 +101,24 @@ void CWinStack::Process(float _fDeltaTick)
 ********************/
 bool CWinStack::AddCard(CCard* _pCards)
 {
-	if( CardCheckSuit(_pCards) ||
-	((*m_pCards).back()->GetSuit()) == SUIT_DEFAULT)
+	if( ((*m_pCards).back()->GetSuit()) == SUIT_DEFAULT)
+	{
+		if(_pCards->GetNumber() == ACE)
+		{
+			m_pCards->push_back(_pCards);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if(CardCheckSuit(_pCards) )
 	{
 		m_pCards->push_back(_pCards);
 		return true;
 	}
-	else 
+	else
 	{
 		return false;
 	}
@@ -183,4 +186,16 @@ bool CWinStack::CardCheckValue( CCard* _kpCard)
 vector<CCard*>* CWinStack::GetCards()
 {
 	return m_pCards;
+}
+
+bool CWinStack::Complete()
+{
+	if(m_pCards->back()->GetNumber() == KING)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

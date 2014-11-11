@@ -40,6 +40,7 @@ CGame::CGame()	: m_pClock(0)
 				, m_WinStacks(0)
 				, m_pMouseStack(0)
 {
+	m_bWin = false;
 	/*
 	for(int i = 0 ; i < 7; i++)
 	{
@@ -191,12 +192,24 @@ void CGame::Process(float _fDeltaTick)
 	{
 		(*m_PlayStacks)[i]->Process(_fDeltaTick);
 	}
+
+	m_bWin = true;
+	for(unsigned int i = 0; i < m_WinStacks->size() ; i++)
+	{
+		
+		if(!(*m_WinStacks)[i]->Complete())
+		{
+			m_bWin = false;
+		}
+	}
+
+
 }
 
 /***********************
 * ExecuteOneFrame: Executes a single frame for game process, 
 * @author: Asma Shakil
-* @return: void
+* @return: bool: true if game is won
 ********************/
 void CGame::ExecuteOneFrame()
 {
@@ -205,6 +218,8 @@ void CGame::ExecuteOneFrame()
 	Draw();
 	m_pClock->Process();
 	Sleep(1);
+
+	
 }
 
 /***********************
@@ -300,6 +315,8 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 	CPlayStack* pCurrentStack = 0;
 	CWinStack* pCurrentWinStack = 0;
 
+
+
 	if( m_pMouseStack->GetHeldCards()->empty() )
 	{
 		float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
@@ -363,7 +380,30 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 		}
 
 
+		//loop through the win stacks
+		for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
+		{
+			pCurrentWinStack =  (*m_WinStacks)[i];
 
+			for(unsigned int j = 1; j < pCurrentWinStack->GetCards()->size(); j++)
+			{
+				pCurrentCard = (*(pCurrentWinStack->GetCards()))[j];
+
+				fCardX = pCurrentCard->GetX();
+				fCardY = pCurrentCard->GetY();
+				fCardHalfW = pCurrentCard->GetWidth() / 2;
+				fCardHalfH = pCurrentCard->GetHeight() / 2;
+
+				// Check if mouse is within borders of the playstack
+				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
+					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
+				{
+					m_pMouseStack->GetHeldCards()->push_back(pCurrentWinStack->RemoveCard());
+				}
+			}
+			
+
+		}
 
 		
 
@@ -387,7 +427,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			}
 		}
 	}
-	else
+	else //mouse stack has some cards in it
 	{
 		float fCardX;
 		float fCardY;
@@ -449,29 +489,70 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			fCardHalfW = pCardInWinStack->GetWidth() / 2;
 			fCardHalfH = pCardInWinStack->GetHeight() / 2;
 
-			// Check if mouse is within borders of current card
+			// Check if mouse is within borders of the playstack
 			if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 				&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 			{
-				// Save current card and stack
-				//pPointedCard = pCurrentCard;
-				//pPointedStack = pCurrentStack;
 				if((m_pMouseStack->GetHeldCards())->size() == 1)
 				{
+					//check if adding a card is valid
 					CCard* theCard = (*(m_pMouseStack->GetHeldCards()))[0];
+					
 					if(pCurrentWinStack->AddCard(theCard))
 					{
 						m_pMouseStack->GetHeldCards()->pop_back();
 					}
-
 				}
-				
 			}
-
-
 		}
 
 
+	}
+}
+
+/***********************
+* HasWon: Check to see if you have won
+* @author: Jc Fowles
+* @return: bool: true if you have won
+********************/
+bool CGame::HasWon()
+{
+	return m_bWin;
+}
+
+/***********************
+* SetCardBack: Sets the Card Backing for the game cards
+* @author: Callan Moore
+* @parameter: _eCardBacking: Enum for the Card Backing
+* @return: void
+********************/
+void CGame::SetCardBack(ECardBack _eCardBacking)
+{
+	deque<CCard*>* pTempDeckCards = 0;
+	pTempDeckCards = m_pDeck->GetDrawPile();
+
+	// Set the Draw pile card backs
+	for( unsigned int i = 0; i < pTempDeckCards->size(); i++)
+	{
+		(*pTempDeckCards)[i]->SetCardBack(_eCardBacking);
+	}
+
+	// Set the Pick up pile card backs
+	pTempDeckCards = m_pDeck->GetPickUpPile();
+	for( unsigned int i = 0; i < pTempDeckCards->size(); i++)
+	{
+		(*pTempDeckCards)[i]->SetCardBack(_eCardBacking);
+	}
+
+	// Set all Play Stacks card backs
+	vector<CCard*>* pTempStackCards = 0;
+	for( unsigned int i = 0; i < m_PlayStacks->size(); i++)
+	{
+		pTempStackCards = (*m_PlayStacks)[i]->GetStack();
+		for( unsigned int j = 0; j < pTempStackCards->size(); j++)
+		{
+			(*pTempStackCards)[j]->SetCardBack(_eCardBacking);
+		}
 	}
 }
 

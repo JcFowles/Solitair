@@ -143,3 +143,4 @@ float CMouseStack::GetMouseY()
 {
 	return m_fY;
 }
+
