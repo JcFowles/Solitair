@@ -345,10 +345,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			// Take the top card if the click was inside the borders
 			if ( (_fMouseX < fPickX + fPickHalfW && _fMouseX > fPickX - fPickHalfW) && (_fMouseY < fPickY + fPickHalfH && _fMouseY > fPickY - fPickHalfH) )
 			{
-				// Move the mouse to the centre of the card
-				ptMoveCursor.x = pPickUpTopCard->GetX();
-				ptMoveCursor.y = pPickUpTopCard->GetY();
-
 				m_pMouseStack->GetHeldCards()->push_back(pPickUpTopCard);
 				m_pDeck->GetPickUpPile()->pop_back();
 
@@ -382,10 +378,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
-					// Move the mouse to the centre of the card
-					ptMoveCursor.x = fCardX;
-					ptMoveCursor.y = fCardY;
-
 					// Save current card and stack
 					pPointedCard = pCurrentCard;
 					pPointedStack = pCurrentStack;
@@ -395,6 +387,24 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					m_pMouseStack->SetPrevWinStack(0);
 					m_pMouseStack->SetPrevPlayStack(pPointedStack);
 				}
+			}
+		}
+
+		// If the mouse was over a viable Playstack card when clicked
+		if( pPointedCard != 0)
+		{
+			// If the viable card is flipped then take it and add it to the MouseStack vector
+			if( pPointedCard->IsFlipped() )
+			{
+				vector<CCard*>* pCardsToTake = pPointedStack->RemoveCards(iPointedCardPosition);
+
+				m_pMouseStack->SetHeldCards(pCardsToTake);
+				pCardsToTake = 0;
+			}
+			// Card was front card of stack but not flipped yet so flip it only
+			else if( pPointedCard == pPointedStack->GetStack()->back())
+			{
+				pPointedStack->GetStack()->back()->SetFlipped(true);
 			}
 		}
 
@@ -416,34 +426,12 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
-					// Move the mouse to the centre of the card
-					ptMoveCursor.x = fCardX;
-					ptMoveCursor.y = fCardY;
-
 					m_pMouseStack->GetHeldCards()->push_back(pCurrentWinStack->RemoveCard());
 
 					m_pMouseStack->SetPrevDeck(0);
 					m_pMouseStack->SetPrevWinStack(pCurrentWinStack);
 					m_pMouseStack->SetPrevPlayStack(0);
 				}
-			}
-		}
-
-		// If the mouse was over a viable card when clicked
-		if( pPointedCard != 0)
-		{
-			// If the viable card is flipped then take it and add it to the MouseStack vector
-			if( pPointedStack->GetStack()->back()->IsFlipped() )
-			{
-				vector<CCard*>* pCardsToTake = pPointedStack->RemoveCards(iPointedCardPosition);
-
-				m_pMouseStack->SetHeldCards(pCardsToTake);
-				pCardsToTake = 0;
-			}
-			// Card was front card of stack but not flipped yet so flip it only
-			else if( pPointedCard == pPointedStack->GetStack()->back())
-			{
-				pPointedStack->GetStack()->back()->SetFlipped(true);
 			}
 		}
 	}
@@ -551,12 +539,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 		}
 	}
 
-	if( ptMoveCursor.x != 0 && ptMoveCursor.y !=0)
-	{
-		ClientToScreen(m_hMainWindow , &ptMoveCursor);
-		SetCursorPos(ptMoveCursor.x,ptMoveCursor.y);
-	}
-
 	// Show cursor only when no cards are in mouse stack
 	if( m_pMouseStack->GetHeldCards()->empty() == false)
 	{
@@ -576,8 +558,6 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			ShowCursor(true);
 		}
 	}
-
-
 }
 
 /***********************
