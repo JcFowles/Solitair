@@ -122,6 +122,7 @@ void CDeck::Draw()
 		for(int k = 0; k < flip; k++)
 		{
 			(*m_pPickUp)[iPickUpSize - 1 - k ]->SetX(260.0f + k*30.0f);
+			(*m_pPickUp)[iPickUpSize - 1 - k ]->SetY(m_pDraw->back()->GetY());
 		}
 		
 		for(int i = 0 ; i < iPickUpSize  ; i++)
@@ -132,6 +133,7 @@ void CDeck::Draw()
 		for(int k = 0; k < flip; k++)
 		{
 			(*m_pPickUp)[iPickUpSize - 1 - k ]->SetX(260.0f );
+			(*m_pPickUp)[iPickUpSize - 1 - k ]->SetY(m_pDraw->back()->GetY());
 		}
 
 	}
