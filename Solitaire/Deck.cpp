@@ -36,6 +36,9 @@ CDeck::~CDeck(void)
 	//Deletes the Draw Pile
 	while(!m_pDraw->empty())
 	{
+		delete m_pDraw->back();
+		m_pDraw->back() = 0;
+	
 		m_pDraw->pop_back();
 	}
 	delete m_pDraw;
@@ -44,10 +47,14 @@ CDeck::~CDeck(void)
 	//Deletes the Pick up Pile
 	while(!m_pPickUp->empty())
 	{
+		delete m_pPickUp->back();
+		m_pPickUp->back() = 0;
 		m_pPickUp->pop_back();
 	}
 	delete m_pPickUp;
 	m_pPickUp = 0;
+
+	
 }
 
 /***********************

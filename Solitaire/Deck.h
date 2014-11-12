@@ -54,6 +54,7 @@ protected:
 	int m_NumFlip;
 
 	CCard* theBackCard;
+	
 };
 
 #endif //__DECK_H__

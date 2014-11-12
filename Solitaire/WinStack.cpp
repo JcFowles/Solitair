@@ -34,6 +34,8 @@ CWinStack::~CWinStack(void)
 {
 	while(!(m_pCards->empty()))
 	{
+		delete m_pCards->back();
+		m_pCards->back() = 0;
 		m_pCards->pop_back();
 	}
 

@@ -65,6 +65,8 @@ CGame::~CGame()
 	// Delete all PlayStacks
 	while( !(m_PlayStacks->empty()))
 	{
+		delete m_PlayStacks->back();
+		m_PlayStacks->back() = 0;
 		m_PlayStacks->pop_back();
 	}
 	delete m_PlayStacks;
@@ -73,6 +75,8 @@ CGame::~CGame()
 	// Delete all WinStacks
 	while( !(m_WinStacks->empty()))
 	{
+		delete m_WinStacks->back();
+		m_WinStacks->back() = 0;
 		m_WinStacks->pop_back();
 	}
 	delete m_WinStacks;
@@ -80,17 +84,6 @@ CGame::~CGame()
 
 	delete m_pMouseStack;
 	m_pMouseStack = 0;
-
-
-
-	/*for(int i = 0 ; i < 7; i++)
-	{
-		delete m_PlayStack[i] ; 
-		m_PlayStack[i] = 0;
-	}*/
-
-	//delete m_pDeck;
-	//m_pDeck = 0;
 }
 
 /***********************
@@ -112,16 +105,12 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 	m_pClock->Process();
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
-	//ShowCursor(false);
-	
-	
 
 	//Card Stacks
 	CPlayStack* tempStack;
 	CWinStack* tempWinStack;
 	m_PlayStacks = new vector<CPlayStack*>;
 	m_WinStacks = new vector<CWinStack*>;
-	m_pMouseStack = new CMouseStack();
 
 	const float fkGap = 40.0f;
 	const float fkYPlayStack = 380.0f;
@@ -156,6 +145,7 @@ bool CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeig
 
 	m_pDeck = new CDeck();
 	VALIDATE(m_pDeck->Initialise(fkXDeck, fkYDeck, m_PlayStacks));
+	m_pMouseStack = new CMouseStack();
 	VALIDATE(m_pMouseStack->Initialise());
 
 	SetCardBack(DEFAULT);
@@ -202,13 +192,6 @@ void CGame::Draw()
 ********************/
 void CGame::Process(float _fDeltaTick)
 {
-	//// Process all the game’s logic here.
-	//for(unsigned int i = 0; i < m_PlayStacks->size() ; i++)
-	//{
-	//	(*m_PlayStacks)[i]->Process(_fDeltaTick);
-	//}
-
-
 	//WINNING CHECK
 	m_bWin = true;
 	for(unsigned int i = 0; i < m_WinStacks->size() ; i++)
@@ -236,9 +219,6 @@ void CGame::Process(float _fDeltaTick)
 			break;
 		}
 	}
-		
-
-
 }
 
 /***********************
@@ -253,8 +233,6 @@ void CGame::ExecuteOneFrame()
 	Draw();
 	m_pClock->Process();
 	Sleep(1);
-
-	
 }
 
 /***********************
@@ -367,7 +345,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			m_pDeck->Flip();
 		}
 
-		// Check if the mouse click was in the Pick up Pile area
+		// Check if the mouse click was in the Pick up Pile area`	
 		if(!(m_pDeck->GetPickUpPile()->empty()))
 		{
 			CCard* pPickUpTopCard = m_pDeck->GetPickUpPile()->back();

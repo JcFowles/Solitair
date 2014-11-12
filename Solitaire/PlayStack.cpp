@@ -34,6 +34,8 @@ CPlayStack::~CPlayStack(void)
 {
 	while(!m_pCards->empty())
 	{
+		delete m_pCards->back();
+		m_pCards->back() = 0;
 		m_pCards->pop_back();
 	}
 	delete m_pCards;
@@ -75,18 +77,19 @@ void CPlayStack::Draw()
 
 		for(unsigned int i = 1; i < m_pCards->size() ; i++)
 		{
-			//sets the X value
+			// Sets the X value
 			(*m_pCards)[i]->SetX((*m_pCards)[i-1]->GetX());
 			
-			//Sets the Y value based on if its previous card is flipped or not
+			// Sets the Y value based on if its previous card is flipped or not
+			// Sets the Y value of the unflipped cards.
 			if((*m_pCards)[i - 1]->IsFlipped() && ((*m_pCards)[i - 1]->GetSuit() != SUIT_DEFAULT) )
 			{
 				(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) + 40);
 			}
-			//
+			//Sets the Y value of the Flipped cards.
 			else
 			{
-				//sets the first card in the deck to the same position as the blank
+				// Sets the first card in the deck to the same position as the blank
 				if( i == 1 )
 				{
 					(*m_pCards)[i]->SetY( ((*m_pCards)[i-1]->GetY()) );
@@ -101,7 +104,7 @@ void CPlayStack::Draw()
 		}
 
 	}
-	else	//No Cards in the play stack draw the blank card
+	else	// No Cards in the play stack draw the blank card
 	{
 		(*m_pCards)[0]->Draw();
 	}

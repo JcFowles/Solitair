@@ -31,11 +31,14 @@ CMouseStack::CMouseStack(void)
 /***********************
 * ~CMouseStack: Destructor for Mouse Stack class
 * @author: Callan Moore
+* @author: Jc Fowles
 ********************/
 CMouseStack::~CMouseStack(void)
 {
 	if( m_pHeldCards->empty() == false)
 	{
+		delete m_pHeldCards->back(); 
+		m_pHeldCards->back() = 0;
 		m_pHeldCards->pop_back();
 	}
 	delete m_pHeldCards;

@@ -39,6 +39,7 @@ CBackBuffer::~CBackBuffer()
 	SelectObject(m_hDC, m_hOldObject);
 	DeleteObject(m_hSurface);
 	DeleteObject(m_hDC);
+	DeleteObject(m_brushGreen);
 }
 
 /***********************
