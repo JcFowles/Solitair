@@ -33,6 +33,8 @@
 CGame& g_rGame = CGame::GetInstance();
 
 
+
+
 /***********************
 * WindowProc: Process the window 
 * @author: Asma Shakil
@@ -47,7 +49,7 @@ CGame& g_rGame = CGame::GetInstance();
 ********************/
 LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 {
-
+	HMENU _hMenu = GetMenu(_hWnd);
 	switch (_uiMsg)
 	{
 	case WM_DESTROY:
@@ -75,37 +77,66 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 					
 					case ID_FLIPNUMBER_ONE :
 						{
+							CheckMenuItem(_hMenu, ID_FLIPNUMBER_ONE, MF_CHECKED);
 							g_rGame.GetDeck()->setFlipNum(1);
+							CheckMenuItem(_hMenu, ID_FLIPNUMBER_THREE, MF_UNCHECKED);
 						}
 						break;
 					case ID_FLIPNUMBER_THREE:
 						{
+							CheckMenuItem(_hMenu, ID_FLIPNUMBER_THREE, MF_CHECKED);
 							g_rGame.GetDeck()->setFlipNum(3);
+							CheckMenuItem(_hMenu, ID_FLIPNUMBER_ONE, MF_UNCHECKED);
 						}
 						break;
 					case ID_CARDBACKS_FACE:
 						{
+							CheckMenuItem(_hMenu, ID_CARDBACKS_FACE, MF_CHECKED);
 							g_rGame.SetCardBack(FACE);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_ROSE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_CROWN, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_PURPLE, MF_UNCHECKED);
 						}
 						break;
 					case ID_CARDBACKS_ROSE:
 						{
+							CheckMenuItem(_hMenu, ID_CARDBACKS_ROSE, MF_CHECKED);
 							g_rGame.SetCardBack(ROSE);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_FACE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_CROWN, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_PURPLE, MF_UNCHECKED);
 						}
 						break;
-					case ID_CARDBACKS_BLUE:
+					case ID_CARDBACKS_DEFAULT:
 						{
+							CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_CHECKED);
 							g_rGame.SetCardBack(DEFAULT);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_FACE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_ROSE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_CROWN, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_PURPLE, MF_UNCHECKED);
 						}
 						break;
 					case ID_CARDBACKS_CROWN:
 						{
+							CheckMenuItem(_hMenu, ID_CARDBACKS_CROWN, MF_CHECKED);
 							g_rGame.SetCardBack(CROWN);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_FACE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_ROSE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_PURPLE, MF_UNCHECKED);
 						}
 						break;
 					case ID_CARDBACKS_PURPLE:
 						{
+							CheckMenuItem(_hMenu, ID_CARDBACKS_PURPLE, MF_CHECKED);
 							g_rGame.SetCardBack(PURPLE);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_FACE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_ROSE, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_UNCHECKED);
+							CheckMenuItem(_hMenu, ID_CARDBACKS_CROWN, MF_UNCHECKED);
 						}
 						break;
 					
@@ -271,6 +302,10 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 	const int kiHeight = 1040;
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 	
+	HMENU _hMenu = GetMenu(hwnd);
+	CheckMenuItem(_hMenu, ID_FLIPNUMBER_ONE, MF_CHECKED);
+	CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_CHECKED);
+
 	//seed used for the random shuffle
 	std::srand ( unsigned ( time(0) ) );
 
