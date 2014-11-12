@@ -18,6 +18,8 @@
 *			Nick.gould@mediadesign.school.nz
 */
 
+#pragma comment(lib, "winmm.lib")
+
 //Library Includes
 #include <windows.h>
 #include <windowsx.h>
