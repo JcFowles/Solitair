@@ -35,14 +35,17 @@ CMouseStack::CMouseStack(void)
 ********************/
 CMouseStack::~CMouseStack(void)
 {
-	if( m_pHeldCards->empty() == false)
+	if( m_pHeldCards != 0)
 	{
-		delete m_pHeldCards->back(); 
-		m_pHeldCards->back() = 0;
-		m_pHeldCards->pop_back();
+		while( m_pHeldCards->empty() == false)
+		{
+			delete m_pHeldCards->back(); 
+			m_pHeldCards->back() = 0;
+			m_pHeldCards->pop_back();
+		}
+		delete m_pHeldCards;
+		m_pHeldCards = 0;
 	}
-	delete m_pHeldCards;
-	m_pHeldCards = 0;
 }
 
 /***********************
@@ -52,7 +55,6 @@ CMouseStack::~CMouseStack(void)
 ********************/
 bool CMouseStack::Initialise()
 {
-	m_pHeldCards = new vector<CCard*>;
 	return true;
 }
 
@@ -64,7 +66,7 @@ bool CMouseStack::Initialise()
 void CMouseStack::Draw()
 {
 	// Draw cards if the Held Cards has something in it
-	if(m_pHeldCards->empty() != true)
+	if(m_pHeldCards != 0)
 	{
 		// All cards in Held Stack
 		for(unsigned int i = 0; i < m_pHeldCards->size() ; i++)

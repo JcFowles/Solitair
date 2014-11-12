@@ -165,7 +165,7 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 		case WM_LBUTTONUP:
 		{
 			// Only run if dragging a stack of cards on the mouse
-			if(CGame::GetInstance().GetMouseStack()->GetHeldCards()->empty() == false)
+			if(CGame::GetInstance().GetMouseStack()->GetHeldCards() != 0)
 			{
 				float fMouseX = LOWORD(_lParam);
 				float fMouseY = HIWORD(_lParam);

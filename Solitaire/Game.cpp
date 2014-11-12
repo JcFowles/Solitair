@@ -177,7 +177,9 @@ void CGame::Draw()
 		(*m_WinStacks)[i]->Draw();
 	}
 
+
 	m_pMouseStack->Draw();
+
 
 	m_pBackBuffer->Present();
 }
@@ -332,7 +334,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 	ptMoveCursor.x = 0;
 	ptMoveCursor.y = 0;
 
-	if( m_pMouseStack->GetHeldCards()->empty() )
+	if( m_pMouseStack->GetHeldCards() == 0 )
 	{
 		float fDeckX = m_pDeck->GetDrawPile()->back()->GetX();
 		float fDeckY = m_pDeck->GetDrawPile()->back()->GetY();
@@ -357,7 +359,9 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			// Take the top card if the click was inside the borders
 			if ( (_fMouseX < fPickX + fPickHalfW && _fMouseX > fPickX - fPickHalfW) && (_fMouseY < fPickY + fPickHalfH && _fMouseY > fPickY - fPickHalfH) )
 			{
-				m_pMouseStack->GetHeldCards()->push_back(pPickUpTopCard);
+				vector<CCard*>* pCardToTake = new vector<CCard*>;
+				pCardToTake->push_back(pPickUpTopCard);
+				m_pMouseStack->SetHeldCards(pCardToTake);
 				m_pDeck->GetPickUpPile()->pop_back();
 
 				m_pMouseStack->SetPrevDeck(m_pDeck);
@@ -438,7 +442,10 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
-					m_pMouseStack->GetHeldCards()->push_back(pCurrentWinStack->RemoveCard());
+					vector<CCard*>* pCardToTake = new vector<CCard*>;
+					pCardToTake->push_back(pCurrentCard);
+					m_pMouseStack->SetHeldCards(pCardToTake);
+					pCurrentWinStack->GetCards()->pop_back();
 
 					m_pMouseStack->SetPrevDeck(0);
 					m_pMouseStack->SetPrevWinStack(pCurrentWinStack);
@@ -488,10 +495,20 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 			{
 				if( pPointedStack->AddCards(m_pMouseStack->GetHeldCards()) )
 				{
-					while( !(m_pMouseStack->GetHeldCards()->empty()) )
+					/*while( !(m_pMouseStack->GetHeldCards()->empty()) )
 					{
 						m_pMouseStack->GetHeldCards()->pop_back();
+					}*/
+
+					// Properly Delete the vector of held cards
+					while( m_pMouseStack->GetHeldCards()->empty() == false)
+					{
+						//delete m_pMouseStack->GetHeldCards()->back(); 
+						m_pMouseStack->GetHeldCards()->back() = 0;
+						m_pMouseStack->GetHeldCards()->pop_back();
 					}
+					delete m_pMouseStack->GetHeldCards();
+					m_pMouseStack->SetHeldCards(0);
 				}
 			}
 		}
@@ -519,41 +536,60 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					
 						if(pCurrentWinStack->AddCard(theCard))
 						{
-							m_pMouseStack->GetHeldCards()->pop_back();
+							// Properly Delete the vector of held cards
+							while( m_pMouseStack->GetHeldCards()->empty() == false)
+							{
+								//delete m_pMouseStack->GetHeldCards()->back(); 
+								m_pMouseStack->GetHeldCards()->back() = 0;
+								m_pMouseStack->GetHeldCards()->pop_back();
+							}
+							delete m_pMouseStack->GetHeldCards();
+							m_pMouseStack->SetHeldCards(0);
+
+							//m_pMouseStack->GetHeldCards()->pop_back();
 						}
 					}
 				}
 			}
 		}
 
-		if( m_pMouseStack->GetHeldCards()->empty() == false)
+		if( m_pMouseStack->GetHeldCards() != 0)
 		{
 			//Returns Cards to the Deck if that was its last position before mouse stack
 			if( m_pMouseStack->GetPrevDeck() != 0)
 			{
 				m_pMouseStack->GetPrevDeck()->GetPickUpPile()->push_back((m_pMouseStack->GetHeldCards()->back()));
-				m_pMouseStack->GetHeldCards()->pop_back();
+				//m_pMouseStack->GetHeldCards()->pop_back();
 			}
 			// Returns Cards to the correct WinStack if that was its last position before mouse stack
 			else if( m_pMouseStack->GetPrevWinStack() != 0)
 			{
 				m_pMouseStack->GetPrevWinStack()->AddCard(m_pMouseStack->GetHeldCards()->back());
-				m_pMouseStack->GetHeldCards()->pop_back();
+				//m_pMouseStack->GetHeldCards()->pop_back();
 			}
 			// Returns Cards to the correct PlayStack if that was its last position before mouse stack
 			else if( m_pMouseStack->GetPrevPlayStack() != 0)
 			{
 				m_pMouseStack->GetPrevPlayStack()->ReturnCards(m_pMouseStack->GetHeldCards());
-				while( m_pMouseStack->GetHeldCards()->empty() == false)
+				/*while( m_pMouseStack->GetHeldCards()->empty() == false)
 				{
 					m_pMouseStack->GetHeldCards()->pop_back();
-				}
+				}*/
 			}
+			// Properly Delete the vector of held cards
+			if( m_pMouseStack->GetHeldCards()->empty() == false)
+			{
+				//delete m_pMouseStack->GetHeldCards()->back(); 
+				m_pMouseStack->GetHeldCards()->back() = 0;
+				m_pMouseStack->GetHeldCards()->pop_back();
+			}
+			delete m_pMouseStack->GetHeldCards();
+			m_pMouseStack->SetHeldCards(0);
 		}
 	}
 
 	// Show cursor only when no cards are in mouse stack
-	if( m_pMouseStack->GetHeldCards()->empty() == false)
+	if( m_pMouseStack->GetHeldCards() != 0)
 	{
 		// Set cursor to false only if the cursor was true 
 		if( bCursorVisible == true)
