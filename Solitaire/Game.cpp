@@ -656,3 +656,82 @@ void CGame::SetCardFlipNum(int _iCardFlipNum)
 {
 	m_pDeck->setFlipNum(_iCardFlipNum);
 }
+
+
+void CGame::RightClick(float _fMouseX, float _fMouseY)
+{
+	CWinStack* pCurrentWinStack = 0;
+	CPlayStack* pCurrentStack = 0;
+	CCard* pPointedCard = 0;
+
+	float fCardX = 0.0f;
+	float fCardY = 0.0f;
+	float fCardHalfW = 0.0f;
+	float fCardHalfH = 0.0f;
+
+	if( m_pMouseStack->GetHeldCards() == 0 )
+	{
+			
+		// Check if the mouse click was in the Pick up Pile area`	
+		if(!(m_pDeck->GetPickUpPile()->empty()))
+		{
+			pPointedCard = m_pDeck->GetPickUpPile()->back();
+
+			float fCardX = pPointedCard->GetX();
+			float fCardY = pPointedCard->GetY();
+			float fCardHalfW = pPointedCard->GetWidth() / 2;
+			float fCardHalfH = pPointedCard->GetHeight() / 2;
+
+			// Take the top card if the click was inside the borders
+			if ( (_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) && (_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
+			{
+				for(unsigned int i = 0; i < m_WinStacks->size(); i++)
+				{
+					pCurrentWinStack =  (*m_WinStacks)[i];
+					if(pCurrentWinStack->AddCard(pPointedCard))
+					{
+						m_pDeck->GetPickUpPile()->pop_back();
+						break;
+					}
+				}
+			}
+		}
+
+		// Loop through all Play Stacks
+		for(unsigned int i = 0; i < m_PlayStacks->size(); i++)
+		{
+			pCurrentStack = (*m_PlayStacks)[i];
+
+			pPointedCard = (pCurrentStack->GetStack())->back();
+
+			fCardX = pPointedCard->GetX();
+			fCardY = pPointedCard->GetY();
+			fCardHalfW = pPointedCard->GetWidth() / 2;
+			fCardHalfH = pPointedCard->GetHeight() / 2;
+
+			// Check if mouse is within borders of current card
+			if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
+				&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
+			{
+				for(unsigned int i = 0; i < m_WinStacks->size(); i++)
+				{
+					pCurrentWinStack =  (*m_WinStacks)[i];
+					if(pCurrentWinStack->AddCard(pPointedCard))
+					{
+						(pCurrentStack->GetStack())->pop_back();
+						break;
+					}
+				}
+			}
+			
+		}
+
+
+
+	}
+	else
+	{
+
+	}
+
+}

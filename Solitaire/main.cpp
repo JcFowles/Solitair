@@ -152,6 +152,14 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 			
 		}
 		break;
+	case WM_RBUTTONDOWN:
+		{
+			float fMouseX = LOWORD(_lParam);
+			float fMouseY = HIWORD(_lParam);
+
+			CGame::GetInstance().RightClick(fMouseX, fMouseY);
+		}
+		break;
 	case WM_LBUTTONDOWN:
 		{
 
@@ -183,8 +191,8 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 			CGame::GetInstance().GetMouseStack()->SetMousePosition(fMouseX,  fMouseY);
 			CGame::GetInstance().Draw();
 		}
+		break;
 
-	break;
 	default:break;
 	}
 

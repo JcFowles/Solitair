@@ -51,6 +51,7 @@ public:
 	void Process(float _fDeltaTick);
 	void ExecuteOneFrame();
 	void MouseClick(float _fMouseX, float _fMouseY);
+	void RightClick(float _fMouseX, float _fMouseY);
 
 	// Getters
 	CBackBuffer* GetBackBuffer();
