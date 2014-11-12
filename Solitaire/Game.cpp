@@ -428,20 +428,20 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 		for(unsigned int i = 0 ; i < m_WinStacks->size() ; i++)
 		{
 			pCurrentWinStack =  (*m_WinStacks)[i];
-
-			for(unsigned int j = 1; j < pCurrentWinStack->GetCards()->size(); j++)
+						
+			pCurrentCard = ((pCurrentWinStack->GetCards())->back());
+			if(pCurrentCard->GetSuit() != SUIT_DEFAULT)
 			{
-				pCurrentCard = (*(pCurrentWinStack->GetCards()))[j];
-
 				fCardX = pCurrentCard->GetX();
 				fCardY = pCurrentCard->GetY();
 				fCardHalfW = pCurrentCard->GetWidth() / 2;
 				fCardHalfH = pCurrentCard->GetHeight() / 2;
 
-				// Check if mouse is within borders of the playstack
+				// Check if mouse is within borders of the winStack
 				if (	(_fMouseX < fCardX + fCardHalfW && _fMouseX > fCardX - fCardHalfW) 
 					&&	(_fMouseY < fCardY + fCardHalfH && _fMouseY > fCardY - fCardHalfH) )
 				{
+					
 					vector<CCard*>* pCardToTake = new vector<CCard*>;
 					pCardToTake->push_back(pCurrentCard);
 					m_pMouseStack->SetHeldCards(pCardToTake);
@@ -453,6 +453,7 @@ void CGame::MouseClick(float _fMouseX, float _fMouseY)
 					break;
 				}
 			}
+			
 		}
 	}
 	else // mouse stack has some cards in it
