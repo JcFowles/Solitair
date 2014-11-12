@@ -42,6 +42,7 @@ public:
 	//Getters
 	deque<CCard*>* GetDrawPile();
 	deque<CCard*>* GetPickUpPile();
+	int getFlipNum();
 
 	//Setters
 	void setFlipNum(int _iNum);

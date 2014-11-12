@@ -34,7 +34,7 @@
 
 CGame& g_rGame = CGame::GetInstance();
 
-
+#pragma comment(lib, "winmm.lib")
 
 
 /***********************
@@ -82,6 +82,7 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 							CheckMenuItem(_hMenu, ID_FLIPNUMBER_ONE, MF_CHECKED);
 							g_rGame.GetDeck()->setFlipNum(1);
 							CheckMenuItem(_hMenu, ID_FLIPNUMBER_THREE, MF_UNCHECKED);
+							SendMessage(_hWnd, WM_COMMAND,ID_GAME_NEWGAME,0 );
 						}
 						break;
 					case ID_FLIPNUMBER_THREE:
@@ -89,6 +90,7 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 							CheckMenuItem(_hMenu, ID_FLIPNUMBER_THREE, MF_CHECKED);
 							g_rGame.GetDeck()->setFlipNum(3);
 							CheckMenuItem(_hMenu, ID_FLIPNUMBER_ONE, MF_UNCHECKED);
+							SendMessage(_hWnd, WM_COMMAND,ID_GAME_NEWGAME,0 );
 						}
 						break;
 					case ID_CARDBACKS_FACE:
@@ -168,6 +170,8 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 					  iWndHeight = rect.bottom - rect.top;
 					}
 
+					int flipNum = (&g_rGame)->GetDeck()->getFlipNum();
+					ECardBack eCardBack = (&g_rGame)->GetCardBack();
 					//destroy and recreate the game
 					(&g_rGame)->DestroyInstance();
 					g_rGame.GetInstance();
@@ -177,6 +181,9 @@ LRESULT CALLBACK WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lPa
 						// Failed
 						return (0);
 					}
+
+					(&g_rGame)->GetDeck()->setFlipNum(flipNum);
+					(&g_rGame)->SetCardBack(eCardBack);
 
 
 				}
@@ -305,7 +312,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdl
 	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 	
 	HMENU _hMenu = GetMenu(hwnd);
-	CheckMenuItem(_hMenu, ID_FLIPNUMBER_ONE, MF_CHECKED);
+	CheckMenuItem(_hMenu, ID_FLIPNUMBER_THREE, MF_CHECKED);
 	CheckMenuItem(_hMenu, ID_CARDBACKS_DEFAULT, MF_CHECKED);
 
 	//seed used for the random shuffle

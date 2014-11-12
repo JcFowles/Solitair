@@ -59,7 +59,8 @@ public:
 	HWND GetWindow();
 	CDeck* GetDeck();
 	CMouseStack* GetMouseStack();
-	
+	ECardBack GetCardBack();
+
 	// Setters
 	void SetCardBack(ECardBack _eCardBacking);
 	void SetCardFlipNum(int _iCardFlipNum);
@@ -87,6 +88,8 @@ protected:
 
 	float m_fMouseX;
 	float m_fMouseY;
+
+	ECardBack m_eCardBacking;
 
 	//Application data
 	HINSTANCE m_hApplicationInstance;

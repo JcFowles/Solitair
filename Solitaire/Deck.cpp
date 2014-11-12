@@ -24,7 +24,7 @@ CDeck::CDeck(void)
 	//I want a comment here
 	m_pDraw = new deque<CCard*>;
 	m_pPickUp = new deque<CCard*>;
-	m_NumFlip = 1;
+	m_NumFlip = 3;
 }
 
 /***********************
@@ -300,4 +300,14 @@ deque<CCard*>* CDeck::GetPickUpPile()
 void CDeck::setFlipNum(int _iNum)
 {
 	m_NumFlip = _iNum;
+}
+
+/***********************
+* getFlipNum: Return the number of cards to flip
+* @author: Jc Fowles
+* @return: int: 
+********************/
+int CDeck::getFlipNum()
+{
+	return m_NumFlip;
 }
