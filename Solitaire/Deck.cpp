@@ -101,10 +101,23 @@ bool CDeck::Initialise(float _fX, float _fY, vector<CPlayStack*>* _pThePlayStack
 ********************/
 void CDeck::Draw()
 {
+	int iPickUpSize = m_pPickUp->size() ;
+
+	//Sets the back card to a X or O depending if the deck empty or not
+	if((m_pDraw->size() == 1) && 
+		(iPickUpSize <= 0) )
+	{
+		(*m_pDraw)[0]->SetNumber(TWO);
+	}
+	else
+	{
+		(*m_pDraw)[0]->SetNumber(THREE);
+	}
+
 	//Draw the Draw pile
 	m_pDraw->back()->Draw();
 
-	int iPickUpSize = m_pPickUp->size() ;
+	
 	
 	//if There are cards in the pick up pile
 	if(iPickUpSize > 0)
